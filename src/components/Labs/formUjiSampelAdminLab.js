@@ -29,6 +29,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import MUIDataTable from "mui-datatables";
+import Box from '@material-ui/core/Box';
 // import CustomToolbarSelect from "../AppSetting/CustomToolbarSelect";
 // import FormHelperText from '@material-ui/core/FormHelperText';
 // import Input from '@material-ui/core/Input';
@@ -36,7 +37,7 @@ import MUIDataTable from "mui-datatables";
 // import SvgIcon, { SvgIconProps } from '@material-ui/core/SvgIcon';
 // import exportCSV from '../Labs/exportCSV';
 // import * as FileSaver from 'file-saver';
-// import * as XLSX from 'xlsx';
+import * as XLSX from 'xlsx';
 // import * as jsonexport from "jsonexport/dist";
 // import { CSVLink } from "react-csv";
 // import { Parser } from 'json2csv';
@@ -79,8 +80,10 @@ class SampelAllBase extends Component {
     this.state = {
       loading: true,
       items: [],
+      itemsB: null,
       open: false,
       formMode: [],
+      selectBulan: '',
     };
   }
 
@@ -119,76 +122,69 @@ class SampelAllBase extends Component {
               formLaporanKesimpulan: el.val().formLaporanKesimpulan,
               keteranganPengujianDitolak: el.val().keteranganPengujianDitolak,
               zItems: el.val().zItems,
-            })
-          });
-          const b = [];
-          snap.forEach(el => {
-            b.push({
-              idPermohonanUji: el.val().idPermohonanUji,
-              kodeUnikSampel: el.val().kodeUnikSampel,
-              tanggalMasukSampel: el.val().tanggalMasukSampel,
-              tanggalTerimaSampelAdminLab: el.val().tanggalTerimaSampelAdminLab,
-              tanggalUjiSampelAnalis: el.val().tanggalUjiSampelAnalis,
-              nomorAgendaSurat: el.val().nomorAgendaSurat,
-              namaPemilikSampel: el.val().namaPemilikSampel,
-              alamatPemilikSampel: el.val().alamatPemilikSampel,
-              asalTujuanSampel: el.val().asalTujuanSampel,
-              flagActivity: el.val().flagActivity,
-              flagActivityDetail: el.val().flagActivityDetail,
-              flagStatusProses: el.val().flagStatusProses,
-              unitPengujianSampel: el.val().unitPengujianSampel,
-              // kondisiSampel: el.val().kondisiSampel,
-              formLaporanKesimpulan: el.val().formLaporanKesimpulan,
-              formLaporanKeterangan: el.val().formLaporanKeterangan,
-              kodeUnikSampelAdminLab: el.val().kodeUnikSampelAdminLab,
+              // kodeUnikSampel: el.val().kodeUnikSampel,
+              // tanggalMasukSampel: dateFnsFormat(new Date(el.val().tanggalMasukSampel), "dd MMM yyyy"),
               // nomorAgendaSurat: el.val().nomorAgendaSurat,
-              // formLaporanKeterangan: el.val().formLaporanKeterangan,
-              // formLaporanKesimpulan: el.val().formLaporanKesimpulan,
-              keteranganPengujianDitolak: el.val().keteranganPengujianDitolak,
-              statusLaporanSPP: el.val().statusLaporanSPP,
-              manajerAdministrasiAdminLab: el.val().manajerAdministrasiAdminLab,
-              nipManajerAdministrasiAdminLab: el.val().nipManajerAdministrasiAdminLab,
-              manajerTeknisAdminLab: el.val().manajerTeknisAdminLab,
-              nipManajerTeknisAdminLab: el.val().nipManajerTeknisAdminLab,
-              penerimaSampelAdminLab: el.val().penerimaSampelAdminLab,
-              nipPenerimaSampelAdminLab: el.val().nipPenerimaSampelAdminLab,
-              penerimaSampelAnalisLab: el.val().penerimaSampelAnalisLab,
-              nipPenerimaSampelAnalisLab: el.val().nipPenerimaSampelAnalisLab,
-              penyeliaAnalis: el.val().penyeliaAnalis,
-              nipPenyeliaAnalis: el.val().nipPenyeliaAnalis,
-              petugasPengambilSampel: el.val().petugasPengambilSampel,
-              nipUser: el.val().nipUser,
-              // zItems: Object.keys(el.val().zItems).map((key) => el.val().zItems[key]),
-              zHasilUjiSampel: Object.keys(el.val().zItems).map((key) => el.val().zItems[key].hasilUjiSampel),
-              zJenisSampel: Object.keys(el.val().zItems).map((key) => el.val().zItems[key].jenisSampel),
-              zJumlahSampel: Object.keys(el.val().zItems).map((key) => el.val().zItems[key].jumlahSampel),
-              zKategoriSampel: Object.keys(el.val().zItems).map((key) => el.val().zItems[key].kategoriSample),
-              zMetodePengujianSampel: Object.keys(el.val().zItems).map((key) => el.val().zItems[key].metodePengujianSampel),
-              zRuangLingkupSampel: Object.keys(el.val().zItems).map((key) => el.val().zItems[key].ruangLingkupSampel),
-              zTargetPengujianSampel: Object.keys(el.val().zItems).map((key) => el.val().zItems[key].targetPengujianSampel),
-              zKondisiSampel: Object.keys(el.val().zItems).map((key) => el.val().zItems[key].kondisiSampel),
-              zKeteranganSampel: Object.keys(el.val().zItems).map((key) => el.val().zItems[key].keteranganSampel),
-            })
-          });
-          const c = [];
-          snap.forEach(el => {
-            c.push({
-              kodeUnikSampel: el.val().kodeUnikSampel,
-              tanggalMasukSampel: dateFnsFormat(new Date(el.val().tanggalMasukSampel), "dd MMM yyyy"),
-              nomorAgendaSurat: el.val().nomorAgendaSurat,
-              namaPemilikSampel: el.val().namaPemilikSampel,
-              asalTujuanSampel: el.val().asalTujuanSampel,
-              flagStatusProses: [el.val().flagStatusProses, el.val().flagActivity, el.val().keteranganPengujianDitolak],
+              // namaPemilikSampel: el.val().namaPemilikSampel,
+              // asalTujuanSampel: el.val().asalTujuanSampel,
+              flagStatusProses2: [el.val().flagStatusProses, el.val().flagActivity, el.val().keteranganPengujianDitolak],
               Detail: [el.val().idPermohonanUji, el.val()],
-              Report: [el.val().flagActivity, a],
+              Report: [el.val().flagActivity, el.val()],
               Action: [el.val().idPermohonanUji, el.val().flagActivityDetail],
             })
           });
-          // console.log(b)
+          // const b = [];
+          // snap.forEach(el => {
+          //   b.push({
+          //     // idPermohonanUji: el.val().idPermohonanUji,
+          //     // kodeUnikSampel: el.val().kodeUnikSampel,
+          //     tanggalMasukSampel: el.val().tanggalMasukSampel,
+          //     tanggalTerimaSampelAdminLab: el.val().tanggalTerimaSampelAdminLab,
+          //     tanggalUjiSampelAnalis: el.val().tanggalUjiSampelAnalis,
+          //     nomorAgendaSurat: el.val().nomorAgendaSurat,
+          //     namaPemilikSampel: el.val().namaPemilikSampel,
+          //     alamatPemilikSampel: el.val().alamatPemilikSampel,
+          //     asalTujuanSampel: el.val().asalTujuanSampel,
+          //     flagActivity: el.val().flagActivity,
+          //     flagActivityDetail: el.val().flagActivityDetail,
+          //     flagStatusProses: el.val().flagStatusProses,
+          //     unitPengujianSampel: el.val().unitPengujianSampel,
+          //     // kondisiSampel: el.val().kondisiSampel,
+          //     formLaporanKesimpulan: el.val().formLaporanKesimpulan,
+          //     formLaporanKeterangan: el.val().formLaporanKeterangan,
+          //     kodeUnikSampelAdminLab: el.val().kodeUnikSampelAdminLab,
+          //     // nomorAgendaSurat: el.val().nomorAgendaSurat,
+          //     // formLaporanKeterangan: el.val().formLaporanKeterangan,
+          //     // formLaporanKesimpulan: el.val().formLaporanKesimpulan,
+          //     keteranganPengujianDitolak: el.val().keteranganPengujianDitolak,
+          //     statusLaporanSPP: el.val().statusLaporanSPP,
+          //     manajerAdministrasiAdminLab: el.val().manajerAdministrasiAdminLab,
+          //     nipManajerAdministrasiAdminLab: el.val().nipManajerAdministrasiAdminLab,
+          //     manajerTeknisAdminLab: el.val().manajerTeknisAdminLab,
+          //     nipManajerTeknisAdminLab: el.val().nipManajerTeknisAdminLab,
+          //     penerimaSampelAdminLab: el.val().penerimaSampelAdminLab,
+          //     nipPenerimaSampelAdminLab: el.val().nipPenerimaSampelAdminLab,
+          //     penerimaSampelAnalisLab: el.val().penerimaSampelAnalisLab,
+          //     nipPenerimaSampelAnalisLab: el.val().nipPenerimaSampelAnalisLab,
+          //     penyeliaAnalis: el.val().penyeliaAnalis,
+          //     nipPenyeliaAnalis: el.val().nipPenyeliaAnalis,
+          //     petugasPengambilSampel: el.val().petugasPengambilSampel,
+          //     nipUser: el.val().nipUser,
+          //     // zItems: Object.keys(el.val().zItems).map((key) => el.val().zItems[key]),
+          //     zHasilUjiSampel: Object.keys(el.val().zItems).map((key) => el.val().zItems[key].hasilUjiSampel),
+          //     zJenisSampel: Object.keys(el.val().zItems).map((key) => el.val().zItems[key].jenisSampel),
+          //     zJumlahSampel: Object.keys(el.val().zItems).map((key) => el.val().zItems[key].jumlahSampel),
+          //     zKategoriSampel: Object.keys(el.val().zItems).map((key) => el.val().zItems[key].kategoriSample),
+          //     zMetodePengujianSampel: Object.keys(el.val().zItems).map((key) => el.val().zItems[key].metodePengujianSampel),
+          //     zRuangLingkupSampel: Object.keys(el.val().zItems).map((key) => el.val().zItems[key].ruangLingkupSampel),
+          //     zTargetPengujianSampel: Object.keys(el.val().zItems).map((key) => el.val().zItems[key].targetPengujianSampel),
+          //     zKondisiSampel: Object.keys(el.val().zItems).map((key) => el.val().zItems[key].kondisiSampel),
+          //     zKeteranganSampel: Object.keys(el.val().zItems).map((key) => el.val().zItems[key].keteranganSampel),
+          //   })
+          // });
           this.setState({
             items: a,
-            itemsB: b,
-            itemsC: c,
+            // itemsB: b,
             loading: false,
           });
         } else {
@@ -223,6 +219,7 @@ class SampelAllBase extends Component {
       label: 'Tanggal Masuk Sampel',
       options: {
         filter: true,
+        sortDirection: 'desc',
         customBodyRender: (value, tableMeta, updateValue) => {
           return (
             <Text>{dateFnsFormat(new Date(value), "dd MMM yyyy")}</Text>
@@ -246,7 +243,7 @@ class SampelAllBase extends Component {
       options: { filter: false }
     },
     {
-      name: "flagStatusProses",
+      name: "flagStatusProses2",
       label: 'Status',
       options: {
         filter: true,
@@ -314,35 +311,156 @@ class SampelAllBase extends Component {
   ]
   options = {
     filterType: 'dropdown',
-    rowsPerPage: 20,
+    rowsPerPage: 5,
     selectableRows: false,
     download: false,
     print: false,
+    // customSort: (data, colIndex, order) => {
+    //   return data.sort((a, b) => {
+    //     return (a.data[colIndex].length < b.data[colIndex].length ? -1: 1 ) * (order === 'desc' ? 1 : -1);
+    //   });
+    // }
+  };
+
+  onChange = name => event => {
+    // console.log(event.target.value)
+    this.setState({
+      [name]: event.target.value,
+    });
+    if (name === 'selectBulan') {
+      this.proses(event.target.value)
+    }
+  };
+
+  proses = (a) => {
+    this.props.firebase.db.ref(`samples`)
+      .orderByChild('bulanMasukSampel').equalTo(a)
+      .once('value', snap => {
+        // console.log('snap', snap.val())
+        if (snap.val()) {
+          const b = [];
+          snap.forEach(el => {
+            b.push({
+              // idPermohonanUji: el.val().idPermohonanUji,
+              // kodeUnikSampel: el.val().kodeUnikSampel,
+              tanggalMasukSampel: el.val().tanggalMasukSampel,
+              tanggalTerimaSampelAdminLab: el.val().tanggalTerimaSampelAdminLab,
+              tanggalUjiSampelAnalis: el.val().tanggalUjiSampelAnalis,
+              nomorAgendaSurat: el.val().nomorAgendaSurat,
+              namaPemilikSampel: el.val().namaPemilikSampel,
+              alamatPemilikSampel: el.val().alamatPemilikSampel,
+              asalTujuanSampel: el.val().asalTujuanSampel,
+              flagActivity: el.val().flagActivity,
+              flagActivityDetail: el.val().flagActivityDetail,
+              flagStatusProses: el.val().flagStatusProses,
+              unitPengujianSampel: el.val().unitPengujianSampel,
+              // kondisiSampel: el.val().kondisiSampel,
+              formLaporanKesimpulan: el.val().formLaporanKesimpulan,
+              formLaporanKeterangan: el.val().formLaporanKeterangan,
+              kodeUnikSampelAdminLab: el.val().kodeUnikSampelAdminLab,
+              // nomorAgendaSurat: el.val().nomorAgendaSurat,
+              // formLaporanKeterangan: el.val().formLaporanKeterangan,
+              // formLaporanKesimpulan: el.val().formLaporanKesimpulan,
+              keteranganPengujianDitolak: el.val().keteranganPengujianDitolak,
+              statusLaporanSPP: el.val().statusLaporanSPP,
+              manajerAdministrasiAdminLab: el.val().manajerAdministrasiAdminLab,
+              nipManajerAdministrasiAdminLab: el.val().nipManajerAdministrasiAdminLab,
+              manajerTeknisAdminLab: el.val().manajerTeknisAdminLab,
+              nipManajerTeknisAdminLab: el.val().nipManajerTeknisAdminLab,
+              penerimaSampelAdminLab: el.val().penerimaSampelAdminLab,
+              nipPenerimaSampelAdminLab: el.val().nipPenerimaSampelAdminLab,
+              penerimaSampelAnalisLab: el.val().penerimaSampelAnalisLab,
+              nipPenerimaSampelAnalisLab: el.val().nipPenerimaSampelAnalisLab,
+              penyeliaAnalis: el.val().penyeliaAnalis,
+              nipPenyeliaAnalis: el.val().nipPenyeliaAnalis,
+              petugasPengambilSampel: el.val().petugasPengambilSampel,
+              nipUser: el.val().nipUser,
+              // zItems: Object.keys(el.val().zItems).map((key) => el.val().zItems[key]),
+              zHasilUjiSampel: Object.keys(el.val().zItems).map((key) => el.val().zItems[key].hasilUjiSampel),
+              zJenisSampel: Object.keys(el.val().zItems).map((key) => el.val().zItems[key].jenisSampel),
+              zJumlahSampel: Object.keys(el.val().zItems).map((key) => el.val().zItems[key].jumlahSampel),
+              zKategoriSampel: Object.keys(el.val().zItems).map((key) => el.val().zItems[key].kategoriSample),
+              zMetodePengujianSampel: Object.keys(el.val().zItems).map((key) => el.val().zItems[key].metodePengujianSampel),
+              zRuangLingkupSampel: Object.keys(el.val().zItems).map((key) => el.val().zItems[key].ruangLingkupSampel),
+              zTargetPengujianSampel: Object.keys(el.val().zItems).map((key) => el.val().zItems[key].targetPengujianSampel),
+              zKondisiSampel: Object.keys(el.val().zItems).map((key) => el.val().zItems[key].kondisiSampel),
+              zKeteranganSampel: Object.keys(el.val().zItems).map((key) => el.val().zItems[key].keteranganSampel),
+            })
+          });
+          this.setState({
+            itemsB: b,
+            loading: false,
+          });
+        } else {
+          this.setState({
+            itemsB: null,
+            loading: false,
+          });
+        }
+      })
+    console.log(this.state.itemsB)
+  }
+
+  exportFile = () => {
+    if (this.state.itemsB !== null) {
+      const ws = XLSX.utils.json_to_sheet(this.state.itemsB);
+      const wb = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(wb, ws, "master data");
+      XLSX.writeFile(wb, "Simlab2019.xlsx")
+    }
   };
 
   render() {
-    const { items, loading } = this.state;
+    const { items, loading, selectBulan } = this.state;
     return (
       <AuthUserContext.Consumer>
         {authUser => (
           <div>
             {loading ? <Typography>Loading...</Typography> :
               <div>
-                {/* <Button variant="outlined" color="primary" onClick={() => this.exportToCSV(this.state.itemsB, '1')}>
-                  Export Excel
-                </Button> */}
-                {/* <Button onClick={this.exToCsv}>Tes</Button> */}
-                {/* <Button variant="outlined">
-                  <CSVLink data={this.state.itemsB}
-                    filename={"CSV_.csv"}
-                  >
-                    Download CSV/Excel
-                  </CSVLink>
-                </Button> */}
+                <div style={{ marginBottom: 25 }}>
+                  <Grid container spacing={24}>
+                    <Grid item xs={12}
+                      container
+                      direction="row"
+                      justify="flex-start"
+                      alignItems="bottom"
+                    >
+                      <FormControl variant="standard">
+                        <InputLabel htmlFor="selectBulan">Bulan</InputLabel>{" "}
+                        <Select
+                          value={selectBulan}
+                          onChange={this.onChange('selectBulan')}
+                          style={{ width: 200 }}
+                          name="selectBulan"
+                        >
+                          <MenuItem key={1} value={1}>Januari</MenuItem>
+                          <MenuItem key={2} value={2}>Februari</MenuItem>
+                          <MenuItem key={3} value={3}>Maret</MenuItem>
+                          <MenuItem key={4} value={4}>April</MenuItem>
+                          <MenuItem key={5} value={5}>Mei</MenuItem>
+                          <MenuItem key={6} value={6}>Juni</MenuItem>
+                          <MenuItem key={7} value={7}>Juli</MenuItem>
+                          <MenuItem key={8} value={8}>Agustus</MenuItem>
+                          <MenuItem key={9} value={9}>September</MenuItem>
+                          <MenuItem key={10} value={10}>Oktober</MenuItem>
+                          <MenuItem key={11} value={11}>November</MenuItem>
+                          <MenuItem key={12} value={12}>Desember</MenuItem>
+                        </Select>
+                      </FormControl>
+                      <div style={{ width: 5 }} />
+                      <Button variant="outlined" color="primary" onClick={this.exportFile}
+                        disabled={this.state.itemsB === null ? true : false}
+                      >
+                        Export Excel
+                      </Button>
+                    </Grid>
+                  </Grid>
+                </div>
 
                 <MUIDataTable
                   // title={"Daftar Sampel"}
-                  data={this.state.itemsC ? this.state.itemsC : this.state.itemsZ}
+                  data={items ? items : this.state.itemsZ}
                   columns={this.columns}
                   options={this.options}
                 />
@@ -591,7 +709,7 @@ class SampelDetailBase extends Component {
 
   handleEditKodeUnik = () => {
     this.setState({ openAlertKodeUnik: false });
-    
+
     this.props.firebase.db.ref('samples/' + this.state.idPermohonanUji).update({
       kodeUnikSampelAdminLab: this.state.kodeUnikSampelAdminLab,
     })
@@ -1240,7 +1358,7 @@ const styles = StyleSheet.create({
   footerRow200: {
     position: 'absolute',
     bottom: 200,
-    marginHorizontal: '20%',
+    marginHorizontal: '15%',
   },
   footerRow2: {
     flexDirection: 'row',
@@ -1384,6 +1502,7 @@ const PDFLHU = (p) => {
       </View>
       <View style={styles.headerRowCenter}>
         <Text style={styles.headerTitle16}>LAPORAN HASIL UJI SEROLOGI</Text>
+        <Text style={styles.headerTitle10}>Nomor : {p.q.nomorAgendaSurat} {'   '}Tanggal : {dateFnsFormat(new Date(p.q.tanggalMasukSampel), "dd MMM yyyy")}</Text>
       </View>
       <View style={[styles.marginV10, styles.marginL20]}>
         <Text style={styles.headerTitle11}>Laporan / Sertifikat ini diberikan kepada :</Text>

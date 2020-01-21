@@ -154,10 +154,11 @@ class SampelAllBase extends Component {
 
   columns = [
     {
-      name: "tanggalMasukSampelz",
+      name: "tanggalMasukSampel",
       label: 'Tanggal Masuk Sampel',
       options: {
         filter: true,
+        sortDirection: 'desc',
         customBodyRender: (value, tableMeta, updateValue) => {
           return (
             <Text>{dateFnsFormat(new Date(value), "dd MMM yyyy")}</Text>
@@ -233,16 +234,17 @@ class SampelAllBase extends Component {
         customBodyRender: (value) => {
           return (
             <Text>
-              {value[0] === 'Laporan Hasil Uji di Admin Lab' ?
+              {value[0] === 'Laporan Hasil Uji di Admin Lab' &&
                 <PDFDownloadLink document={<PDFLHU q={value[1]} />} fileName="Laporan-Hasil-Uji.pdf">
                   {({ blob, url, loading, error }) => (loading ? 'Loading pdf...' : 'Download Laporan Hasil Uji')}
                 </PDFDownloadLink>
-                :
+              }
+              {value[0] !== 'Laporan Hasil Uji di Admin Lab' &&
                 <PDFDownloadLink document={<Quixote q={value[1]} />} fileName="permohonan-pengujian.pdf">
                   {({ blob, url, loading, error }) => (loading ? 'Loading pdf...' : 'Download Permohonan Pengujian')}
                 </PDFDownloadLink>
 
-              }
+              } 
             </Text>
           )
         }
@@ -266,8 +268,8 @@ class SampelAllBase extends Component {
   ]
   options = {
     filterType: 'dropdown',
-    rowsPerPage: 20,
-    selectableRows: false,
+    rowsPerPage: 5,
+    selectableRows: 'none',
     download: false,
     print: false,
     // customSort: (data, colIndex, order) => {
