@@ -538,12 +538,14 @@ class SampelDetailBase extends Component {
       open2: false,
       openAlert: false,
       openAlertKodeUnik: false,
+      openAlertNomorAgenda: false,
       ...props.location.state,
       idPermohonanUji: '',
       kodeUnikSampel: '',
       tanggalMasukSampel: '',
       kodeUnikSampelAdminLab: '',
       nomorAgendaSurat: '',
+      nomorLhu: '',
       namaPemilikSampel: '',
       alamatPemilikSampel: '',
       asalTujuanSampel: '',
@@ -585,6 +587,7 @@ class SampelDetailBase extends Component {
             kodeUnikSampel: snap.val().kodeUnikSampel,
             tanggalMasukSampel: snap.val().tanggalMasukSampel,
             nomorAgendaSurat: snap.val().nomorAgendaSurat,
+            nomorLhu: snap.val().nomorLhu,
             namaPemilikSampel: snap.val().namaPemilikSampel,
             alamatPemilikSampel: snap.val().alamatPemilikSampel,
             asalTujuanSampel: snap.val().asalTujuanSampel,
@@ -690,6 +693,14 @@ class SampelDetailBase extends Component {
     this.setState({ openAlertKodeUnik: false });
   };
 
+  handleOpenAlertNomorLhu = () => {
+    this.setState({ openAlertNomorLhu: true });
+  };
+
+  handleCloseAlertNomorLhu = () => {
+    this.setState({ openAlertNomorLhu: false });
+  };
+
   handleLanjutPengujian = () => {
     this.props.firebase.db.ref('samples/' + this.state.idPermohonanUji).update({
       flagActivityDetail: 'Lanjut Pengujian',
@@ -715,11 +726,20 @@ class SampelDetailBase extends Component {
     })
   };
 
+  handleEditNomorLhu = () => {
+    this.setState({ openAlertNomorLhu: false });
+
+    this.props.firebase.db.ref('samples/' + this.state.idPermohonanUji).update({
+      nomorLhu: this.state.nomorLhu,
+    })
+  };
+
   handleSubmit = () => {
     this.setState({ open: false, loadingReport: false });
     this.props.firebase.db.ref('samples/' + this.state.idPermohonanUji).update({
       tanggalTerimaSampelAdminLab: this.state.tanggalTerimaSampelAdminLab.toString(),   //=== undefined ? dateFnsFormat(new Date(), "dd MMM yyyy") : this.state.tanggalTerimaSampelAdminLab.toString(),
       kodeUnikSampelAdminLab: this.state.kodeUnikSampelAdminLab,
+      nomorLhu: this.state.nomorLhu,
       penerimaSampelAdminLab: this.state.penerimaSampelAdminLab,
       manajerAdministrasiAdminLab: this.state.manajerAdministrasiAdminLab,
       manajerTeknisAdminLab: this.state.manajerTeknisAdminLab,
@@ -838,13 +858,13 @@ class SampelDetailBase extends Component {
       penerimaSampelAdminLab, manajerTeknisAdminLab, manajerAdministrasiAdminLab, penerimaSampelAnalisLab,
       selectUserformAdminLab, selectUserformManajerAdministrasi, selectUserformManajerTeknis, selectUserformAnalis,
       // selectNipUserformAdminLab, selectNipUserformManajerAdministrasi, selectNipUserformManajerTeknis, selectNipUserformAnalis,
-      statusLaporanSPP, loadingReport, keteranganPengujianDitolak,
-      openAlert, openAlertKodeUnik,
+      statusLaporanSPP, loadingReport, keteranganPengujianDitolak, nomorAgendaSurat,
+      openAlert, openAlertKodeUnik, openAlertNomorAgenda, nomorLhu,
     } = this.state;
     const isInvalid = tanggalTerimaSampelAdminLab === '' || PenerimaSampelAdminLab === '' || ManajerTeknisAdminLab === '' ||
-      ManajerAdministrasiAdminLab === '' || kodeUnikSampelAdminLab === '' || kodeUnikSampelAdminLab.length < 20;
+      ManajerAdministrasiAdminLab === '' || kodeUnikSampelAdminLab === '' || kodeUnikSampelAdminLab.length < 20 || nomorLhu === '' ;
     const isInvalid2 = unitPengujianSampel === '';
-    console.log(this.state)
+    // console.log(this.state)
 
     return (
       <div>
@@ -883,7 +903,8 @@ class SampelDetailBase extends Component {
                 <Typography variant="subtitle1" gutterBottom>Petugas Pengambil Sampel (PPC) : {el.petugasPengambilSampel}</Typography>
                 <Typography variant="subtitle1" gutterBottom>Unit Pengujian Sampel : {el.unitPengujianSampel}</Typography>
                 <Typography variant="subtitle1" gutterBottom>
-                  <Button variant='contained' onClick={this.handleOpenAlertKodeUnik}>Kode Unik Sampel AdminLab : {el.kodeUnikSampelAdminLab}</Button>
+                  {/* <Button variant='contained' onClick={this.handleOpenAlertNomorAgenda}>Edit Nomor Agenda : {el.nomorAgendaSurat}</Button> {'  '} */}
+                  <Button variant='contained' onClick={this.handleOpenAlertKodeUnik}>Edit Kode Unik Sampel AdminLab : {el.kodeUnikSampelAdminLab}</Button>
                 </Typography>
 
                 <Table>
@@ -942,7 +963,14 @@ class SampelDetailBase extends Component {
                     format={'dd MMM yyyy'}
                     onChange={this.handleDateChange} />
                 </MuiPickersUtilsProvider>
-
+                <TextField
+                  id="nomorLhu"
+                  value={nomorLhu}
+                  label="Nomor LHU"
+                  style={{ width: "100%", marginBottom: 20 }}
+                  variant="outlined"
+                  onChange={this.onChange}
+                />
                 <TextField
                   id="kodeUnikSampelAdminLab"
                   value={kodeUnikSampelAdminLab}
@@ -1151,6 +1179,36 @@ class SampelDetailBase extends Component {
                   Batal
                 </Button>
                 <Button variant="contained" onClick={this.handleEditKodeUnik} color="primary" autoFocus>
+                  OK
+                </Button>
+              </DialogActions>
+            </Dialog>
+            <Dialog
+              open={openAlertNomorAgenda}
+              onClose={this.handleCloseAlertNomorAgenda}
+              aria-labelledby="alert-dialog-title"
+              aria-describedby="alert-dialog-description"
+              maxWidth={'sm'}
+              fullWidth={true}
+            >
+              <DialogTitle id="alert-dialog-title">{'Edit Nomor Agenda'}</DialogTitle>
+              <DialogContent>
+                <DialogContentText id="alert-dialog-description">
+                  <TextField
+                    id="nomorAgendaSurat"
+                    value={nomorAgendaSurat}
+                    label="Nomor Agenda"
+                    style={{ width: "100%", marginBottom: 20, marginTop: 20 }}
+                    variant="outlined"
+                    onChange={this.onChange}
+                  />
+                </DialogContentText>
+              </DialogContent>
+              <DialogActions>
+                <Button onClick={this.handleCloseAlertNomorAgenda}>
+                  Batal
+                </Button>
+                <Button variant="contained" onClick={this.handleEditNomorAgenda} color="primary" autoFocus>
                   OK
                 </Button>
               </DialogActions>
@@ -1502,7 +1560,7 @@ const PDFLHU = (p) => {
       </View>
       <View style={styles.headerRowCenter}>
         <Text style={styles.headerTitle16}>LAPORAN HASIL UJI SEROLOGI</Text>
-        <Text style={styles.headerTitle10}>Nomor : {p.q.nomorAgendaSurat} {'   '}Tanggal : {dateFnsFormat(new Date(p.q.tanggalMasukSampel), "dd MMM yyyy")}</Text>
+        <Text style={styles.headerTitle10}>Nomor : {p.q.nomorLhu} {'   '}Tanggal : {dateFnsFormat(new Date(p.q.tanggalTerimaSampelAdminLab), "dd MMM yyyy")}</Text>
       </View>
       <View style={[styles.marginV10, styles.marginL20]}>
         <Text style={styles.headerTitle11}>Laporan / Sertifikat ini diberikan kepada :</Text>
@@ -1567,6 +1625,15 @@ const PDFLHU = (p) => {
             </View>
             <View style={styles.tableCol15}>
               <Text style={styles.tableCell}>{p.q.zItems[el1].hasilUjiSampel}</Text>
+              {!!p.q.zItems[el1].hasilUjiSampelBaris2 && <Text style={styles.tableCell}>{p.q.zItems[el1].hasilUjiSampelBaris2}</Text> }
+              {!!p.q.zItems[el1].hasilUjiSampelBaris3 && <Text style={styles.tableCell}>{p.q.zItems[el1].hasilUjiSampelBaris3}</Text> }
+              {!!p.q.zItems[el1].hasilUjiSampelBaris4 && <Text style={styles.tableCell}>{p.q.zItems[el1].hasilUjiSampelBaris4}</Text> }
+              {!!p.q.zItems[el1].hasilUjiSampelBaris5 && <Text style={styles.tableCell}>{p.q.zItems[el1].hasilUjiSampelBaris5}</Text> }
+              {!!p.q.zItems[el1].hasilUjiSampelBaris6 && <Text style={styles.tableCell}>{p.q.zItems[el1].hasilUjiSampelBaris6}</Text> }
+              {!!p.q.zItems[el1].hasilUjiSampelBaris7 && <Text style={styles.tableCell}>{p.q.zItems[el1].hasilUjiSampelBaris7}</Text> }
+              {!!p.q.zItems[el1].hasilUjiSampelBaris8 && <Text style={styles.tableCell}>{p.q.zItems[el1].hasilUjiSampelBaris8}</Text> }
+              {!!p.q.zItems[el1].hasilUjiSampelBaris9 && <Text style={styles.tableCell}>{p.q.zItems[el1].hasilUjiSampelBaris9}</Text> }
+              {!!p.q.zItems[el1].hasilUjiSampelBaris10 && <Text style={styles.tableCell}>{p.q.zItems[el1].hasilUjiSampelBaris10}</Text> }
             </View>
             <View style={styles.tableCol20}>
               <Text style={styles.tableCell}>{p.q.zItems[el1].keteranganSampel}</Text>

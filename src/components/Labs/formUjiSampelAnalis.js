@@ -225,6 +225,15 @@ class SampelDetailBase extends Component {
       metodePemeriksaanSampel: '',
       targetPengujianSampel: '',
       hasilUjiSampel: '',
+      hasilUjiSampelBaris2: '',
+      hasilUjiSampelBaris3: '',
+      hasilUjiSampelBaris4: '',
+      hasilUjiSampelBaris5: '',
+      hasilUjiSampelBaris6: '',
+      hasilUjiSampelBaris7: '',
+      hasilUjiSampelBaris8: '',
+      hasilUjiSampelBaris9: '',
+      hasilUjiSampelBaris10: '',
       keteranganSampel: '',
       selectMetodePemeriksaanSampel: '',
       selectTargetPengujianSampel: '',
@@ -326,298 +335,318 @@ class SampelDetailBase extends Component {
     })
     this.props.firebase.db.ref('samples/' + this.state.thisP + '/zItems/' + this.state.thisQ).update({
       hasilUjiSampel: this.state.hasilUjiSampel,
+      hasilUjiSampelBaris2: this.state.hasilUjiSampelBaris2,
+      hasilUjiSampelBaris3: this.state.hasilUjiSampelBaris3,
+      hasilUjiSampelBaris4: this.state.hasilUjiSampelBaris4,
+      hasilUjiSampelBaris5: this.state.hasilUjiSampelBaris5,
+      hasilUjiSampelBaris6: this.state.hasilUjiSampelBaris6,
+      hasilUjiSampelBaris7: this.state.hasilUjiSampelBaris7,
+      hasilUjiSampelBaris8: this.state.hasilUjiSampelBaris8,
+      hasilUjiSampelBaris9: this.state.hasilUjiSampelBaris9,
+      hasilUjiSampelBaris10: this.state.hasilUjiSampelBaris10,
       keteranganSampel: this.state.keteranganSampel,
     })
 
     this.setState({
       hasilUjiSampel: '',
+      hasilUjiSampelBaris2: '',
+      hasilUjiSampelBaris3: '',
+      hasilUjiSampelBaris4: '',
+      hasilUjiSampelBaris5: '',
+      hasilUjiSampelBaris6: '',
+      hasilUjiSampelBaris7: '',
+      hasilUjiSampelBaris8: '',
+      hasilUjiSampelBaris9: '',
+      hasilUjiSampelBaris10: '',
       keteranganSampel: '',
     })
-    this.props.firebase.db.ref('samples/' + this.state.thisP + '/zItems/' + this.state.thisQ + '/bahan')
-      .once('value', snap => {
-        const a = [];
-        snap.forEach(el => {
-          a.push(el.val())
-        })
-        console.log(this.state.thisP, this.state.thisQ)
-        // TPC
-        if (this.state.thisR === 'TPC') {
-          this.props.firebase.db.ref('bahanAlatTerpakai')
-            .orderByChild('pengujian')
-            .equalTo('TPC')
-            .once('value', snap1 => {
-              if (snap1.val()) {
-                // update data
-                const b = [];
-                snap1.forEach(el => {
-                  b.push(el.val())
-                });
-                const c = []
-                c.push(JSON.parse(b[0].item))
-                const d = {}
-                d['AQUADEST'] = parseInt(a[0].AQUADEST, 10) + parseInt(c[0].AQUADEST, 10)
-                d['BPW'] = parseInt(a[0].BPW, 10) + parseInt(c[0].BPW, 10)
-                d['CAWAN_PETRI'] = parseInt(a[0].CAWAN_PETRI, 10) + parseInt(c[0].CAWAN_PETRI, 10)
-                d['COLONY_COUNTER'] = parseInt(a[0].COLONY_COUNTER, 10) + parseInt(c[0].COLONY_COUNTER, 10)
-                d['FINTIPP'] = parseInt(a[0].FINTIPP, 10) + parseInt(c[0].FINTIPP, 10)
-                d['HOT_PLATE_STIRER'] = parseInt(a[0].HOT_PLATE_STIRER, 10) + parseInt(c[0].HOT_PLATE_STIRER, 10)
-                d['INKUBATOR'] = parseInt(a[0].INKUBATOR, 10) + parseInt(c[0].INKUBATOR, 10)
-                d['KERTAS_TIMBANG'] = parseInt(a[0].KERTAS_TIMBANG, 10) + parseInt(c[0].KERTAS_TIMBANG, 10)
-                d['LAMINAR_AIRFLOW'] = parseInt(a[0].LAMINAR_AIRFLOW, 10) + parseInt(c[0].LAMINAR_AIRFLOW, 10)
-                d['MICROWAVE'] = parseInt(a[0].MICROWAVE, 10) + parseInt(c[0].MICROWAVE, 10)
-                d['PCA'] = parseInt(a[0].PCA, 10) + parseInt(c[0].PCA, 10)
-                d['PH_METER'] = parseInt(a[0].PH_METER, 10) + parseInt(c[0].PH_METER, 10)
-                d['PLASTIK_SAMPEL'] = parseInt(a[0].PLASTIK_SAMPEL, 10) + parseInt(c[0].PLASTIK_SAMPEL, 10)
-                d['PLASTIK_STOMACHER'] = parseInt(a[0].PLASTIK_STOMACHER, 10) + parseInt(c[0].PLASTIK_STOMACHER, 10)
-                d['SCALPEL'] = parseInt(a[0].SCALPEL, 10) + parseInt(c[0].SCALPEL, 10)
-                d['STOMACHER'] = parseInt(a[0].STOMACHER, 10) + parseInt(c[0].STOMACHER, 10)
-                d['TABUNG_REAKSI'] = parseInt(a[0].TABUNG_REAKSI, 10) + parseInt(c[0].TABUNG_REAKSI, 10)
-                d['TIMBANGAN_ELEKTRIK'] = parseInt(a[0].TIMBANGAN_ELEKTRIK, 10) + parseInt(c[0].TIMBANGAN_ELEKTRIK, 10)
-                d['VORTEX'] = parseInt(a[0].VORTEX, 10) + parseInt(c[0].VORTEX, 10)
-                this.props.firebase.db.ref('bahanAlatTerpakai/' + Object.keys(snap1.val())[0]).update({
-                  item: JSON.stringify(d),
-                })
-              } else {
-                // new data
-                const z = this.props.firebase.db.ref('bahanAlatTerpakai').push();
-                delete a[0].idZItems
-                delete a[0].idPermohonanUji
-                delete a[0].pengujian
-                this.props.firebase.db.ref('bahanAlatTerpakai/' + z.key).update({
-                  item: JSON.stringify(a[0]),
-                  pengujian: 'TPC',
-                  tanggalSelesaiAnalisa: new Date(),
-                })
-              }
-            })
-        }
-        // RTK_SALMONELLA && SALMONELLA
-        if (this.state.thisR === 'RAPID TEST KIT' && this.state.thisS === 'Salmonella') {
-          this.props.firebase.db.ref('bahanAlatTerpakai')
-            .orderByChild('pengujian')
-            .equalTo('RTK_SALMONELLA')
-            .once('value', snap1 => {
-              if (snap1.val()) {
-                // update data
-                const b = [];
-                snap1.forEach(el => {
-                  b.push(el.val())
-                });
-                const c = []
-                c.push(JSON.parse(b[0].item))
-                const d = {}
-                d['AQUADEST'] = parseInt(a[0].AQUADEST, 10) + parseInt(c[0].AQUADEST, 10)
-                d['BPW'] = parseInt(a[0].BPW, 10) + parseInt(c[0].BPW, 10)
-                d['KIT_SALMONELLA'] = parseInt(a[0].KIT_SALMONELLA, 10) + parseInt(c[0].KIT_SALMONELLA, 10)
-                d['PLASTIK_STOMACHER'] = parseInt(a[0].PLASTIK_STOMACHER, 10) + parseInt(c[0].PLASTIK_STOMACHER, 10)
-                d['JUMLAH_FINTIPP'] = parseInt(a[0].JUMLAH_FINTIPP, 10) + parseInt(c[0].JUMLAH_FINTIPP, 10)
-                d['JUMLAH_SCALPEL'] = parseInt(a[0].JUMLAH_SCALPEL, 10) + parseInt(c[0].JUMLAH_SCALPEL, 10)
-                d['MIKROPIPETTE'] = parseInt(a[0].MIKROPIPETTE, 10) + parseInt(c[0].MIKROPIPETTE, 10)
-                d['TIMBANGAN_ELEKTRIK'] = parseInt(a[0].TIMBANGAN_ELEKTRIK, 10) + parseInt(c[0].TIMBANGAN_ELEKTRIK, 10)
-                d['STOMACHER'] = parseInt(a[0].STOMACHER, 10) + parseInt(c[0].STOMACHER, 10)
-                d['HOT_PLATE_STIRER'] = parseInt(a[0].HOT_PLATE_STIRER, 10) + parseInt(c[0].HOT_PLATE_STIRER, 10)
-                d['MICROWAVE'] = parseInt(a[0].MICROWAVE, 10) + parseInt(c[0].MICROWAVE, 10)
-                d['GELAS_UKUR'] = parseInt(a[0].GELAS_UKUR, 10) + parseInt(c[0].GELAS_UKUR, 10)
-                d['PH_METER'] = parseInt(a[0].PH_METER, 10) + parseInt(c[0].PH_METER, 10)
-                d['PINGSET'] = parseInt(a[0].PINGSET, 10) + parseInt(c[0].PINGSET, 10)
-                d['GUNTING'] = parseInt(a[0].GUNTING, 10) + parseInt(c[0].GUNTING, 10)
-                d['BUNSEN_SPIRTUS'] = parseInt(a[0].BUNSEN_SPIRTUS, 10) + parseInt(c[0].BUNSEN_SPIRTUS, 10)
-                this.props.firebase.db.ref('bahanAlatTerpakai/' + Object.keys(snap1.val())[0]).update({
-                  item: JSON.stringify(d),
-                })
-              } else {
-                // new data
-                delete a[0].idZItems
-                delete a[0].idPermohonanUji
-                delete a[0].pengujian
-                const z = this.props.firebase.db.ref('bahanAlatTerpakai').push();
-                this.props.firebase.db.ref('bahanAlatTerpakai/' + z.key).update({
-                  item: JSON.stringify(a[0]),
-                  pengujian: 'RTK_SALMONELLA',
-                  tanggalSelesaiAnalisa: new Date(),
-                })
-              }
-            })
-        }
-        // ELISA
-        if (this.state.thisR === 'ELISA BVD' || this.state.thisR === 'ELISA RABIES' || this.state.thisR === 'ELISA PARATB') {
-          this.props.firebase.db.ref('bahanAlatTerpakai')
-            .orderByChild('pengujian')
-            .equalTo('ELISA')
-            .once('value', snap1 => {
-              if (snap1.val()) {
-                // update data
-                const b = [];
-                snap1.forEach(el => {
-                  b.push(el.val())
-                });
-                const c = []
-                c.push(JSON.parse(b[0].item))
-                const d = {}
-                d['AQUADEST'] = parseInt(a[0].AQUADEST, 10) + parseInt(c[0].AQUADEST, 10)
-                d['ELISA_READER'] = parseInt(a[0].ELISA_READER, 10) + parseInt(c[0].ELISA_READER, 10)
-                d['INKUBATOR'] = parseInt(a[0].INKUBATOR, 10) + parseInt(c[0].INKUBATOR, 10)
-                d['KONJUGAT'] = parseInt(a[0].KONJUGAT, 10) + parseInt(c[0].KONJUGAT, 10)
-                d['K_NEG'] = parseInt(a[0].K_NEG, 10) + parseInt(c[0].K_NEG, 10)
-                d['K_POS'] = parseInt(a[0].K_POS, 10) + parseInt(c[0].K_POS, 10)
-                d['LAMINAR_AIRFLOW'] = parseInt(a[0].LAMINAR_AIRFLOW, 10) + parseInt(c[0].LAMINAR_AIRFLOW, 10)
-                d['PBS_TWEEN'] = parseInt(a[0].PBS_TWEEN, 10) + parseInt(c[0].PBS_TWEEN, 10)
-                d['STOP_SOLUTION'] = parseInt(a[0].STOP_SOLUTION, 10) + parseInt(c[0].STOP_SOLUTION, 10)
-                d['ST_1_EU'] = parseInt(a[0].ST_1_EU, 10) + parseInt(c[0].ST_1_EU, 10)
-                d['SUBSTRAK'] = parseInt(a[0].SUBSTRAK, 10) + parseInt(c[0].SUBSTRAK, 10)
-                d['PH_METER'] = parseInt(a[0].PH_METER, 10) + parseInt(c[0].PH_METER, 10)
-                d['VORTEX'] = parseInt(a[0].VORTEX, 10) + parseInt(c[0].VORTEX, 10)
-                this.props.firebase.db.ref('bahanAlatTerpakai/' + Object.keys(snap1.val())[0]).update({
-                  item: JSON.stringify(d),
-                })
-              } else {
-                // new data
-                const z = this.props.firebase.db.ref('bahanAlatTerpakai').push();
-                this.props.firebase.db.ref('bahanAlatTerpakai/' + z.key).update({
-                  item: JSON.stringify(a[0]),
-                  pengujian: 'ELISA',
-                  tanggalSelesaiAnalisa: new Date(),
-                })
-              }
-            })
-        }
-        // RT_PCR
-        if (this.state.thisR === 'RT-PCR') {
-          this.props.firebase.db.ref('bahanAlatTerpakai')
-            .orderByChild('pengujian')
-            .equalTo('RT_PCR')
-            .once('value', snap1 => {
-              if (snap1.val()) {
-                // update data
-                const b = [];
-                snap1.forEach(el => {
-                  b.push(el.val())
-                });
-                const c = []
-                c.push(JSON.parse(b[0].item))
-                const d = {}
-                d['RNASE_FREE_WATER'] = parseInt(a[0].RNASE_FREE_WATER, 10) + parseInt(c[0].RNASE_FREE_WATER, 10)
-                d['QUANTITECT_PROB_RT_PCR_MASTER_MIX'] = parseInt(a[0].QUANTITECT_PROB_RT_PCR_MASTER_MIX, 10) + parseInt(c[0].QUANTITECT_PROB_RT_PCR_MASTER_MIX, 10)
-                d['PRIMER_AL_F'] = parseInt(a[0].PRIMER_AL_F, 10) + parseInt(c[0].PRIMER_AL_F, 10)
-                d['PRIMER_AL_R'] = parseInt(a[0].PRIMER_AL_R, 10) + parseInt(c[0].PRIMER_AL_R, 10)
-                d['PROB_AL'] = parseInt(a[0].PROB_AL, 10) + parseInt(c[0].PROB_AL, 10)
-                d['QUANTITECH_RT_MIX'] = parseInt(a[0].QUANTITECH_RT_MIX, 10) + parseInt(c[0].QUANTITECH_RT_MIX, 10)
-                d['RNA_AVE'] = parseInt(a[0].RNA_AVE, 10) + parseInt(c[0].RNA_AVE, 10)
-                d['BUFFER_AVL'] = parseInt(a[0].BUFFER_AVL, 10) + parseInt(c[0].BUFFER_AVL, 10)
-                d['BUFFER_AW1'] = parseInt(a[0].BUFFER_AW1, 10) + parseInt(c[0].BUFFER_AW1, 10)
-                d['BUFFER_AW2'] = parseInt(a[0].BUFFER_AW2, 10) + parseInt(c[0].BUFFER_AW2, 10)
-                d['BUFFER_AVE'] = parseInt(a[0].BUFFER_AVE, 10) + parseInt(c[0].BUFFER_AVE, 10)
-                d['ETHANOL_96_100'] = parseInt(a[0].ETHANOL_96_100, 10) + parseInt(c[0].ETHANOL_96_100, 10)
-                d['TUBE_2ML'] = parseInt(a[0].TUBE_2ML, 10) + parseInt(c[0].TUBE_2ML, 10)
-                d['QIACUBE'] = parseInt(a[0].QIACUBE, 10) + parseInt(c[0].QIACUBE, 10)
-                d['FINTIPP'] = parseInt(a[0].FINTIPP, 10) + parseInt(c[0].FINTIPP, 10)
-                d['MIKROPIPETTE_100UL'] = parseInt(a[0].MIKROPIPETTE_100UL, 10) + parseInt(c[0].MIKROPIPETTE_100UL, 10)
-                d['MIKROPIPETTE_10UL'] = parseInt(a[0].MIKROPIPETTE_10UL, 10) + parseInt(c[0].MIKROPIPETTE_10UL, 10)
-                d['SPIN_DOWN'] = parseInt(a[0].SPIN_DOWN, 10) + parseInt(c[0].SPIN_DOWN, 10)
-                d['VORTEX'] = parseInt(a[0].VORTEX, 10) + parseInt(c[0].VORTEX, 10)
-                d['SENTRIFUGE'] = parseInt(a[0].SENTRIFUGE, 10) + parseInt(c[0].SENTRIFUGE, 10)
-                d['PCR_HOOD'] = parseInt(a[0].PCR_HOOD, 10) + parseInt(c[0].PCR_HOOD, 10)
-                d['ROTOR_GENE_Q'] = parseInt(a[0].ROTOR_GENE_Q, 10) + parseInt(c[0].ROTOR_GENE_Q, 10)
-                this.props.firebase.db.ref('bahanAlatTerpakai/' + Object.keys(snap1.val())[0]).update({
-                  item: JSON.stringify(d),
-                })
-              } else {
-                // new data
-                const z = this.props.firebase.db.ref('bahanAlatTerpakai').push();
-                this.props.firebase.db.ref('bahanAlatTerpakai/' + z.key).update({
-                  item: JSON.stringify(a[0]),
-                  pengujian: 'RT_PCR',
-                  tanggalSelesaiAnalisa: new Date(),
-                })
-              }
-            })
-        }
-        // RTK_ECOLI && ECOLI
-        if (this.state.thisR === 'RAPID TEST KIT' && this.state.thisS === 'E. Coli') {
-          this.props.firebase.db.ref('bahanAlatTerpakai')
-            .orderByChild('pengujian')
-            .equalTo('RTK_ECOLI')
-            .once('value', snap1 => {
-              if (snap1.val()) {
-                // update data
-                const b = [];
-                snap1.forEach(el => {
-                  b.push(el.val())
-                });
-                const c = []
-                c.push(JSON.parse(b[0].item))
-                const d = {}
-                d['AQUADEST'] = parseInt(a[0].AQUADEST, 10) + parseInt(c[0].AQUADEST, 10)
-                d['BPW'] = parseInt(a[0].BPW, 10) + parseInt(c[0].BPW, 10)
-                d['KIT_ECOLI'] = parseInt(a[0].KIT_ECOLI, 10) + parseInt(c[0].KIT_ECOLI, 10)
-                d['PLASTIK_STOMACHER'] = parseInt(a[0].PLASTIK_STOMACHER, 10) + parseInt(c[0].PLASTIK_STOMACHER, 10)
-                d['JUMLAH_FINTIPP'] = parseInt(a[0].JUMLAH_FINTIPP, 10) + parseInt(c[0].JUMLAH_FINTIPP, 10)
-                d['JUMLAH_SCALPEL'] = parseInt(a[0].JUMLAH_SCALPEL, 10) + parseInt(c[0].JUMLAH_SCALPEL, 10)
-                d['MIKROPIPETTE_100UL'] = parseInt(a[0].MIKROPIPETTE_100UL, 10) + parseInt(c[0].MIKROPIPETTE_100UL, 10)
-                d['TIMBANGAN_ELEKTRIK'] = parseInt(a[0].TIMBANGAN_ELEKTRIK, 10) + parseInt(c[0].TIMBANGAN_ELEKTRIK, 10)
-                d['STOMACHER'] = parseInt(a[0].STOMACHER, 10) + parseInt(c[0].STOMACHER, 10)
-                d['HOT_PLATE_STIRER'] = parseInt(a[0].HOT_PLATE_STIRER, 10) + parseInt(c[0].HOT_PLATE_STIRER, 10)
-                d['MICROWAVE'] = parseInt(a[0].MICROWAVE, 10) + parseInt(c[0].MICROWAVE, 10)
-                d['GELAS_UKUR'] = parseInt(a[0].GELAS_UKUR, 10) + parseInt(c[0].GELAS_UKUR, 10)
-                d['PH_METER'] = parseInt(a[0].PH_METER, 10) + parseInt(c[0].PH_METER, 10)
-                d['PINGSET'] = parseInt(a[0].PINGSET, 10) + parseInt(c[0].PINGSET, 10)
-                d['GUNTING'] = parseInt(a[0].GUNTING, 10) + parseInt(c[0].GUNTING, 10)
-                d['BUNSEN_SPIRTUS'] = parseInt(a[0].BUNSEN_SPIRTUS, 10) + parseInt(c[0].BUNSEN_SPIRTUS, 10)
-                this.props.firebase.db.ref('bahanAlatTerpakai/' + Object.keys(snap1.val())[0]).update({
-                  item: JSON.stringify(d),
-                })
-              } else {
-                // new data
-                const z = this.props.firebase.db.ref('bahanAlatTerpakai').push();
-                this.props.firebase.db.ref('bahanAlatTerpakai/' + z.key).update({
-                  item: JSON.stringify(a[0]),
-                  pengujian: 'RTK_ECOLI',
-                  tanggalSelesaiAnalisa: new Date(),
-                })
-              }
-            })
-        }
-        // PEWARNAAN_GIEMSA
-        if (this.state.thisR === 'PEWARNAAN GIEMSA') {
-          this.props.firebase.db.ref('bahanAlatTerpakai')
-            .orderByChild('pengujian')
-            .equalTo('PEWARNAAN_GIEMSA')
-            .once('value', snap1 => {
-              if (snap1.val()) {
-                // update data
-                const b = [];
-                snap1.forEach(el => {
-                  b.push(el.val())
-                });
-                const c = []
-                c.push(JSON.parse(b[0].item))
-                const d = {}
-                d['AQUADEST'] = parseInt(a[0].AQUADEST, 10) + parseInt(c[0].AQUADEST, 10)
-                d['BPW'] = parseInt(a[0].BPW, 10) + parseInt(c[0].BPW, 10)
-                d['GIEMZA'] = parseInt(a[0].GIEMZA, 10) + parseInt(c[0].GIEMZA, 10)
-                d['SLIDE'] = parseInt(a[0].SLIDE, 10) + parseInt(c[0].SLIDE, 10)
-                d['PIPET_PASTEUR'] = parseInt(a[0].PIPET_PASTEUR, 10) + parseInt(c[0].PIPET_PASTEUR, 10)
-                d['ETHANOL_96'] = parseInt(a[0].ETHANOL_96, 10) + parseInt(c[0].ETHANOL_96, 10)
-                d['MIKROSKOPE'] = parseInt(a[0].MIKROSKOPE, 10) + parseInt(c[0].MIKROSKOPE, 10)
-                d['OIL_EMERSION'] = parseInt(a[0].OIL_EMERSION, 10) + parseInt(c[0].OIL_EMERSION, 10)
-                this.props.firebase.db.ref('bahanAlatTerpakai/' + Object.keys(snap1.val())[0]).update({
-                  item: JSON.stringify(d),
-                })
-              } else {
-                // new data
-                const z = this.props.firebase.db.ref('bahanAlatTerpakai').push();
-                this.props.firebase.db.ref('bahanAlatTerpakai/' + z.key).update({
-                  item: JSON.stringify(a[0]),
-                  pengujian: 'PEWARNAAN_GIEMSA',
-                  tanggalSelesaiAnalisa: new Date(),
-                })
-              }
-            })
-        }
+
+
+    // this.props.firebase.db.ref('samples/' + this.state.thisP + '/zItems/' + this.state.thisQ + '/bahan')
+    //   .once('value', snap => {
+    //     const a = [];
+    //     snap.forEach(el => {
+    //       a.push(el.val())
+    //     })
+    //     console.log(this.state.thisP, this.state.thisQ)
+    //     // TPC
+    //     if (this.state.thisR === 'TPC') {
+    //       this.props.firebase.db.ref('bahanAlatTerpakai')
+    //         .orderByChild('pengujian')
+    //         .equalTo('TPC')
+    //         .once('value', snap1 => {
+    //           if (snap1.val()) {
+    //             // update data
+    //             const b = [];
+    //             snap1.forEach(el => {
+    //               b.push(el.val())
+    //             });
+    //             const c = []
+    //             c.push(JSON.parse(b[0].item))
+    //             const d = {}
+    //             d['AQUADEST'] = parseInt(a[0].AQUADEST, 10) + parseInt(c[0].AQUADEST, 10)
+    //             d['BPW'] = parseInt(a[0].BPW, 10) + parseInt(c[0].BPW, 10)
+    //             d['CAWAN_PETRI'] = parseInt(a[0].CAWAN_PETRI, 10) + parseInt(c[0].CAWAN_PETRI, 10)
+    //             d['COLONY_COUNTER'] = parseInt(a[0].COLONY_COUNTER, 10) + parseInt(c[0].COLONY_COUNTER, 10)
+    //             d['FINTIPP'] = parseInt(a[0].FINTIPP, 10) + parseInt(c[0].FINTIPP, 10)
+    //             d['HOT_PLATE_STIRER'] = parseInt(a[0].HOT_PLATE_STIRER, 10) + parseInt(c[0].HOT_PLATE_STIRER, 10)
+    //             d['INKUBATOR'] = parseInt(a[0].INKUBATOR, 10) + parseInt(c[0].INKUBATOR, 10)
+    //             d['KERTAS_TIMBANG'] = parseInt(a[0].KERTAS_TIMBANG, 10) + parseInt(c[0].KERTAS_TIMBANG, 10)
+    //             d['LAMINAR_AIRFLOW'] = parseInt(a[0].LAMINAR_AIRFLOW, 10) + parseInt(c[0].LAMINAR_AIRFLOW, 10)
+    //             d['MICROWAVE'] = parseInt(a[0].MICROWAVE, 10) + parseInt(c[0].MICROWAVE, 10)
+    //             d['PCA'] = parseInt(a[0].PCA, 10) + parseInt(c[0].PCA, 10)
+    //             d['PH_METER'] = parseInt(a[0].PH_METER, 10) + parseInt(c[0].PH_METER, 10)
+    //             d['PLASTIK_SAMPEL'] = parseInt(a[0].PLASTIK_SAMPEL, 10) + parseInt(c[0].PLASTIK_SAMPEL, 10)
+    //             d['PLASTIK_STOMACHER'] = parseInt(a[0].PLASTIK_STOMACHER, 10) + parseInt(c[0].PLASTIK_STOMACHER, 10)
+    //             d['SCALPEL'] = parseInt(a[0].SCALPEL, 10) + parseInt(c[0].SCALPEL, 10)
+    //             d['STOMACHER'] = parseInt(a[0].STOMACHER, 10) + parseInt(c[0].STOMACHER, 10)
+    //             d['TABUNG_REAKSI'] = parseInt(a[0].TABUNG_REAKSI, 10) + parseInt(c[0].TABUNG_REAKSI, 10)
+    //             d['TIMBANGAN_ELEKTRIK'] = parseInt(a[0].TIMBANGAN_ELEKTRIK, 10) + parseInt(c[0].TIMBANGAN_ELEKTRIK, 10)
+    //             d['VORTEX'] = parseInt(a[0].VORTEX, 10) + parseInt(c[0].VORTEX, 10)
+    //             this.props.firebase.db.ref('bahanAlatTerpakai/' + Object.keys(snap1.val())[0]).update({
+    //               item: JSON.stringify(d),
+    //             })
+    //           } else {
+    //             // new data
+    //             const z = this.props.firebase.db.ref('bahanAlatTerpakai').push();
+    //             delete a[0].idZItems
+    //             delete a[0].idPermohonanUji
+    //             delete a[0].pengujian
+    //             this.props.firebase.db.ref('bahanAlatTerpakai/' + z.key).update({
+    //               item: JSON.stringify(a[0]),
+    //               pengujian: 'TPC',
+    //               tanggalSelesaiAnalisa: new Date(),
+    //             })
+    //           }
+    //         })
+    //     }
+    //     // RTK_SALMONELLA && SALMONELLA
+    //     if (this.state.thisR === 'RAPID TEST KIT' && this.state.thisS === 'Salmonella') {
+    //       this.props.firebase.db.ref('bahanAlatTerpakai')
+    //         .orderByChild('pengujian')
+    //         .equalTo('RTK_SALMONELLA')
+    //         .once('value', snap1 => {
+    //           if (snap1.val()) {
+    //             // update data
+    //             const b = [];
+    //             snap1.forEach(el => {
+    //               b.push(el.val())
+    //             });
+    //             const c = []
+    //             c.push(JSON.parse(b[0].item))
+    //             const d = {}
+    //             d['AQUADEST'] = parseInt(a[0].AQUADEST, 10) + parseInt(c[0].AQUADEST, 10)
+    //             d['BPW'] = parseInt(a[0].BPW, 10) + parseInt(c[0].BPW, 10)
+    //             d['KIT_SALMONELLA'] = parseInt(a[0].KIT_SALMONELLA, 10) + parseInt(c[0].KIT_SALMONELLA, 10)
+    //             d['PLASTIK_STOMACHER'] = parseInt(a[0].PLASTIK_STOMACHER, 10) + parseInt(c[0].PLASTIK_STOMACHER, 10)
+    //             d['JUMLAH_FINTIPP'] = parseInt(a[0].JUMLAH_FINTIPP, 10) + parseInt(c[0].JUMLAH_FINTIPP, 10)
+    //             d['JUMLAH_SCALPEL'] = parseInt(a[0].JUMLAH_SCALPEL, 10) + parseInt(c[0].JUMLAH_SCALPEL, 10)
+    //             d['MIKROPIPETTE'] = parseInt(a[0].MIKROPIPETTE, 10) + parseInt(c[0].MIKROPIPETTE, 10)
+    //             d['TIMBANGAN_ELEKTRIK'] = parseInt(a[0].TIMBANGAN_ELEKTRIK, 10) + parseInt(c[0].TIMBANGAN_ELEKTRIK, 10)
+    //             d['STOMACHER'] = parseInt(a[0].STOMACHER, 10) + parseInt(c[0].STOMACHER, 10)
+    //             d['HOT_PLATE_STIRER'] = parseInt(a[0].HOT_PLATE_STIRER, 10) + parseInt(c[0].HOT_PLATE_STIRER, 10)
+    //             d['MICROWAVE'] = parseInt(a[0].MICROWAVE, 10) + parseInt(c[0].MICROWAVE, 10)
+    //             d['GELAS_UKUR'] = parseInt(a[0].GELAS_UKUR, 10) + parseInt(c[0].GELAS_UKUR, 10)
+    //             d['PH_METER'] = parseInt(a[0].PH_METER, 10) + parseInt(c[0].PH_METER, 10)
+    //             d['PINGSET'] = parseInt(a[0].PINGSET, 10) + parseInt(c[0].PINGSET, 10)
+    //             d['GUNTING'] = parseInt(a[0].GUNTING, 10) + parseInt(c[0].GUNTING, 10)
+    //             d['BUNSEN_SPIRTUS'] = parseInt(a[0].BUNSEN_SPIRTUS, 10) + parseInt(c[0].BUNSEN_SPIRTUS, 10)
+    //             this.props.firebase.db.ref('bahanAlatTerpakai/' + Object.keys(snap1.val())[0]).update({
+    //               item: JSON.stringify(d),
+    //             })
+    //           } else {
+    //             // new data
+    //             delete a[0].idZItems
+    //             delete a[0].idPermohonanUji
+    //             delete a[0].pengujian
+    //             const z = this.props.firebase.db.ref('bahanAlatTerpakai').push();
+    //             this.props.firebase.db.ref('bahanAlatTerpakai/' + z.key).update({
+    //               item: JSON.stringify(a[0]),
+    //               pengujian: 'RTK_SALMONELLA',
+    //               tanggalSelesaiAnalisa: new Date(),
+    //             })
+    //           }
+    //         })
+    //     }
+    //     // ELISA
+    //     if (this.state.thisR === 'ELISA BVD' || this.state.thisR === 'ELISA RABIES' || this.state.thisR === 'ELISA PARATB') {
+    //       this.props.firebase.db.ref('bahanAlatTerpakai')
+    //         .orderByChild('pengujian')
+    //         .equalTo('ELISA')
+    //         .once('value', snap1 => {
+    //           if (snap1.val()) {
+    //             // update data
+    //             const b = [];
+    //             snap1.forEach(el => {
+    //               b.push(el.val())
+    //             });
+    //             const c = []
+    //             c.push(JSON.parse(b[0].item))
+    //             const d = {}
+    //             d['AQUADEST'] = parseInt(a[0].AQUADEST, 10) + parseInt(c[0].AQUADEST, 10)
+    //             d['ELISA_READER'] = parseInt(a[0].ELISA_READER, 10) + parseInt(c[0].ELISA_READER, 10)
+    //             d['INKUBATOR'] = parseInt(a[0].INKUBATOR, 10) + parseInt(c[0].INKUBATOR, 10)
+    //             d['KONJUGAT'] = parseInt(a[0].KONJUGAT, 10) + parseInt(c[0].KONJUGAT, 10)
+    //             d['K_NEG'] = parseInt(a[0].K_NEG, 10) + parseInt(c[0].K_NEG, 10)
+    //             d['K_POS'] = parseInt(a[0].K_POS, 10) + parseInt(c[0].K_POS, 10)
+    //             d['LAMINAR_AIRFLOW'] = parseInt(a[0].LAMINAR_AIRFLOW, 10) + parseInt(c[0].LAMINAR_AIRFLOW, 10)
+    //             d['PBS_TWEEN'] = parseInt(a[0].PBS_TWEEN, 10) + parseInt(c[0].PBS_TWEEN, 10)
+    //             d['STOP_SOLUTION'] = parseInt(a[0].STOP_SOLUTION, 10) + parseInt(c[0].STOP_SOLUTION, 10)
+    //             d['ST_1_EU'] = parseInt(a[0].ST_1_EU, 10) + parseInt(c[0].ST_1_EU, 10)
+    //             d['SUBSTRAK'] = parseInt(a[0].SUBSTRAK, 10) + parseInt(c[0].SUBSTRAK, 10)
+    //             d['PH_METER'] = parseInt(a[0].PH_METER, 10) + parseInt(c[0].PH_METER, 10)
+    //             d['VORTEX'] = parseInt(a[0].VORTEX, 10) + parseInt(c[0].VORTEX, 10)
+    //             this.props.firebase.db.ref('bahanAlatTerpakai/' + Object.keys(snap1.val())[0]).update({
+    //               item: JSON.stringify(d),
+    //             })
+    //           } else {
+    //             // new data
+    //             const z = this.props.firebase.db.ref('bahanAlatTerpakai').push();
+    //             this.props.firebase.db.ref('bahanAlatTerpakai/' + z.key).update({
+    //               item: JSON.stringify(a[0]),
+    //               pengujian: 'ELISA',
+    //               tanggalSelesaiAnalisa: new Date(),
+    //             })
+    //           }
+    //         })
+    //     }
+    //     // RT_PCR
+    //     if (this.state.thisR === 'RT-PCR') {
+    //       this.props.firebase.db.ref('bahanAlatTerpakai')
+    //         .orderByChild('pengujian')
+    //         .equalTo('RT_PCR')
+    //         .once('value', snap1 => {
+    //           if (snap1.val()) {
+    //             // update data
+    //             const b = [];
+    //             snap1.forEach(el => {
+    //               b.push(el.val())
+    //             });
+    //             const c = []
+    //             c.push(JSON.parse(b[0].item))
+    //             const d = {}
+    //             d['RNASE_FREE_WATER'] = parseInt(a[0].RNASE_FREE_WATER, 10) + parseInt(c[0].RNASE_FREE_WATER, 10)
+    //             d['QUANTITECT_PROB_RT_PCR_MASTER_MIX'] = parseInt(a[0].QUANTITECT_PROB_RT_PCR_MASTER_MIX, 10) + parseInt(c[0].QUANTITECT_PROB_RT_PCR_MASTER_MIX, 10)
+    //             d['PRIMER_AL_F'] = parseInt(a[0].PRIMER_AL_F, 10) + parseInt(c[0].PRIMER_AL_F, 10)
+    //             d['PRIMER_AL_R'] = parseInt(a[0].PRIMER_AL_R, 10) + parseInt(c[0].PRIMER_AL_R, 10)
+    //             d['PROB_AL'] = parseInt(a[0].PROB_AL, 10) + parseInt(c[0].PROB_AL, 10)
+    //             d['QUANTITECH_RT_MIX'] = parseInt(a[0].QUANTITECH_RT_MIX, 10) + parseInt(c[0].QUANTITECH_RT_MIX, 10)
+    //             d['RNA_AVE'] = parseInt(a[0].RNA_AVE, 10) + parseInt(c[0].RNA_AVE, 10)
+    //             d['BUFFER_AVL'] = parseInt(a[0].BUFFER_AVL, 10) + parseInt(c[0].BUFFER_AVL, 10)
+    //             d['BUFFER_AW1'] = parseInt(a[0].BUFFER_AW1, 10) + parseInt(c[0].BUFFER_AW1, 10)
+    //             d['BUFFER_AW2'] = parseInt(a[0].BUFFER_AW2, 10) + parseInt(c[0].BUFFER_AW2, 10)
+    //             d['BUFFER_AVE'] = parseInt(a[0].BUFFER_AVE, 10) + parseInt(c[0].BUFFER_AVE, 10)
+    //             d['ETHANOL_96_100'] = parseInt(a[0].ETHANOL_96_100, 10) + parseInt(c[0].ETHANOL_96_100, 10)
+    //             d['TUBE_2ML'] = parseInt(a[0].TUBE_2ML, 10) + parseInt(c[0].TUBE_2ML, 10)
+    //             d['QIACUBE'] = parseInt(a[0].QIACUBE, 10) + parseInt(c[0].QIACUBE, 10)
+    //             d['FINTIPP'] = parseInt(a[0].FINTIPP, 10) + parseInt(c[0].FINTIPP, 10)
+    //             d['MIKROPIPETTE_100UL'] = parseInt(a[0].MIKROPIPETTE_100UL, 10) + parseInt(c[0].MIKROPIPETTE_100UL, 10)
+    //             d['MIKROPIPETTE_10UL'] = parseInt(a[0].MIKROPIPETTE_10UL, 10) + parseInt(c[0].MIKROPIPETTE_10UL, 10)
+    //             d['SPIN_DOWN'] = parseInt(a[0].SPIN_DOWN, 10) + parseInt(c[0].SPIN_DOWN, 10)
+    //             d['VORTEX'] = parseInt(a[0].VORTEX, 10) + parseInt(c[0].VORTEX, 10)
+    //             d['SENTRIFUGE'] = parseInt(a[0].SENTRIFUGE, 10) + parseInt(c[0].SENTRIFUGE, 10)
+    //             d['PCR_HOOD'] = parseInt(a[0].PCR_HOOD, 10) + parseInt(c[0].PCR_HOOD, 10)
+    //             d['ROTOR_GENE_Q'] = parseInt(a[0].ROTOR_GENE_Q, 10) + parseInt(c[0].ROTOR_GENE_Q, 10)
+    //             this.props.firebase.db.ref('bahanAlatTerpakai/' + Object.keys(snap1.val())[0]).update({
+    //               item: JSON.stringify(d),
+    //             })
+    //           } else {
+    //             // new data
+    //             const z = this.props.firebase.db.ref('bahanAlatTerpakai').push();
+    //             this.props.firebase.db.ref('bahanAlatTerpakai/' + z.key).update({
+    //               item: JSON.stringify(a[0]),
+    //               pengujian: 'RT_PCR',
+    //               tanggalSelesaiAnalisa: new Date(),
+    //             })
+    //           }
+    //         })
+    //     }
+    //     // RTK_ECOLI && ECOLI
+    //     if (this.state.thisR === 'RAPID TEST KIT' && this.state.thisS === 'E. Coli') {
+    //       this.props.firebase.db.ref('bahanAlatTerpakai')
+    //         .orderByChild('pengujian')
+    //         .equalTo('RTK_ECOLI')
+    //         .once('value', snap1 => {
+    //           if (snap1.val()) {
+    //             // update data
+    //             const b = [];
+    //             snap1.forEach(el => {
+    //               b.push(el.val())
+    //             });
+    //             const c = []
+    //             c.push(JSON.parse(b[0].item))
+    //             const d = {}
+    //             d['AQUADEST'] = parseInt(a[0].AQUADEST, 10) + parseInt(c[0].AQUADEST, 10)
+    //             d['BPW'] = parseInt(a[0].BPW, 10) + parseInt(c[0].BPW, 10)
+    //             d['KIT_ECOLI'] = parseInt(a[0].KIT_ECOLI, 10) + parseInt(c[0].KIT_ECOLI, 10)
+    //             d['PLASTIK_STOMACHER'] = parseInt(a[0].PLASTIK_STOMACHER, 10) + parseInt(c[0].PLASTIK_STOMACHER, 10)
+    //             d['JUMLAH_FINTIPP'] = parseInt(a[0].JUMLAH_FINTIPP, 10) + parseInt(c[0].JUMLAH_FINTIPP, 10)
+    //             d['JUMLAH_SCALPEL'] = parseInt(a[0].JUMLAH_SCALPEL, 10) + parseInt(c[0].JUMLAH_SCALPEL, 10)
+    //             d['MIKROPIPETTE_100UL'] = parseInt(a[0].MIKROPIPETTE_100UL, 10) + parseInt(c[0].MIKROPIPETTE_100UL, 10)
+    //             d['TIMBANGAN_ELEKTRIK'] = parseInt(a[0].TIMBANGAN_ELEKTRIK, 10) + parseInt(c[0].TIMBANGAN_ELEKTRIK, 10)
+    //             d['STOMACHER'] = parseInt(a[0].STOMACHER, 10) + parseInt(c[0].STOMACHER, 10)
+    //             d['HOT_PLATE_STIRER'] = parseInt(a[0].HOT_PLATE_STIRER, 10) + parseInt(c[0].HOT_PLATE_STIRER, 10)
+    //             d['MICROWAVE'] = parseInt(a[0].MICROWAVE, 10) + parseInt(c[0].MICROWAVE, 10)
+    //             d['GELAS_UKUR'] = parseInt(a[0].GELAS_UKUR, 10) + parseInt(c[0].GELAS_UKUR, 10)
+    //             d['PH_METER'] = parseInt(a[0].PH_METER, 10) + parseInt(c[0].PH_METER, 10)
+    //             d['PINGSET'] = parseInt(a[0].PINGSET, 10) + parseInt(c[0].PINGSET, 10)
+    //             d['GUNTING'] = parseInt(a[0].GUNTING, 10) + parseInt(c[0].GUNTING, 10)
+    //             d['BUNSEN_SPIRTUS'] = parseInt(a[0].BUNSEN_SPIRTUS, 10) + parseInt(c[0].BUNSEN_SPIRTUS, 10)
+    //             this.props.firebase.db.ref('bahanAlatTerpakai/' + Object.keys(snap1.val())[0]).update({
+    //               item: JSON.stringify(d),
+    //             })
+    //           } else {
+    //             // new data
+    //             const z = this.props.firebase.db.ref('bahanAlatTerpakai').push();
+    //             this.props.firebase.db.ref('bahanAlatTerpakai/' + z.key).update({
+    //               item: JSON.stringify(a[0]),
+    //               pengujian: 'RTK_ECOLI',
+    //               tanggalSelesaiAnalisa: new Date(),
+    //             })
+    //           }
+    //         })
+    //     }
+    //     // PEWARNAAN_GIEMSA
+    //     if (this.state.thisR === 'PEWARNAAN GIEMSA') {
+    //       this.props.firebase.db.ref('bahanAlatTerpakai')
+    //         .orderByChild('pengujian')
+    //         .equalTo('PEWARNAAN_GIEMSA')
+    //         .once('value', snap1 => {
+    //           if (snap1.val()) {
+    //             // update data
+    //             const b = [];
+    //             snap1.forEach(el => {
+    //               b.push(el.val())
+    //             });
+    //             const c = []
+    //             c.push(JSON.parse(b[0].item))
+    //             const d = {}
+    //             d['AQUADEST'] = parseInt(a[0].AQUADEST, 10) + parseInt(c[0].AQUADEST, 10)
+    //             d['BPW'] = parseInt(a[0].BPW, 10) + parseInt(c[0].BPW, 10)
+    //             d['GIEMZA'] = parseInt(a[0].GIEMZA, 10) + parseInt(c[0].GIEMZA, 10)
+    //             d['SLIDE'] = parseInt(a[0].SLIDE, 10) + parseInt(c[0].SLIDE, 10)
+    //             d['PIPET_PASTEUR'] = parseInt(a[0].PIPET_PASTEUR, 10) + parseInt(c[0].PIPET_PASTEUR, 10)
+    //             d['ETHANOL_96'] = parseInt(a[0].ETHANOL_96, 10) + parseInt(c[0].ETHANOL_96, 10)
+    //             d['MIKROSKOPE'] = parseInt(a[0].MIKROSKOPE, 10) + parseInt(c[0].MIKROSKOPE, 10)
+    //             d['OIL_EMERSION'] = parseInt(a[0].OIL_EMERSION, 10) + parseInt(c[0].OIL_EMERSION, 10)
+    //             this.props.firebase.db.ref('bahanAlatTerpakai/' + Object.keys(snap1.val())[0]).update({
+    //               item: JSON.stringify(d),
+    //             })
+    //           } else {
+    //             // new data
+    //             const z = this.props.firebase.db.ref('bahanAlatTerpakai').push();
+    //             this.props.firebase.db.ref('bahanAlatTerpakai/' + z.key).update({
+    //               item: JSON.stringify(a[0]),
+    //               pengujian: 'PEWARNAAN_GIEMSA',
+    //               tanggalSelesaiAnalisa: new Date(),
+    //             })
+    //           }
+    //         })
+    //     }
 
 
 
-      })
+    //   })
 
 
   }
@@ -658,7 +687,9 @@ class SampelDetailBase extends Component {
       loading, items,
       tanggalTerimaSampelAdminLab, PenerimaSampelAdminLab, ManajerTeknisAdminLab, ManajerAdministrasiAdminLab,
       tanggalUjiSampelAnalis, penyeliaAnalis, 
-      hasilUjiSampel, keteranganSampel, penerimaSampelAnalisLab, selectUserformPenyelia,
+      hasilUjiSampel, hasilUjiSampelBaris2, hasilUjiSampelBaris3, hasilUjiSampelBaris4, hasilUjiSampelBaris5, hasilUjiSampelBaris6, hasilUjiSampelBaris7, hasilUjiSampelBaris8, 
+      hasilUjiSampelBaris9, hasilUjiSampelBaris10, 
+      keteranganSampel, penerimaSampelAnalisLab, selectUserformPenyelia,
     } = this.state;
     const isInvalid = tanggalTerimaSampelAdminLab === '' || PenerimaSampelAdminLab === '' || ManajerTeknisAdminLab === '' ||
       ManajerAdministrasiAdminLab === '';
@@ -821,6 +852,78 @@ class SampelDetailBase extends Component {
                   label="Hasil Uji Sampel"
                   value={hasilUjiSampel}
                   onChange={this.onChange2('hasilUjiSampel')}
+                  fullWidth
+                />
+                <TextField
+                  margin="dense"
+                  id="hasilUjiSampelBaris2"
+                  label="Hasil Uji Sampel Baris 2"
+                  value={hasilUjiSampelBaris2}
+                  onChange={this.onChange2('hasilUjiSampelBaris2')}
+                  fullWidth
+                />
+                <TextField
+                  margin="dense"
+                  id="hasilUjiSampelBaris3"
+                  label="Hasil Uji Sampel Baris 3"
+                  value={hasilUjiSampelBaris3}
+                  onChange={this.onChange2('hasilUjiSampelBaris3')}
+                  fullWidth
+                />
+                <TextField
+                  margin="dense"
+                  id="hasilUjiSampelBaris4"
+                  label="Hasil Uji Sampel Baris 4"
+                  value={hasilUjiSampelBaris4}
+                  onChange={this.onChange2('hasilUjiSampelBaris4')}
+                  fullWidth
+                />
+                <TextField
+                  margin="dense"
+                  id="hasilUjiSampelBaris5"
+                  label="Hasil Uji Sampel Baris 5"
+                  value={hasilUjiSampelBaris5}
+                  onChange={this.onChange2('hasilUjiSampelBaris5')}
+                  fullWidth
+                />
+                <TextField
+                  margin="dense"
+                  id="hasilUjiSampelBaris6"
+                  label="Hasil Uji Sampel Baris 6"
+                  value={hasilUjiSampelBaris6}
+                  onChange={this.onChange2('hasilUjiSampelBaris6')}
+                  fullWidth
+                />
+                <TextField
+                  margin="dense"
+                  id="hasilUjiSampelBaris7"
+                  label="Hasil Uji Sampel Baris 7"
+                  value={hasilUjiSampelBaris7}
+                  onChange={this.onChange2('hasilUjiSampelBaris7')}
+                  fullWidth
+                />
+                <TextField
+                  margin="dense"
+                  id="hasilUjiSampelBaris8"
+                  label="Hasil Uji Sampel Baris 8"
+                  value={hasilUjiSampelBaris8}
+                  onChange={this.onChange2('hasilUjiSampelBaris8')}
+                  fullWidth
+                />
+                <TextField
+                  margin="dense"
+                  id="hasilUjiSampelBaris9"
+                  label="Hasil Uji Sampel Baris 9"
+                  value={hasilUjiSampelBaris9}
+                  onChange={this.onChange2('hasilUjiSampelBaris9')}
+                  fullWidth
+                />
+                <TextField
+                  margin="dense"
+                  id="hasilUjiSampelBaris10"
+                  label="Hasil Uji Sampel Baris 10"
+                  value={hasilUjiSampelBaris10}
+                  onChange={this.onChange2('hasilUjiSampelBaris10')}
                   fullWidth
                 />
                 <TextField
