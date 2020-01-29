@@ -435,7 +435,7 @@ class PageDetailBase extends Component {
     this.props.firebase.db.ref('samples/' + this.state.idPermohonanUji).update({
       flagActivity: 'Hasil analisa perlu direvisi',
       flagActivityDetail: 'Hasil analisa perlu direvisi',
-      flagStatusProses: 'Proses di Analis',
+      flagStatusProses: 'Sampel di Admin Lab',
     })
     // this.props.firebase.db.ref('samples/' + this.state.thisP).update({
     //   flagActivityDetail: 'Update detail by admin lab done',

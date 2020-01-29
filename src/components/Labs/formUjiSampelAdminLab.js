@@ -875,6 +875,7 @@ class SampelDetailBase extends Component {
                 disabled={
                   ((this.state.items[0].flagActivityDetail === 'Menunggu konfirmasi lanjut pengujian dari Admin Lab'
                     || this.state.items[0].flagActivityDetail !== 'Sampel tidak dapat diuji'
+                    || this.state.items[0].flagActivityDetail !== 'Hasil analisa perlu direvisi'
                   )
                     && this.state.items[0].flagStatusProses === 'Sampel di Admin Lab')
                     ? false : true}
