@@ -538,7 +538,8 @@ class SampelDetailBase extends Component {
       open2: false,
       openAlert: false,
       openAlertKodeUnik: false,
-      openAlertNomorAgenda: false,
+      openAlertNomorLhu: false,
+      openAlertManajerAdministrasiAdminLab: false,
       ...props.location.state,
       idPermohonanUji: '',
       kodeUnikSampel: '',
@@ -701,6 +702,14 @@ class SampelDetailBase extends Component {
     this.setState({ openAlertNomorLhu: false });
   };
 
+  handleOpenAlertManajerAdministrasiAdminLab = () => {
+    this.setState({ openAlertManajerAdministrasiAdminLab: true });
+  };
+
+  handleCloseAlertManajerAdministrasiAdminLab = () => {
+    this.setState({ openAlertManajerAdministrasiAdminLab: false });
+  };
+
   handleLanjutPengujian = () => {
     this.props.firebase.db.ref('samples/' + this.state.idPermohonanUji).update({
       flagActivityDetail: 'Lanjut Pengujian',
@@ -731,6 +740,15 @@ class SampelDetailBase extends Component {
 
     this.props.firebase.db.ref('samples/' + this.state.idPermohonanUji).update({
       nomorLhu: this.state.nomorLhu,
+    })
+  };
+
+  handleEditManajerAdministrasiAdminLab = () => {
+    this.setState({ openAlertManajerAdministrasiAdminLab: false });
+
+    this.props.firebase.db.ref('samples/' + this.state.idPermohonanUji).update({
+      manajerAdministrasiAdminLab: this.state.manajerAdministrasiAdminLab,
+      nipManajerAdministrasiAdminLab: this.state.nipManajerAdministrasiAdminLab,
     })
   };
 
@@ -855,14 +873,14 @@ class SampelDetailBase extends Component {
     const {
       selectUnitPengujian, unitPengujianSampel, loading, items, kodeUnikSampelAdminLab,
       tanggalTerimaSampelAdminLab, PenerimaSampelAdminLab, ManajerTeknisAdminLab, ManajerAdministrasiAdminLab,
-      penerimaSampelAdminLab, manajerTeknisAdminLab, manajerAdministrasiAdminLab, penerimaSampelAnalisLab,
+      penerimaSampelAdminLab, manajerTeknisAdminLab, manajerAdministrasiAdminLab, nipManajerAdministrasiAdminLab, penerimaSampelAnalisLab,
       selectUserformAdminLab, selectUserformManajerAdministrasi, selectUserformManajerTeknis, selectUserformAnalis,
       // selectNipUserformAdminLab, selectNipUserformManajerAdministrasi, selectNipUserformManajerTeknis, selectNipUserformAnalis,
       statusLaporanSPP, loadingReport, keteranganPengujianDitolak, nomorAgendaSurat,
-      openAlert, openAlertKodeUnik, openAlertNomorAgenda, nomorLhu,
+      openAlert, openAlertKodeUnik, openAlertNomorLhu, nomorLhu, openAlertManajerAdministrasiAdminLab,
     } = this.state;
     const isInvalid = tanggalTerimaSampelAdminLab === '' || PenerimaSampelAdminLab === '' || ManajerTeknisAdminLab === '' ||
-      ManajerAdministrasiAdminLab === '' || kodeUnikSampelAdminLab === '' || kodeUnikSampelAdminLab.length < 20 || nomorLhu === '' ;
+      ManajerAdministrasiAdminLab === '' || kodeUnikSampelAdminLab === '' || kodeUnikSampelAdminLab.length < 20 || nomorLhu === '';
     const isInvalid2 = unitPengujianSampel === '';
     // console.log(this.state)
 
@@ -904,10 +922,15 @@ class SampelDetailBase extends Component {
                 <Typography variant="subtitle1" gutterBottom>Petugas Pengambil Sampel (PPC) : {el.petugasPengambilSampel}</Typography>
                 <Typography variant="subtitle1" gutterBottom>Unit Pengujian Sampel : {el.unitPengujianSampel}</Typography>
                 <Typography variant="subtitle1" gutterBottom>
-                  {/* <Button variant='contained' onClick={this.handleOpenAlertNomorAgenda}>Edit Nomor Agenda : {el.nomorAgendaSurat}</Button> {'  '} */}
+                  <Button variant='contained' onClick={this.handleOpenAlertNomorLhu}>Edit Nomor LHU : {el.nomorLhu}</Button> {'  '}
+                </Typography>
+                <Typography variant="subtitle1" gutterBottom>
                   <Button variant='contained' onClick={this.handleOpenAlertKodeUnik}>Edit Kode Unik Sampel AdminLab : {el.kodeUnikSampelAdminLab}</Button>
                 </Typography>
-
+                <Typography variant="subtitle1" gutterBottom>
+                  <Button variant='contained' onClick={this.handleOpenAlertManajerAdministrasiAdminLab}>Edit Pelaksana Fungsi Manajer Admin : {el.manajerAdministrasiAdminLab}</Button>
+                </Typography>
+                {/* {console.log(el)} */}
                 <Table>
                   <TableHead>
                     <TableRow>
@@ -1185,20 +1208,20 @@ class SampelDetailBase extends Component {
               </DialogActions>
             </Dialog>
             <Dialog
-              open={openAlertNomorAgenda}
-              onClose={this.handleCloseAlertNomorAgenda}
+              open={openAlertNomorLhu}
+              onClose={this.handleCloseAlertNomorLhu}
               aria-labelledby="alert-dialog-title"
               aria-describedby="alert-dialog-description"
               maxWidth={'sm'}
               fullWidth={true}
             >
-              <DialogTitle id="alert-dialog-title">{'Edit Nomor Agenda'}</DialogTitle>
+              <DialogTitle id="alert-dialog-title">{'Edit Nomor Lhu'}</DialogTitle>
               <DialogContent>
                 <DialogContentText id="alert-dialog-description">
                   <TextField
-                    id="nomorAgendaSurat"
-                    value={nomorAgendaSurat}
-                    label="Nomor Agenda"
+                    id="nomorLhu"
+                    value={nomorLhu}
+                    label="Nomor Lhu"
                     style={{ width: "100%", marginBottom: 20, marginTop: 20 }}
                     variant="outlined"
                     onChange={this.onChange}
@@ -1206,10 +1229,48 @@ class SampelDetailBase extends Component {
                 </DialogContentText>
               </DialogContent>
               <DialogActions>
-                <Button onClick={this.handleCloseAlertNomorAgenda}>
+                <Button onClick={this.handleCloseAlertNomorLhu}>
                   Batal
                 </Button>
-                <Button variant="contained" onClick={this.handleEditNomorAgenda} color="primary" autoFocus>
+                <Button variant="contained" onClick={this.handleEditNomorLhu} color="primary" autoFocus>
+                  OK
+                </Button>
+              </DialogActions>
+            </Dialog>
+            <Dialog
+              open={openAlertManajerAdministrasiAdminLab}
+              onClose={this.handleCloseAlertopenAlertManajerAdministrasiAdminLab}
+              aria-labelledby="alert-dialog-title"
+              aria-describedby="alert-dialog-description"
+              maxWidth={'sm'}
+              fullWidth={true}
+            >
+              <DialogTitle id="alert-dialog-title">{'Edit Nomor Lhu'}</DialogTitle>
+              <DialogContent>
+                <DialogContentText id="alert-dialog-description">
+                  <TextField
+                    id="manajerAdministrasiAdminLab"
+                    value={manajerAdministrasiAdminLab}
+                    label="Manajer Administrasi Admin Lab"
+                    style={{ width: "100%", marginBottom: 20, marginTop: 20 }}
+                    variant="outlined"
+                    onChange={this.onChange}
+                  />
+                  <TextField
+                    id="nipManajerAdministrasiAdminLab"
+                    value={nipManajerAdministrasiAdminLab}
+                    label="NIP Manajer Administrasi Admin Lab"
+                    style={{ width: "100%", marginBottom: 20, marginTop: 20 }}
+                    variant="outlined"
+                    onChange={this.onChange}
+                  />
+                </DialogContentText>
+              </DialogContent>
+              <DialogActions>
+                <Button onClick={this.handleCloseAlertManajerAdministrasiAdminLab}>
+                  Batal
+                </Button>
+                <Button variant="contained" onClick={this.handleEditManajerAdministrasiAdminLab} color="primary" autoFocus>
                   OK
                 </Button>
               </DialogActions>
@@ -1626,15 +1687,15 @@ const PDFLHU = (p) => {
             </View>
             <View style={styles.tableCol15}>
               <Text style={styles.tableCell}>{p.q.zItems[el1].hasilUjiSampel}</Text>
-              {!!p.q.zItems[el1].hasilUjiSampelBaris2 && <Text style={styles.tableCell}>{p.q.zItems[el1].hasilUjiSampelBaris2}</Text> }
-              {!!p.q.zItems[el1].hasilUjiSampelBaris3 && <Text style={styles.tableCell}>{p.q.zItems[el1].hasilUjiSampelBaris3}</Text> }
-              {!!p.q.zItems[el1].hasilUjiSampelBaris4 && <Text style={styles.tableCell}>{p.q.zItems[el1].hasilUjiSampelBaris4}</Text> }
-              {!!p.q.zItems[el1].hasilUjiSampelBaris5 && <Text style={styles.tableCell}>{p.q.zItems[el1].hasilUjiSampelBaris5}</Text> }
-              {!!p.q.zItems[el1].hasilUjiSampelBaris6 && <Text style={styles.tableCell}>{p.q.zItems[el1].hasilUjiSampelBaris6}</Text> }
-              {!!p.q.zItems[el1].hasilUjiSampelBaris7 && <Text style={styles.tableCell}>{p.q.zItems[el1].hasilUjiSampelBaris7}</Text> }
-              {!!p.q.zItems[el1].hasilUjiSampelBaris8 && <Text style={styles.tableCell}>{p.q.zItems[el1].hasilUjiSampelBaris8}</Text> }
-              {!!p.q.zItems[el1].hasilUjiSampelBaris9 && <Text style={styles.tableCell}>{p.q.zItems[el1].hasilUjiSampelBaris9}</Text> }
-              {!!p.q.zItems[el1].hasilUjiSampelBaris10 && <Text style={styles.tableCell}>{p.q.zItems[el1].hasilUjiSampelBaris10}</Text> }
+              {!!p.q.zItems[el1].hasilUjiSampelBaris2 && <Text style={styles.tableCell}>{p.q.zItems[el1].hasilUjiSampelBaris2}</Text>}
+              {!!p.q.zItems[el1].hasilUjiSampelBaris3 && <Text style={styles.tableCell}>{p.q.zItems[el1].hasilUjiSampelBaris3}</Text>}
+              {!!p.q.zItems[el1].hasilUjiSampelBaris4 && <Text style={styles.tableCell}>{p.q.zItems[el1].hasilUjiSampelBaris4}</Text>}
+              {!!p.q.zItems[el1].hasilUjiSampelBaris5 && <Text style={styles.tableCell}>{p.q.zItems[el1].hasilUjiSampelBaris5}</Text>}
+              {!!p.q.zItems[el1].hasilUjiSampelBaris6 && <Text style={styles.tableCell}>{p.q.zItems[el1].hasilUjiSampelBaris6}</Text>}
+              {!!p.q.zItems[el1].hasilUjiSampelBaris7 && <Text style={styles.tableCell}>{p.q.zItems[el1].hasilUjiSampelBaris7}</Text>}
+              {!!p.q.zItems[el1].hasilUjiSampelBaris8 && <Text style={styles.tableCell}>{p.q.zItems[el1].hasilUjiSampelBaris8}</Text>}
+              {!!p.q.zItems[el1].hasilUjiSampelBaris9 && <Text style={styles.tableCell}>{p.q.zItems[el1].hasilUjiSampelBaris9}</Text>}
+              {!!p.q.zItems[el1].hasilUjiSampelBaris10 && <Text style={styles.tableCell}>{p.q.zItems[el1].hasilUjiSampelBaris10}</Text>}
             </View>
             <View style={styles.tableCol20}>
               <Text style={styles.tableCell}>{p.q.zItems[el1].keteranganSampel}</Text>
