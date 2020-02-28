@@ -539,6 +539,7 @@ class SampelDetailBase extends Component {
       openAlert: false,
       openAlertKodeUnik: false,
       openAlertNomorLhu: false,
+      openAlertTanggalMasukSampel: false,
       openAlertManajerAdministrasiAdminLab: false,
       ...props.location.state,
       idPermohonanUji: '',
@@ -560,6 +561,7 @@ class SampelDetailBase extends Component {
       selectJenisPengujian: [],
       selectMetodePengujian: [],
       selectUnitPengujian: [],
+      // tanggalMasukSampel: dateFnsFormat(new Date(), "dd MMM yyyy"),
       tanggalTerimaSampelAdminLab: dateFnsFormat(new Date(), "dd MMM yyyy"),
       penerimaSampelAdminLab: '',
       penerimaSampelAnalisLab: '',
@@ -702,6 +704,14 @@ class SampelDetailBase extends Component {
     this.setState({ openAlertNomorLhu: false });
   };
 
+  handleOpenAlertTanggalMasukSampel = () => {
+    this.setState({ openAlertTanggalMasukSampel: true });
+  };
+
+  handleCloseAlertTanggalMasukSampel = () => {
+    this.setState({ openAlertTanggalMasukSampel: false });
+  };
+
   handleOpenAlertManajerAdministrasiAdminLab = () => {
     this.setState({ openAlertManajerAdministrasiAdminLab: true });
   };
@@ -740,6 +750,14 @@ class SampelDetailBase extends Component {
 
     this.props.firebase.db.ref('samples/' + this.state.idPermohonanUji).update({
       nomorLhu: this.state.nomorLhu,
+    })
+  };
+
+  handleEditTanggalMasukSampel = () => {
+    this.setState({ openAlertTanggalMasukSampel: false });
+
+    this.props.firebase.db.ref('samples/' + this.state.idPermohonanUji).update({
+      tanggalTerimaSampelAdminLab: this.state.tanggalTerimaSampelAdminLab.toString(),
     })
   };
 
@@ -826,6 +844,11 @@ class SampelDetailBase extends Component {
     this.setState({ tanggalTerimaSampelAdminLab: date });
   };
 
+  handleDateChangeTanggalMasukSampel = date => {
+    // console.log(this.state.tanggalMasukSampel, typeof this.state.tanggalMasukSampel, date, typeof date, date.toString())
+    this.setState({ tanggalTerimaSampelAdminLab: date });
+  };
+
   // onChange = id => event => {
   //   this.setState({
   //     [id]: event.target.value,
@@ -876,8 +899,8 @@ class SampelDetailBase extends Component {
       penerimaSampelAdminLab, manajerTeknisAdminLab, manajerAdministrasiAdminLab, nipManajerAdministrasiAdminLab, penerimaSampelAnalisLab,
       selectUserformAdminLab, selectUserformManajerAdministrasi, selectUserformManajerTeknis, selectUserformAnalis,
       // selectNipUserformAdminLab, selectNipUserformManajerAdministrasi, selectNipUserformManajerTeknis, selectNipUserformAnalis,
-      statusLaporanSPP, loadingReport, keteranganPengujianDitolak, nomorAgendaSurat,
-      openAlert, openAlertKodeUnik, openAlertNomorLhu, nomorLhu, openAlertManajerAdministrasiAdminLab,
+      statusLaporanSPP, loadingReport, keteranganPengujianDitolak, nomorAgendaSurat, tanggalMasukSampel,
+      openAlert, openAlertKodeUnik, openAlertNomorLhu, nomorLhu, openAlertManajerAdministrasiAdminLab, openAlertTanggalMasukSampel,
     } = this.state;
     const isInvalid = tanggalTerimaSampelAdminLab === '' || PenerimaSampelAdminLab === '' || ManajerTeknisAdminLab === '' ||
       ManajerAdministrasiAdminLab === '' || kodeUnikSampelAdminLab === '' || kodeUnikSampelAdminLab.length < 20 || nomorLhu === '';
@@ -915,6 +938,10 @@ class SampelDetailBase extends Component {
             {!loading && items.map((el, key) =>
               <div style={{ marginTop: 25 }} key={key}>
                 <Typography variant="subtitle1" gutterBottom>Tanggal Masuk Sampel : {dateFnsFormat(new Date(el.tanggalMasukSampel), "dd MMM yyyy")}</Typography>
+                <Typography variant="subtitle1" gutterBottom>
+                  <Button variant='contained' onClick={this.handleOpenAlertTanggalMasukSampel}>Edit Tanggal Masuk Sampel Admin Lab : {dateFnsFormat(new Date(el.tanggalTerimaSampelAdminLab), 'dd MMM yyyy')}</Button> {'  '}
+                </Typography>
+                {/* {console.log(el.tanggalMasukSampel, typeof el.tanggalMasukSampel)} */}
                 <Typography variant="subtitle1" gutterBottom>Nomor Permohonan (IQFAST) : {el.nomorAgendaSurat}</Typography>
                 <Typography variant="subtitle1" gutterBottom>Nama Pemilik Sampel : {el.namaPemilikSampel}</Typography>
                 <Typography variant="subtitle1" gutterBottom>Alamat Pemilik Sampel : {el.alamatPemilikSampel}</Typography>
@@ -1271,6 +1298,46 @@ class SampelDetailBase extends Component {
                   Batal
                 </Button>
                 <Button variant="contained" onClick={this.handleEditManajerAdministrasiAdminLab} color="primary" autoFocus>
+                  OK
+                </Button>
+              </DialogActions>
+            </Dialog>
+            <Dialog
+              open={openAlertTanggalMasukSampel}
+              onClose={this.handleCloseAlertTanggalMasukSampel}
+              aria-labelledby="alert-dialog-title"
+              aria-describedby="alert-dialog-description"
+              maxWidth={'sm'}
+              fullWidth={true}
+            >
+              <DialogTitle id="alert-dialog-title">{'Edit Tanggal Masuk Sampel'}</DialogTitle>
+              <DialogContent>
+                <DialogContentText id="alert-dialog-description">
+                  <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                    <DatePicker
+                      margin="normal"
+                      style={{ width: 250 }}
+                      label="Tanggal Masuk Sampel Admin Lab"
+                      value={tanggalTerimaSampelAdminLab}
+                      format={'dd MMM yyyy'}
+                      onChange={this.handleDateChangeTanggalMasukSampel} />
+                  </MuiPickersUtilsProvider>
+                  {/* <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                    <DatePicker
+                      margin="normal"
+                      style={{ width: 350, marginBottom: 20 }}
+                      label="Tanggal Terima Sampel oleh Admin Lab"
+                      value={tanggalTerimaSampelAdminLab}
+                      format={'dd MMM yyyy'}
+                      onChange={this.handleDateChange} />
+                  </MuiPickersUtilsProvider> */}
+                </DialogContentText>
+              </DialogContent>
+              <DialogActions>
+                <Button onClick={this.handleCloseAlertTanggalMasukSampel}>
+                  Batal
+                </Button>
+                <Button variant="contained" onClick={this.handleEditTanggalMasukSampel} color="primary" autoFocus>
                   OK
                 </Button>
               </DialogActions>

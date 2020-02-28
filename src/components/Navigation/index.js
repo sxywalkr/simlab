@@ -20,38 +20,38 @@ const Navigation = () => (
   </div>
 );
 
-const NavigationAuth = ({authUser}) => (
-  <div style={{flexGrow: 1}}>
+const NavigationAuth = ({ authUser }) => (
+  <div style={{ flexGrow: 1 }}>
     <AppBar position="static">
       <Toolbar>
-        <Typography variant="h6" color="inherit" style={{marginRight: 20}} >
+        <Typography variant="h6" color="inherit" style={{ marginRight: 20 }} >
           SIMLAB
         </Typography>
-        <Button color="inherit" style={{marginRight: 5}} component={Link} to={ROUTES.HOME}>Home</Button>
-        {(authUser.roles.includes(ROLES.WILKER) || authUser.roles.includes(ROLES.WILKERSPV) )&& (
-          <Button color="inherit" style={{marginRight: 5}} component={Link} to={ROUTES.WILKER_FORMUJI}>Permohonan</Button>
+        <Button color="inherit" style={{ marginRight: 5 }} component={Link} to={ROUTES.HOME}>Home</Button>
+        {(authUser.roles === ROLES.WILKER || authUser.roles === ROLES.WILKERSPV) && (
+          <Button color="inherit" style={{ marginRight: 5 }} component={Link} to={ROUTES.WILKER_FORMUJI}>Permohonan</Button>
         )}
-        {(authUser.roles === ROLES.ADMINLAB )&& (
-          <Button color="inherit" style={{marginRight: 5}} component={Link} to={ROUTES.ADMINLAB}>Admin Lab</Button>
-        )}  
-        {(authUser.roles.includes(ROLES.ANALIS) )&& (
+        {(authUser.roles === ROLES.ADMINLAB) && (
+          <Button color="inherit" style={{ marginRight: 5 }} component={Link} to={ROUTES.ADMINLAB}>Admin Lab</Button>
+        )}
+        {(authUser.roles === ROLES.ANALIS) && (
           <div>
-            <Button color="inherit" style={{marginRight: 5}} component={Link} to={ROUTES.ANALIS}>Analis</Button>
-            <Button color="inherit" style={{marginRight: 5}} component={Link} to={ROUTES.ANALIS_ALATBAHAN}>Alat Bahan</Button>
+            <Button color="inherit" style={{ marginRight: 5 }} component={Link} to={ROUTES.ANALIS}>Analis</Button>
+            <Button color="inherit" style={{ marginRight: 5 }} component={Link} to={ROUTES.ANALIS_ALATBAHAN}>Alat Bahan</Button>
           </div>
-        )}  
-        {(authUser.roles.includes(ROLES.PELAKSANATEKNIS) )&& (
-          <Button color="inherit" style={{marginRight: 5}} component={Link} to={ROUTES.TEKNIS}>Pelaksana Teknis</Button>
-        )}      
+        )}
+        {(authUser.roles === ROLES.PELAKSANATEKNIS) && (
+          <Button color="inherit" style={{ marginRight: 5 }} component={Link} to={ROUTES.TEKNIS}>Pelaksana Teknis</Button>
+        )}
         {authUser.roles === ROLES.ADMIN && (
           <div>
-            <Button color="inherit" style={{marginRight: 5}} component={Link} to={ROUTES.MASTERDATASAMPLE}>Master Data Sample</Button>
-            <Button color="inherit" style={{marginRight: 5}} component={Link} to={ROUTES.MASTERDATAPENGUJIAN}>Master Data Pengujian</Button>
-            <Button color="inherit" style={{marginRight: 5}} component={Link} to={ROUTES.MASTERDATA_WILKER}>Master Data Wilker</Button>
+            <Button color="inherit" style={{ marginRight: 5 }} component={Link} to={ROUTES.MASTERDATASAMPLE}>Master Data Sample</Button>
+            <Button color="inherit" style={{ marginRight: 5 }} component={Link} to={ROUTES.MASTERDATAPENGUJIAN}>Master Data Pengujian</Button>
+            <Button color="inherit" style={{ marginRight: 5 }} component={Link} to={ROUTES.MASTERDATA_WILKER}>Master Data Wilker</Button>
             {/* <Button color="inherit" style={{marginRight: 5}} component={Link} to={ROUTES.MASTERDATA_BAHAN}>Master Data Bahan</Button> */}
-            <Button color="inherit" style={{marginRight: 5}} component={Link} to={ROUTES.ACCOUNT}>Account</Button>
-            <Button color="inherit" style={{marginRight: 5}} component={Link} to={ROUTES.ADMIN}>Admin</Button>
-            <Button color="inherit" style={{marginRight: 5}} component={Link} to={ROUTES.MASTERDATA_USERFORM}>User Form</Button>
+            <Button color="inherit" style={{ marginRight: 5 }} component={Link} to={ROUTES.ACCOUNT}>Account</Button>
+            <Button color="inherit" style={{ marginRight: 5 }} component={Link} to={ROUTES.ADMIN}>Admin</Button>
+            <Button color="inherit" style={{ marginRight: 5 }} component={Link} to={ROUTES.MASTERDATA_USERFORM}>User Form</Button>
           </div>
         )}
         <SignOutButton />
@@ -61,13 +61,13 @@ const NavigationAuth = ({authUser}) => (
 );
 
 const NavigationNonAuth = () => (
-  <div style={{flexGrow: 1}}>
+  <div style={{ flexGrow: 1 }}>
     <AppBar position="static">
       <Toolbar>
-        <Typography variant="h6" color="inherit" style={{marginRight: 20}} >
+        <Typography variant="h6" color="inherit" style={{ marginRight: 20 }} >
           SIMLAB
         </Typography>
-        <Button color="inherit" style={{marginRight: 5}} component={Link} to={ROUTES.SIGN_IN}>Sign In</Button>
+        <Button color="inherit" style={{ marginRight: 5 }} component={Link} to={ROUTES.SIGN_IN}>Sign In</Button>
       </Toolbar>
     </AppBar>
   </div>
