@@ -336,61 +336,69 @@ class SampelAllBase extends Component {
     this.props.firebase.db.ref(`samples`)
       .orderByChild('bulanMasukSampel').equalTo(a)
       .once('value', snap => {
-        // console.log('snap', snap.val())
+        // console.log(a)
         if (snap.val()) {
+          // console.log(snap.hasChild('zItems'))
           const b = [];
+          // if (snap.hasChild('zItems')) {
           snap.forEach(el => {
-            b.push({
-              // idPermohonanUji: el.val().idPermohonanUji,
-              // kodeUnikSampel: el.val().kodeUnikSampel,
-              tanggalMasukSampel: el.val().tanggalMasukSampel,
-              tanggalTerimaSampelAdminLab: el.val().tanggalTerimaSampelAdminLab,
-              tanggalUjiSampelAnalis: el.val().tanggalUjiSampelAnalis,
-              nomorAgendaSurat: el.val().nomorAgendaSurat,
-              namaPemilikSampel: el.val().namaPemilikSampel,
-              alamatPemilikSampel: el.val().alamatPemilikSampel,
-              asalTujuanSampel: el.val().asalTujuanSampel,
-              flagActivity: el.val().flagActivity,
-              flagActivityDetail: el.val().flagActivityDetail,
-              flagStatusProses: el.val().flagStatusProses,
-              unitPengujianSampel: el.val().unitPengujianSampel,
-              // kondisiSampel: el.val().kondisiSampel,
-              formLaporanKesimpulan: el.val().formLaporanKesimpulan,
-              formLaporanKeterangan: el.val().formLaporanKeterangan,
-              kodeUnikSampelAdminLab: el.val().kodeUnikSampelAdminLab,
-              // nomorAgendaSurat: el.val().nomorAgendaSurat,
-              // formLaporanKeterangan: el.val().formLaporanKeterangan,
-              // formLaporanKesimpulan: el.val().formLaporanKesimpulan,
-              keteranganPengujianDitolak: el.val().keteranganPengujianDitolak,
-              statusLaporanSPP: el.val().statusLaporanSPP,
-              manajerAdministrasiAdminLab: el.val().manajerAdministrasiAdminLab,
-              nipManajerAdministrasiAdminLab: el.val().nipManajerAdministrasiAdminLab,
-              manajerTeknisAdminLab: el.val().manajerTeknisAdminLab,
-              nipManajerTeknisAdminLab: el.val().nipManajerTeknisAdminLab,
-              penerimaSampelAdminLab: el.val().penerimaSampelAdminLab,
-              nipPenerimaSampelAdminLab: el.val().nipPenerimaSampelAdminLab,
-              penerimaSampelAnalisLab: el.val().penerimaSampelAnalisLab,
-              nipPenerimaSampelAnalisLab: el.val().nipPenerimaSampelAnalisLab,
-              penyeliaAnalis: el.val().penyeliaAnalis,
-              nipPenyeliaAnalis: el.val().nipPenyeliaAnalis,
-              petugasPengambilSampel: el.val().petugasPengambilSampel,
-              nipUser: el.val().nipUser,
-              // zItems: Object.keys(el.val().zItems).map((key) => el.val().zItems[key]),
-              zHasilUjiSampel: Object.keys(el.val().zItems).map((key) => el.val().zItems[key].hasilUjiSampel),
-              zJenisSampel: Object.keys(el.val().zItems).map((key) => el.val().zItems[key].jenisSampel),
-              zJumlahSampel: Object.keys(el.val().zItems).map((key) => el.val().zItems[key].jumlahSampel),
-              zKategoriSampel: Object.keys(el.val().zItems).map((key) => el.val().zItems[key].kategoriSample),
-              zMetodePengujianSampel: Object.keys(el.val().zItems).map((key) => el.val().zItems[key].metodePengujianSampel),
-              zRuangLingkupSampel: Object.keys(el.val().zItems).map((key) => el.val().zItems[key].ruangLingkupSampel),
-              zTargetPengujianSampel: Object.keys(el.val().zItems).map((key) => el.val().zItems[key].targetPengujianSampel),
-              zKondisiSampel: Object.keys(el.val().zItems).map((key) => el.val().zItems[key].kondisiSampel),
-              zKeteranganSampel: Object.keys(el.val().zItems).map((key) => el.val().zItems[key].keteranganSampel),
-            })
+            // console.log(el.hasChild('zItems'))
+            if (el.hasChild('zItems')) {
+              // console.log(Object.keys(el.val().zItems).map((key) => el.val().zItems[key].hasilUjiSampel))
+              b.push({
+                // idPermohonanUji: el.val().idPermohonanUji,
+                // kodeUnikSampel: el.val().kodeUnikSampel,
+                tanggalMasukSampel: el.val().tanggalMasukSampel,
+                tanggalTerimaSampelAdminLab: el.val().tanggalTerimaSampelAdminLab,
+                tanggalUjiSampelAnalis: el.val().tanggalUjiSampelAnalis,
+                nomorAgendaSurat: el.val().nomorAgendaSurat,
+                namaPemilikSampel: el.val().namaPemilikSampel,
+                alamatPemilikSampel: el.val().alamatPemilikSampel,
+                asalTujuanSampel: el.val().asalTujuanSampel,
+                flagActivity: el.val().flagActivity,
+                flagActivityDetail: el.val().flagActivityDetail,
+                flagStatusProses: el.val().flagStatusProses,
+                unitPengujianSampel: el.val().unitPengujianSampel,
+                // kondisiSampel: el.val().kondisiSampel,
+                formLaporanKesimpulan: el.val().formLaporanKesimpulan,
+                formLaporanKeterangan: el.val().formLaporanKeterangan,
+                kodeUnikSampelAdminLab: el.val().kodeUnikSampelAdminLab,
+                // nomorAgendaSurat: el.val().nomorAgendaSurat,
+                // formLaporanKeterangan: el.val().formLaporanKeterangan,
+                // formLaporanKesimpulan: el.val().formLaporanKesimpulan,
+                keteranganPengujianDitolak: el.val().keteranganPengujianDitolak,
+                statusLaporanSPP: el.val().statusLaporanSPP,
+                manajerAdministrasiAdminLab: el.val().manajerAdministrasiAdminLab,
+                nipManajerAdministrasiAdminLab: el.val().nipManajerAdministrasiAdminLab,
+                manajerTeknisAdminLab: el.val().manajerTeknisAdminLab,
+                nipManajerTeknisAdminLab: el.val().nipManajerTeknisAdminLab,
+                penerimaSampelAdminLab: el.val().penerimaSampelAdminLab,
+                nipPenerimaSampelAdminLab: el.val().nipPenerimaSampelAdminLab,
+                penerimaSampelAnalisLab: el.val().penerimaSampelAnalisLab,
+                nipPenerimaSampelAnalisLab: el.val().nipPenerimaSampelAnalisLab,
+                penyeliaAnalis: el.val().penyeliaAnalis,
+                nipPenyeliaAnalis: el.val().nipPenyeliaAnalis,
+                petugasPengambilSampel: el.val().petugasPengambilSampel,
+                nipUser: el.val().nipUser,
+                // zItems: Object.keys(el.val().zItems).map((key) => el.val().zItems[key]),
+                zHasilUjiSampel: Object.keys(el.val().zItems).map((key) => el.val().zItems[key].hasilUjiSampel),
+                zJenisSampel: Object.keys(el.val().zItems).map((key) => el.val().zItems[key].jenisSampel),
+                zJumlahSampel: Object.keys(el.val().zItems).map((key) => el.val().zItems[key].jumlahSampel),
+                zKategoriSampel: Object.keys(el.val().zItems).map((key) => el.val().zItems[key].kategoriSample),
+                zMetodePengujianSampel: Object.keys(el.val().zItems).map((key) => el.val().zItems[key].metodePengujianSampel),
+                zRuangLingkupSampel: Object.keys(el.val().zItems).map((key) => el.val().zItems[key].ruangLingkupSampel),
+                zTargetPengujianSampel: Object.keys(el.val().zItems).map((key) => el.val().zItems[key].targetPengujianSampel),
+                zKondisiSampel: Object.keys(el.val().zItems).map((key) => el.val().zItems[key].kondisiSampel),
+                zKeteranganSampel: Object.keys(el.val().zItems).map((key) => el.val().zItems[key].keteranganSampel),
+              })
+            }
           });
+          // console.log(b)
           this.setState({
             itemsB: b,
             loading: false,
           });
+          // }
         } else {
           this.setState({
             itemsB: null,
@@ -398,7 +406,7 @@ class SampelAllBase extends Component {
           });
         }
       })
-    console.log(this.state.itemsB)
+    // console.log(this.state.itemsB)
   }
 
   exportFile = () => {
@@ -563,6 +571,7 @@ class SampelDetailBase extends Component {
       selectUnitPengujian: [],
       // tanggalMasukSampel: dateFnsFormat(new Date(), "dd MMM yyyy"),
       tanggalTerimaSampelAdminLab: dateFnsFormat(new Date(), "dd MMM yyyy"),
+      tanggalUjiSampelAnalis: '',
       penerimaSampelAdminLab: '',
       penerimaSampelAnalisLab: '',
       manajerTeknisAdminLab: '',
@@ -597,6 +606,7 @@ class SampelDetailBase extends Component {
             petugasPengambilSampel: snap.val().petugasPengambilSampel,
             kodeUnikSampelAdminLab: snap.val().kodeUnikSampelAdminLab === undefined ? '' : snap.val().kodeUnikSampelAdminLab,
             tanggalTerimaSampelAdminLab: snap.val().tanggalTerimaSampelAdminLab === undefined ? dateFnsFormat(new Date(), "dd MMM yyyy") : snap.val().tanggalTerimaSampelAdminLab,
+            tanggalUjiSampelAnalis: snap.val().tanggalUjiSampelAnalis === undefined ? dateFnsFormat(new Date(), "dd MMM yyyy") : snap.val().tanggalUjiSampelAnalis,
             unitPengujianSampel: snap.val().unitPengujianSampel === undefined ? '' : snap.val().unitPengujianSampel,
             penerimaSampelAdminLab: snap.val().penerimaSampelAdminLab === undefined ? '' : snap.val().penerimaSampelAdminLab,
             penerimaSampelAnalisLab: snap.val().penerimaSampelAnalisLab === undefined ? '' : snap.val().penerimaSampelAnalisLab,
@@ -757,7 +767,7 @@ class SampelDetailBase extends Component {
     this.setState({ openAlertTanggalMasukSampel: false });
 
     this.props.firebase.db.ref('samples/' + this.state.idPermohonanUji).update({
-      tanggalTerimaSampelAdminLab: this.state.tanggalTerimaSampelAdminLab.toString(),
+      tanggalUjiSampelAnalis: this.state.tanggalUjiSampelAnalis.toString(),
     })
   };
 
@@ -846,7 +856,7 @@ class SampelDetailBase extends Component {
 
   handleDateChangeTanggalMasukSampel = date => {
     // console.log(this.state.tanggalMasukSampel, typeof this.state.tanggalMasukSampel, date, typeof date, date.toString())
-    this.setState({ tanggalTerimaSampelAdminLab: date });
+    this.setState({ tanggalUjiSampelAnalis: date });
   };
 
   // onChange = id => event => {
@@ -899,7 +909,7 @@ class SampelDetailBase extends Component {
       penerimaSampelAdminLab, manajerTeknisAdminLab, manajerAdministrasiAdminLab, nipManajerAdministrasiAdminLab, penerimaSampelAnalisLab,
       selectUserformAdminLab, selectUserformManajerAdministrasi, selectUserformManajerTeknis, selectUserformAnalis,
       // selectNipUserformAdminLab, selectNipUserformManajerAdministrasi, selectNipUserformManajerTeknis, selectNipUserformAnalis,
-      statusLaporanSPP, loadingReport, keteranganPengujianDitolak, nomorAgendaSurat, tanggalMasukSampel,
+      statusLaporanSPP, loadingReport, keteranganPengujianDitolak, nomorAgendaSurat, tanggalMasukSampel, tanggalUjiSampelAnalis,
       openAlert, openAlertKodeUnik, openAlertNomorLhu, nomorLhu, openAlertManajerAdministrasiAdminLab, openAlertTanggalMasukSampel,
     } = this.state;
     const isInvalid = tanggalTerimaSampelAdminLab === '' || PenerimaSampelAdminLab === '' || ManajerTeknisAdminLab === '' ||
@@ -939,7 +949,7 @@ class SampelDetailBase extends Component {
               <div style={{ marginTop: 25 }} key={key}>
                 <Typography variant="subtitle1" gutterBottom>Tanggal Masuk Sampel : {dateFnsFormat(new Date(el.tanggalMasukSampel), "dd MMM yyyy")}</Typography>
                 <Typography variant="subtitle1" gutterBottom>
-                  <Button variant='contained' onClick={this.handleOpenAlertTanggalMasukSampel}>Edit Tanggal Masuk Sampel Admin Lab : {dateFnsFormat(new Date(el.tanggalTerimaSampelAdminLab), 'dd MMM yyyy')}</Button> {'  '}
+                  <Button variant='contained' onClick={this.handleOpenAlertTanggalMasukSampel}>Edit Tanggal LHU : {dateFnsFormat(new Date(el.tanggalUjiSampelAnalis), 'dd MMM yyyy')}</Button> {'  '}
                 </Typography>
                 {/* {console.log(el.tanggalMasukSampel, typeof el.tanggalMasukSampel)} */}
                 <Typography variant="subtitle1" gutterBottom>Nomor Permohonan (IQFAST) : {el.nomorAgendaSurat}</Typography>
@@ -1310,27 +1320,18 @@ class SampelDetailBase extends Component {
               maxWidth={'sm'}
               fullWidth={true}
             >
-              <DialogTitle id="alert-dialog-title">{'Edit Tanggal Masuk Sampel'}</DialogTitle>
+              <DialogTitle id="alert-dialog-title">{'Edit Tanggal LHU'}</DialogTitle>
               <DialogContent>
                 <DialogContentText id="alert-dialog-description">
                   <MuiPickersUtilsProvider utils={DateFnsUtils}>
                     <DatePicker
                       margin="normal"
                       style={{ width: 250 }}
-                      label="Tanggal Masuk Sampel Admin Lab"
-                      value={tanggalTerimaSampelAdminLab}
+                      label="Tanggal LHU"
+                      value={tanggalUjiSampelAnalis}
                       format={'dd MMM yyyy'}
                       onChange={this.handleDateChangeTanggalMasukSampel} />
                   </MuiPickersUtilsProvider>
-                  {/* <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                    <DatePicker
-                      margin="normal"
-                      style={{ width: 350, marginBottom: 20 }}
-                      label="Tanggal Terima Sampel oleh Admin Lab"
-                      value={tanggalTerimaSampelAdminLab}
-                      format={'dd MMM yyyy'}
-                      onChange={this.handleDateChange} />
-                  </MuiPickersUtilsProvider> */}
                 </DialogContentText>
               </DialogContent>
               <DialogActions>

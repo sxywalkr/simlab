@@ -76,32 +76,33 @@ class SampelAllBase extends Component {
   componentDidMount() {
     this.setState({ loading: true });
     this.props.firebase.db.ref('samples')
-      // .orderByChild('flagStatusProses')
-      // .equalTo('Sampel di Analis')
+      .orderByChild('flagStatusProses')
+      .equalTo('Sampel di Analis')
       .on('value', snap => {
         if (snap.val()) {
           const a = [];
           snap.forEach(el => {
             // console.log(el.val());
-            if ( el.val().flagStatusProses !== 'Sampel tidak dapat diuji') 
-            {a.push({
-              idPermohonanUji: el.val().idPermohonanUji,
-              kodeUnikSampelAdminLab: el.val().kodeUnikSampelAdminLab,
-              tanggalMasukSampel: el.val().tanggalMasukSampel,
-              nomorAgendaSurat: el.val().nomorAgendaSurat,
-              namaPemilikSampel: el.val().namaPemilikSampel,
-              alamatPemilikSampel: el.val().alamatPemilikSampel,
-              asalTujuanSampel: el.val().asalTujuanSampel,
-              petugasPengambilSampel: el.val().petugasPengambilSampel,
-              flagActivity: el.val().flagActivity,
-              flagStatusProses: el.val().flagStatusProses,
-              tanggalUjiSampelAnalis: el.val().tanggalUjiSampelAnalis,
-              penyeliaAnalis: el.val().penyeliaAnalis,
-              nipPenyeliaAnalis: el.val().nipPenyeliaAnalis,
-              penerimaSampelAnalisLab: el.val().penerimaSampelAnalisLab,
-              nipPenerimaSampelAnalisLab: el.val().nipPenerimaSampelAnalisLab,
-              zItems: el.val().zItems,
-            })}
+            // if (el.val().flagStatusProses !== 'Sampel tidak dapat diuji') {
+              a.push({
+                idPermohonanUji: el.val().idPermohonanUji,
+                kodeUnikSampelAdminLab: el.val().kodeUnikSampelAdminLab,
+                tanggalMasukSampel: el.val().tanggalMasukSampel,
+                nomorAgendaSurat: el.val().nomorAgendaSurat,
+                namaPemilikSampel: el.val().namaPemilikSampel,
+                alamatPemilikSampel: el.val().alamatPemilikSampel,
+                asalTujuanSampel: el.val().asalTujuanSampel,
+                petugasPengambilSampel: el.val().petugasPengambilSampel,
+                flagActivity: el.val().flagActivity,
+                flagStatusProses: el.val().flagStatusProses,
+                tanggalUjiSampelAnalis: el.val().tanggalUjiSampelAnalis,
+                penyeliaAnalis: el.val().penyeliaAnalis,
+                nipPenyeliaAnalis: el.val().nipPenyeliaAnalis,
+                penerimaSampelAnalisLab: el.val().penerimaSampelAnalisLab,
+                nipPenerimaSampelAnalisLab: el.val().nipPenerimaSampelAnalisLab,
+                zItems: el.val().zItems,
+              })
+            // }
           });
           this.setState({
             items: a,
@@ -168,14 +169,14 @@ class SampelAllBase extends Component {
                           </Button>
                         </TableCell>
                         <TableCell>
-                        {
-                          el.flagActivity === 'Sampel selesai diuji oleh Analis' ?
-                          <PDFDownloadLink document={<Quixote q={el} />} fileName="laporan-hasil-pengujian.pdf">
-                            {({ blob, url, loading, error }) => (loading ? 'Loading pdf...' : 'Download Laporan Hasil Pengujian')}
-                          </PDFDownloadLink>
-                          :
-                          'Laporan Hasil Pengujian belum tersedia.'
-                        }
+                          {
+                            el.flagActivity === 'Sampel selesai diuji oleh Analis' ?
+                              <PDFDownloadLink document={<Quixote q={el} />} fileName="laporan-hasil-pengujian.pdf">
+                                {({ blob, url, loading, error }) => (loading ? 'Loading pdf...' : 'Download Laporan Hasil Pengujian')}
+                              </PDFDownloadLink>
+                              :
+                              'Laporan Hasil Pengujian belum tersedia.'
+                          }
                         </TableCell>
                       </TableRow>
                     </TableBody>
@@ -678,7 +679,7 @@ class SampelDetailBase extends Component {
     this.setState({
       [name]: event.target.value,
     });
-    
+
   };
 
   render() {
@@ -686,9 +687,9 @@ class SampelDetailBase extends Component {
     const {
       loading, items,
       tanggalTerimaSampelAdminLab, PenerimaSampelAdminLab, ManajerTeknisAdminLab, ManajerAdministrasiAdminLab,
-      tanggalUjiSampelAnalis, penyeliaAnalis, 
-      hasilUjiSampel, hasilUjiSampelBaris2, hasilUjiSampelBaris3, hasilUjiSampelBaris4, hasilUjiSampelBaris5, hasilUjiSampelBaris6, hasilUjiSampelBaris7, hasilUjiSampelBaris8, 
-      hasilUjiSampelBaris9, hasilUjiSampelBaris10, 
+      tanggalUjiSampelAnalis, penyeliaAnalis,
+      hasilUjiSampel, hasilUjiSampelBaris2, hasilUjiSampelBaris3, hasilUjiSampelBaris4, hasilUjiSampelBaris5, hasilUjiSampelBaris6, hasilUjiSampelBaris7, hasilUjiSampelBaris8,
+      hasilUjiSampelBaris9, hasilUjiSampelBaris10,
       keteranganSampel, penerimaSampelAnalisLab, selectUserformPenyelia,
     } = this.state;
     const isInvalid = tanggalTerimaSampelAdminLab === '' || PenerimaSampelAdminLab === '' || ManajerTeknisAdminLab === '' ||
