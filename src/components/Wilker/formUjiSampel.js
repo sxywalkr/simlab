@@ -1233,7 +1233,7 @@ class SampelDetailBase extends Component {
         })
       if (event.target.value === 'Bahan Asal Hewan' || event.target.value === 'Hasil Bahan Asal Hewan') {
         this.setState({
-          selectMetodePengujian: ['TPC', 'RAPID TEST KIT'],
+          selectMetodePengujian: ['TPC', 'RAPID TEST KIT', 'HA-HI/AI-ND'],
         })
       } else if (event.target.value === 'Ulas Darah') {
         this.setState({

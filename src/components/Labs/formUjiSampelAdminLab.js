@@ -948,10 +948,9 @@ class SampelDetailBase extends Component {
             {!loading && items.map((el, key) =>
               <div style={{ marginTop: 25 }} key={key}>
                 <Typography variant="subtitle1" gutterBottom>Tanggal Masuk Sampel : {dateFnsFormat(new Date(el.tanggalMasukSampel), "dd MMM yyyy")}</Typography>
-                <Typography variant="subtitle1" gutterBottom>
+                {!! el.tanggalUjiSampelAnalis && <Typography variant="subtitle1" gutterBottom>
                   <Button variant='contained' onClick={this.handleOpenAlertTanggalMasukSampel}>Edit Tanggal LHU : {dateFnsFormat(new Date(el.tanggalUjiSampelAnalis), 'dd MMM yyyy')}</Button> {'  '}
-                </Typography>
-                {/* {console.log(el.tanggalMasukSampel, typeof el.tanggalMasukSampel)} */}
+                </Typography>}
                 <Typography variant="subtitle1" gutterBottom>Nomor Permohonan (IQFAST) : {el.nomorAgendaSurat}</Typography>
                 <Typography variant="subtitle1" gutterBottom>Nama Pemilik Sampel : {el.namaPemilikSampel}</Typography>
                 <Typography variant="subtitle1" gutterBottom>Alamat Pemilik Sampel : {el.alamatPemilikSampel}</Typography>
