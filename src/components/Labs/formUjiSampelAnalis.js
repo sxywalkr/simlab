@@ -76,14 +76,18 @@ class SampelAllBase extends Component {
   componentDidMount() {
     this.setState({ loading: true });
     this.props.firebase.db.ref('samples')
-      .orderByChild('flagStatusProses')
-      .equalTo('Sampel di Analis')
+      // .orderByChild('flagStatusProses')
+      // .equalTo('Sampel di Analis')
       .on('value', snap => {
         if (snap.val()) {
           const a = [];
           snap.forEach(el => {
-            // console.log(el.val());
-            // if (el.val().flagStatusProses !== 'Sampel tidak dapat diuji') {
+            console.log(el.val());
+            if (
+                  el.val().flagActivity === 'Permohonan pengujian diteruskan ke analis' 
+                  || el.val().flagActivity === 'Sampel selesai diuji oleh Analis'
+                  // && el.val().flagStatusProses !== 'Laporan Hasil Uji di Admin Lab'
+            ) {
               a.push({
                 idPermohonanUji: el.val().idPermohonanUji,
                 kodeUnikSampelAdminLab: el.val().kodeUnikSampelAdminLab,
@@ -102,7 +106,7 @@ class SampelAllBase extends Component {
                 nipPenerimaSampelAnalisLab: el.val().nipPenerimaSampelAnalisLab,
                 zItems: el.val().zItems,
               })
-            // }
+            }
           });
           this.setState({
             items: a,
@@ -1204,6 +1208,15 @@ const Quixote = (p) => {
             </View>
             <View style={styles.tableCol20}>
               <Text style={styles.tableCell}>{p.q.zItems[el1].hasilUjiSampel}</Text>
+              {!!p.q.zItems[el1].hasilUjiSampelBaris2 && <Text style={styles.tableCell}>{p.q.zItems[el1].hasilUjiSampelBaris2}</Text>}
+              {!!p.q.zItems[el1].hasilUjiSampelBaris3 && <Text style={styles.tableCell}>{p.q.zItems[el1].hasilUjiSampelBaris3}</Text>}
+              {!!p.q.zItems[el1].hasilUjiSampelBaris4 && <Text style={styles.tableCell}>{p.q.zItems[el1].hasilUjiSampelBaris4}</Text>}
+              {!!p.q.zItems[el1].hasilUjiSampelBaris5 && <Text style={styles.tableCell}>{p.q.zItems[el1].hasilUjiSampelBaris5}</Text>}
+              {!!p.q.zItems[el1].hasilUjiSampelBaris6 && <Text style={styles.tableCell}>{p.q.zItems[el1].hasilUjiSampelBaris6}</Text>}
+              {!!p.q.zItems[el1].hasilUjiSampelBaris7 && <Text style={styles.tableCell}>{p.q.zItems[el1].hasilUjiSampelBaris7}</Text>}
+              {!!p.q.zItems[el1].hasilUjiSampelBaris8 && <Text style={styles.tableCell}>{p.q.zItems[el1].hasilUjiSampelBaris8}</Text>}
+              {!!p.q.zItems[el1].hasilUjiSampelBaris9 && <Text style={styles.tableCell}>{p.q.zItems[el1].hasilUjiSampelBaris9}</Text>}
+              {!!p.q.zItems[el1].hasilUjiSampelBaris10 && <Text style={styles.tableCell}>{p.q.zItems[el1].hasilUjiSampelBaris10}</Text>}
             </View>
             <View style={styles.tableCol15}>
               <Text style={styles.tableCell}>{p.q.zItems[el1].keteranganSampel}</Text>

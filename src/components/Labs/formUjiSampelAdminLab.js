@@ -96,6 +96,7 @@ class SampelAllBase extends Component {
         if (snap.val()) {
           const a = [];
           snap.forEach(el => {
+            console.log(el.val())
             a.push({
               idPermohonanUji: el.val().idPermohonanUji,
               kodeUnikSampel: el.val().kodeUnikSampel,
@@ -468,7 +469,8 @@ class SampelAllBase extends Component {
 
                 <MUIDataTable
                   // title={"Daftar Sampel"}
-                  data={items ? items : this.state.itemsZ}
+                  // data={items ? items : this.state.itemsZ}
+                  data={items}
                   columns={this.columns}
                   options={this.options}
                 />
