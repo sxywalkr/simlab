@@ -84,9 +84,9 @@ class SampelAllBase extends Component {
           snap.forEach(el => {
             console.log(el.val());
             if (
-                  el.val().flagActivity === 'Permohonan pengujian diteruskan ke analis' 
-                  || el.val().flagActivity === 'Sampel selesai diuji oleh Analis'
-                  // && el.val().flagStatusProses !== 'Laporan Hasil Uji di Admin Lab'
+              el.val().flagActivity === 'Permohonan pengujian diteruskan ke analis'
+              || el.val().flagActivity === 'Sampel selesai diuji oleh Analis'
+              // && el.val().flagStatusProses !== 'Laporan Hasil Uji di Admin Lab'
             ) {
               a.push({
                 idPermohonanUji: el.val().idPermohonanUji,
@@ -687,7 +687,7 @@ class SampelDetailBase extends Component {
   };
 
   render() {
-    // console.log(this.state);
+    console.log(this.state);
     const {
       loading, items,
       tanggalTerimaSampelAdminLab, PenerimaSampelAdminLab, ManajerTeknisAdminLab, ManajerAdministrasiAdminLab,
@@ -744,7 +744,22 @@ class SampelDetailBase extends Component {
                         <TableCell>{el.zItems[el1].metodePengujianSampel}</TableCell>
                         <TableCell>{el.zItems[el1].targetPengujianSampel}</TableCell>
                         {/* <TableCell>{el.zItems[el1].unitPengujianSampel}</TableCell> */}
-                        <TableCell>{el.zItems[el1].hasilUjiSampel}</TableCell>
+                        <TableCell>
+                          <View style={{ display: "flex", flexDirection: "column" }} >
+                            <Text>{el.zItems[el1].hasilUjiSampel}</Text>
+                            {!!el.zItems[el1].hasilUjiSampelBaris2 && <Text>{el.zItems[el1].hasilUjiSampelBaris2}</Text>}
+                            {!!el.zItems[el1].hasilUjiSampelBaris3 && <Text>{el.zItems[el1].hasilUjiSampelBaris3}</Text>}
+                            {!!el.zItems[el1].hasilUjiSampelBaris4 && <Text>{el.zItems[el1].hasilUjiSampelBaris4}</Text>}
+                            {!!el.zItems[el1].hasilUjiSampelBaris5 && <Text>{el.zItems[el1].hasilUjiSampelBaris5}</Text>}
+                            {!!el.zItems[el1].hasilUjiSampelBaris6 && <Text>{el.zItems[el1].hasilUjiSampelBaris6}</Text>}
+                            {!!el.zItems[el1].hasilUjiSampelBaris7 && <Text>{el.zItems[el1].hasilUjiSampelBaris7}</Text>}
+                            {!!el.zItems[el1].hasilUjiSampelBaris8 && <Text>{el.zItems[el1].hasilUjiSampelBaris8}</Text>}
+                            {!!el.zItems[el1].hasilUjiSampelBaris9 && <Text>{el.zItems[el1].hasilUjiSampelBaris9}</Text>}
+                            {!!el.zItems[el1].hasilUjiSampelBaris10 && <Text>{el.zItems[el1].hasilUjiSampelBaris10}</Text>}
+                          </View>
+                        </TableCell>
+
+                        {/* {!!p.q.zItems[el1].hasilUjiSampelBaris2 && <Text style={styles.tableCell}>{p.q.zItems[el1].hasilUjiSampelBaris2}</Text>} */}
                         <TableCell>
                           <Button variant="outlined" color="primary" onClick={() => this.updateHasilPengujian(el.idPermohonanUji, el1, el.zItems[el1].metodePengujianSampel, el.zItems[el1].targetPengujianSampel)}>
                             Update hasil
@@ -1169,7 +1184,7 @@ const Quixote = (p) => {
         <Text style={styles.headerTitle16}>LAPORAN HASIL PENGUJIAN</Text>
       </View>
       <View style={styles.marginV10}>
-        <Text style={styles.headerTitle11}>Tanggal Penerimaan Sampel : {dateFnsFormat(p.q.tanggalUjiSampelAnalis === undefined ? new Date() : new Date(p.q.tanggalUjiSampelAnalis), "dd MMM yyyy")}</Text>
+        <Text style={styles.headerTitle11}>Tanggal Pengujian Sampel : {dateFnsFormat(p.q.tanggalUjiSampelAnalis === undefined ? new Date() : new Date(p.q.tanggalUjiSampelAnalis), "dd MMM yyyy")}</Text>
       </View>
       <View style={styles.table}>
         <View style={styles.tableRow}>

@@ -84,34 +84,35 @@ class PageAllBase extends Component {
         if (snap.val()) {
           const a = [];
           snap.forEach(el => {
-            if ( el.val().flagStatusProses !== 'Sampel tidak dapat diuji') 
-            {a.push({
-              idPermohonanUji: el.val().idPermohonanUji,
-              kodeUnikSampel: el.val().kodeUnikSampel,
-              tanggalMasukSampel: el.val().tanggalMasukSampel,
-              nomorAgendaSurat: el.val().nomorAgendaSurat,
-              namaPemilikSampel: el.val().namaPemilikSampel,
-              alamatPemilikSampel: el.val().alamatPemilikSampel,
-              asalTujuanSampel: el.val().asalTujuanSampel,
-              petugasPengambilSampel: el.val().petugasPengambilSampel,
-              flagActivity: el.val().flagActivity,
-              flagActivityDetail: el.val().flagActivityDetail,
-              flagStatusProses: el.val().flagStatusProses,
-              kodeUnikSampelAdminLab: el.val().kodeUnikSampelAdminLab,
-              // nomorAgendaSurat: el.val().nomorAgendaSurat,
-              tanggalTerimaSampelAdminLab: el.val().tanggalTerimaSampelAdminLab,
-              unitPengujianSampel: el.val().unitPengujianSampel,
-              tanggalUjiSampelAnalis: el.val().tanggalUjiSampelAnalis,
-              kondisiSampel: el.val().kondisiSampel,
-              manajerAdministrasiAdminLab: el.val().manajerAdministrasiAdminLab,
-              manajerTeknisAdminLab: el.val().manajerTeknisAdminLab,
-              nipManajerTeknisAdminLab: el.val().nipManajerTeknisAdminLab,
-              penyeliaAnalis: el.val().penyeliaAnalis,
-              nipPenyeliaAnalis: el.val().nipPenyeliaAnalis,
-              penerimaSampelAnalisLab: el.val().penerimaSampelAnalisLab,
-              nipPenerimaSampelAnalisLab: el.val().nipPenerimaSampelAnalisLab,
-              zItems: el.val().zItems,
-            })}
+            if (el.val().flagStatusProses !== 'Sampel tidak dapat diuji') {
+              a.push({
+                idPermohonanUji: el.val().idPermohonanUji,
+                kodeUnikSampel: el.val().kodeUnikSampel,
+                tanggalMasukSampel: el.val().tanggalMasukSampel,
+                nomorAgendaSurat: el.val().nomorAgendaSurat,
+                namaPemilikSampel: el.val().namaPemilikSampel,
+                alamatPemilikSampel: el.val().alamatPemilikSampel,
+                asalTujuanSampel: el.val().asalTujuanSampel,
+                petugasPengambilSampel: el.val().petugasPengambilSampel,
+                flagActivity: el.val().flagActivity,
+                flagActivityDetail: el.val().flagActivityDetail,
+                flagStatusProses: el.val().flagStatusProses,
+                kodeUnikSampelAdminLab: el.val().kodeUnikSampelAdminLab,
+                // nomorAgendaSurat: el.val().nomorAgendaSurat,
+                tanggalTerimaSampelAdminLab: el.val().tanggalTerimaSampelAdminLab,
+                unitPengujianSampel: el.val().unitPengujianSampel,
+                tanggalUjiSampelAnalis: el.val().tanggalUjiSampelAnalis,
+                kondisiSampel: el.val().kondisiSampel,
+                manajerAdministrasiAdminLab: el.val().manajerAdministrasiAdminLab,
+                manajerTeknisAdminLab: el.val().manajerTeknisAdminLab,
+                nipManajerTeknisAdminLab: el.val().nipManajerTeknisAdminLab,
+                penyeliaAnalis: el.val().penyeliaAnalis,
+                nipPenyeliaAnalis: el.val().nipPenyeliaAnalis,
+                penerimaSampelAnalisLab: el.val().penerimaSampelAnalisLab,
+                nipPenerimaSampelAnalisLab: el.val().nipPenerimaSampelAnalisLab,
+                zItems: el.val().zItems,
+              })
+            }
           });
           this.setState({
             items: a,
@@ -500,7 +501,21 @@ class PageDetailBase extends Component {
                         <TableCell>{el.zItems[el1].kondisiSampel}</TableCell>
                         <TableCell>{el.zItems[el1].metodePengujianSampel}</TableCell>
                         <TableCell>{el.zItems[el1].targetPengujianSampel}</TableCell>
-                        <TableCell>{el.zItems[el1].hasilUjiSampel}</TableCell>
+                        {/* <TableCell>{el.zItems[el1].hasilUjiSampel}</TableCell> */}
+                        <TableCell>
+                          <View style={{ display: "flex", flexDirection: "column" }} >
+                            <Text>{el.zItems[el1].hasilUjiSampel}</Text>
+                            {!!el.zItems[el1].hasilUjiSampelBaris2 && <Text>{el.zItems[el1].hasilUjiSampelBaris2}</Text>}
+                            {!!el.zItems[el1].hasilUjiSampelBaris3 && <Text>{el.zItems[el1].hasilUjiSampelBaris3}</Text>}
+                            {!!el.zItems[el1].hasilUjiSampelBaris4 && <Text>{el.zItems[el1].hasilUjiSampelBaris4}</Text>}
+                            {!!el.zItems[el1].hasilUjiSampelBaris5 && <Text>{el.zItems[el1].hasilUjiSampelBaris5}</Text>}
+                            {!!el.zItems[el1].hasilUjiSampelBaris6 && <Text>{el.zItems[el1].hasilUjiSampelBaris6}</Text>}
+                            {!!el.zItems[el1].hasilUjiSampelBaris7 && <Text>{el.zItems[el1].hasilUjiSampelBaris7}</Text>}
+                            {!!el.zItems[el1].hasilUjiSampelBaris8 && <Text>{el.zItems[el1].hasilUjiSampelBaris8}</Text>}
+                            {!!el.zItems[el1].hasilUjiSampelBaris9 && <Text>{el.zItems[el1].hasilUjiSampelBaris9}</Text>}
+                            {!!el.zItems[el1].hasilUjiSampelBaris10 && <Text>{el.zItems[el1].hasilUjiSampelBaris10}</Text>}
+                          </View>
+                        </TableCell>
                         {/* <TableCell>{el.zItems[el1].unitPengujianSampel}</TableCell> */}
                         {/* <TableCell>
                           <Button variant="text" color="secondary" onClick={() => this.handleUbah2(el.idPermohonanUji, el1, el.zItems[el1].metodePengujianSampel)}>
