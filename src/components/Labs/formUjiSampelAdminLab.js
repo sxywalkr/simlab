@@ -1691,7 +1691,7 @@ const PDFLHU = (p) => {
       </View>
       <View style={styles.headerRowCenter}>
         <Text style={styles.headerTitle16}>LAPORAN HASIL UJI SEROLOGI</Text>
-        <Text style={styles.headerTitle10}>Nomor : {p.q.nomorLhu} {'   '}Tanggal : {dateFnsFormat(new Date(p.q.tanggalTerimaSampelAdminLab), "dd MMM yyyy")}</Text>
+        <Text style={styles.headerTitle10}>Nomor : {p.q.nomorLhu} {'   '}Tanggal : {dateFnsFormat(new Date(p.q.tanggalUjiSampelAnalis), "dd MMM yyyy")}</Text>
       </View>
       <View style={[styles.marginV10, styles.marginL20]}>
         <Text style={styles.headerTitle11}>Laporan / Sertifikat ini diberikan kepada :</Text>

@@ -86,6 +86,7 @@ class SampelAllBase extends Component {
             if (
               el.val().flagActivity === 'Permohonan pengujian diteruskan ke analis'
               || el.val().flagActivity === 'Sampel selesai diuji oleh Analis'
+              || el.val().flagActivity === 'Laporan Hasil Uji di Admin Lab'
               // && el.val().flagStatusProses !== 'Laporan Hasil Uji di Admin Lab'
             ) {
               a.push({
@@ -108,8 +109,12 @@ class SampelAllBase extends Component {
               })
             }
           });
+          const sortedItems = a.slice().sort((a, b) => b.tanggalMasukSampel - a.tanggalMasukSampel)
+          // const sortedItems = a.sort((a, b) => a.tanggalMasukSampel - b.tanggalMasukSampel)
+
           this.setState({
-            items: a,
+            items: sortedItems,
+            // items: a,
             loading: false,
           });
         } else {
@@ -174,7 +179,10 @@ class SampelAllBase extends Component {
                         </TableCell>
                         <TableCell>
                           {
-                            el.flagActivity === 'Sampel selesai diuji oleh Analis' ?
+                            (el.flagActivity === 'Laporan Hasil Uji di Admin Lab'
+                            || el.flagActivity === 'Sampel selesai diuji oleh Analis')
+                            // (el.flagActivity === 'Sampel selesai diuji oleh Analis') 
+                            ?
                               <PDFDownloadLink document={<Quixote q={el} />} fileName="laporan-hasil-pengujian.pdf">
                                 {({ blob, url, loading, error }) => (loading ? 'Loading pdf...' : 'Download Laporan Hasil Pengujian')}
                               </PDFDownloadLink>
