@@ -268,7 +268,7 @@ class SampelAllBase extends Component {
               }}
             >
               Detail
-          </Button>
+            </Button>
           )
         }
       }
@@ -950,7 +950,7 @@ class SampelDetailBase extends Component {
             {!loading && items.map((el, key) =>
               <div style={{ marginTop: 25 }} key={key}>
                 <Typography variant="subtitle1" gutterBottom>Tanggal Masuk Sampel : {dateFnsFormat(new Date(el.tanggalMasukSampel), "dd MMM yyyy")}</Typography>
-                {!! el.tanggalUjiSampelAnalis && <Typography variant="subtitle1" gutterBottom>
+                {!!el.tanggalUjiSampelAnalis && <Typography variant="subtitle1" gutterBottom>
                   <Button variant='contained' onClick={this.handleOpenAlertTanggalMasukSampel}>Edit Tanggal LHU : {dateFnsFormat(new Date(el.tanggalUjiSampelAnalis), 'dd MMM yyyy')}</Button> {'  '}
                 </Typography>}
                 <Typography variant="subtitle1" gutterBottom>Nomor Permohonan (IQFAST) : {el.nomorAgendaSurat}</Typography>
@@ -1690,7 +1690,13 @@ const PDFLHU = (p) => {
         <Text>Form No : 5.4.4.2</Text>
       </View>
       <View style={styles.headerRowCenter}>
-        <Text style={styles.headerTitle16}>LAPORAN HASIL UJI SEROLOGI</Text>
+        <Text style={styles.headerTitle16}>LAPORAN HASIL UJI</Text>
+        {/* {p.q.unitPengujianSampel === 'Mikrobiologi' && <Text style={styles.headerTitle16}>LAPORAN HASIL UJI MIKROBIOLOGI</Text>}
+        {p.q.unitPengujianSampel === 'Virologi' && <Text style={styles.headerTitle16}>LAPORAN HASIL UJI VIROLOGI</Text>}
+        {p.q.unitPengujianSampel === 'Serologi' && <Text style={styles.headerTitle16}>LAPORAN HASIL UJI SEROLOGI</Text>}
+        {p.q.unitPengujianSampel === 'Biomolekuler' && <Text style={styles.headerTitle16}>LAPORAN HASIL UJI SEROLOGI</Text>}
+        {p.q.unitPengujianSampel === 'PSAH' && <Text style={styles.headerTitle16}>LAPORAN HASIL UJI SEROLOGI</Text>}
+        {p.q.unitPengujianSampel === 'Parasitologi' && <Text style={styles.headerTitle16}>LAPORAN HASIL UJI PARASITOLOGI</Text>} */}
         <Text style={styles.headerTitle10}>Nomor : {p.q.nomorLhu} {'   '}Tanggal : {dateFnsFormat(new Date(p.q.tanggalUjiSampelAnalis), "dd MMM yyyy")}</Text>
       </View>
       <View style={[styles.marginV10, styles.marginL20]}>
