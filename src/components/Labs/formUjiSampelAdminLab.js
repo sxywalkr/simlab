@@ -84,6 +84,7 @@ class SampelAllBase extends Component {
       open: false,
       formMode: [],
       selectBulan: '',
+      bahanOut: null,
     };
   }
 
@@ -134,55 +135,6 @@ class SampelAllBase extends Component {
               Action: [el.val().idPermohonanUji, el.val().flagActivityDetail],
             })
           });
-          // const b = [];
-          // snap.forEach(el => {
-          //   b.push({
-          //     // idPermohonanUji: el.val().idPermohonanUji,
-          //     // kodeUnikSampel: el.val().kodeUnikSampel,
-          //     tanggalMasukSampel: el.val().tanggalMasukSampel,
-          //     tanggalTerimaSampelAdminLab: el.val().tanggalTerimaSampelAdminLab,
-          //     tanggalUjiSampelAnalis: el.val().tanggalUjiSampelAnalis,
-          //     nomorAgendaSurat: el.val().nomorAgendaSurat,
-          //     namaPemilikSampel: el.val().namaPemilikSampel,
-          //     alamatPemilikSampel: el.val().alamatPemilikSampel,
-          //     asalTujuanSampel: el.val().asalTujuanSampel,
-          //     flagActivity: el.val().flagActivity,
-          //     flagActivityDetail: el.val().flagActivityDetail,
-          //     flagStatusProses: el.val().flagStatusProses,
-          //     unitPengujianSampel: el.val().unitPengujianSampel,
-          //     // kondisiSampel: el.val().kondisiSampel,
-          //     formLaporanKesimpulan: el.val().formLaporanKesimpulan,
-          //     formLaporanKeterangan: el.val().formLaporanKeterangan,
-          //     kodeUnikSampelAdminLab: el.val().kodeUnikSampelAdminLab,
-          //     // nomorAgendaSurat: el.val().nomorAgendaSurat,
-          //     // formLaporanKeterangan: el.val().formLaporanKeterangan,
-          //     // formLaporanKesimpulan: el.val().formLaporanKesimpulan,
-          //     keteranganPengujianDitolak: el.val().keteranganPengujianDitolak,
-          //     statusLaporanSPP: el.val().statusLaporanSPP,
-          //     manajerAdministrasiAdminLab: el.val().manajerAdministrasiAdminLab,
-          //     nipManajerAdministrasiAdminLab: el.val().nipManajerAdministrasiAdminLab,
-          //     manajerTeknisAdminLab: el.val().manajerTeknisAdminLab,
-          //     nipManajerTeknisAdminLab: el.val().nipManajerTeknisAdminLab,
-          //     penerimaSampelAdminLab: el.val().penerimaSampelAdminLab,
-          //     nipPenerimaSampelAdminLab: el.val().nipPenerimaSampelAdminLab,
-          //     penerimaSampelAnalisLab: el.val().penerimaSampelAnalisLab,
-          //     nipPenerimaSampelAnalisLab: el.val().nipPenerimaSampelAnalisLab,
-          //     penyeliaAnalis: el.val().penyeliaAnalis,
-          //     nipPenyeliaAnalis: el.val().nipPenyeliaAnalis,
-          //     petugasPengambilSampel: el.val().petugasPengambilSampel,
-          //     nipUser: el.val().nipUser,
-          //     // zItems: Object.keys(el.val().zItems).map((key) => el.val().zItems[key]),
-          //     zHasilUjiSampel: Object.keys(el.val().zItems).map((key) => el.val().zItems[key].hasilUjiSampel),
-          //     zJenisSampel: Object.keys(el.val().zItems).map((key) => el.val().zItems[key].jenisSampel),
-          //     zJumlahSampel: Object.keys(el.val().zItems).map((key) => el.val().zItems[key].jumlahSampel),
-          //     zKategoriSampel: Object.keys(el.val().zItems).map((key) => el.val().zItems[key].kategoriSample),
-          //     zMetodePengujianSampel: Object.keys(el.val().zItems).map((key) => el.val().zItems[key].metodePengujianSampel),
-          //     zRuangLingkupSampel: Object.keys(el.val().zItems).map((key) => el.val().zItems[key].ruangLingkupSampel),
-          //     zTargetPengujianSampel: Object.keys(el.val().zItems).map((key) => el.val().zItems[key].targetPengujianSampel),
-          //     zKondisiSampel: Object.keys(el.val().zItems).map((key) => el.val().zItems[key].kondisiSampel),
-          //     zKeteranganSampel: Object.keys(el.val().zItems).map((key) => el.val().zItems[key].keteranganSampel),
-          //   })
-          // });
           this.setState({
             items: a,
             // itemsB: b,
@@ -192,6 +144,7 @@ class SampelAllBase extends Component {
           this.setState({ items: null, loading: false });
         }
       })
+
 
   }
 
@@ -397,16 +350,45 @@ class SampelAllBase extends Component {
           // console.log(b)
           this.setState({
             itemsB: b,
-            loading: false,
+            // loading: false,
           });
           // }
         } else {
           this.setState({
             itemsB: null,
-            loading: false,
+            // loading: false,
           });
         }
       })
+
+      this.props.firebase.db.ref('bahanOut')
+            .orderByChild('bahanBulanMasukSampel').equalTo(a)
+            .on('value', snap3 => {
+              if (snap3.val()) {
+                const b3 = [];
+                snap3.forEach((res) => {
+                  b3.push({
+                    // bahanId: res.key,
+                    TanggalUjiSampelAnalis: res.val().bahanTanggalUjiSampelAnalis,
+                    KodeUnikSampelAdminLab: res.val().bahanKodeUnikSampelAdminLab,
+                    NamaAnalis: res.val().bahanNamaAnalis,
+                    Nama: res.val().bahanNama,
+                    Jumlah: res.val().bahanJumlah,
+                    // bahanIdPermohonanUji: res.val().bahanIdPermohonanUji,
+                    // bahanBulanMasukSampel: res.val().bahanBulanMasukSampel,
+                  })
+                })
+                this.setState({
+                  bahanOut: b3,
+                  loading: false,
+                });
+              } else {
+                this.setState({
+                  bahanOut: null,
+                  loading: false,
+                });
+              }
+            })
     // console.log(this.state.itemsB)
   }
 
@@ -416,6 +398,15 @@ class SampelAllBase extends Component {
       const wb = XLSX.utils.book_new();
       XLSX.utils.book_append_sheet(wb, ws, "master data");
       XLSX.writeFile(wb, "Simlab2019.xlsx")
+    }
+  };
+
+  exportBahan = () => {
+    if (this.state.bahanOut !== null) {
+      const ws = XLSX.utils.json_to_sheet(this.state.bahanOut);
+      const wb = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(wb, ws, "Bahan");
+      XLSX.writeFile(wb, "Simlab2019 - Bahan.xlsx")
     }
   };
 
@@ -461,7 +452,13 @@ class SampelAllBase extends Component {
                       <Button variant="outlined" color="primary" onClick={this.exportFile}
                         disabled={this.state.itemsB === null ? true : false}
                       >
-                        Export Excel
+                        Export Sampels
+                      </Button>
+                      <div style={{ width: 5 }} />
+                      <Button variant="outlined" color="primary" onClick={this.exportBahan}
+                        disabled={this.state.bahanOut === null ? true : false}
+                      >
+                        Export Bahan
                       </Button>
                     </Grid>
                   </Grid>
