@@ -71,6 +71,7 @@ class BahanAllBase extends Component {
                 idBahan: el.val().idBahan,
                 kodeBahan: el.val().kodeBahan,
                 namaBahan: el.val().namaBahan,
+                satuanBahan: el.val().satuanBahan,
               })
             });
             this.setState({ 
@@ -104,6 +105,7 @@ class BahanAllBase extends Component {
           idBahan: a.key,
           kodeBahan: propSample[0].kodeBahan,
           namaBahan: propSample[0].namaBahan,
+          satuanBahan: propSample[0].satuanBahan,
         })
       }}
     }
@@ -133,6 +135,7 @@ class BahanAllBase extends Component {
               <TableRow>
                 <TableCell>Kode Bahan</TableCell>
                 <TableCell>Nama Bahan</TableCell>
+                <TableCell>Satuan Bahan</TableCell>
                 <TableCell>Ubah</TableCell>
                 <TableCell>Hapus</TableCell>
               </TableRow>
@@ -142,6 +145,7 @@ class BahanAllBase extends Component {
                 <TableRow>
                   <TableCell>{el.kodeBahan}</TableCell>
                   <TableCell>{el.namaBahan}</TableCell>
+                  <TableCell>{el.satuanBahan}</TableCell>
                   <TableCell>
                     <Button component={Link} 
                         to={{
@@ -178,6 +182,7 @@ class BahanDetailBase extends Component {
       idBahan: '',
       kodeBahan: '',
       namaBahan: '',
+      satuanBahan: '',
       }; 
   }
 
@@ -195,6 +200,7 @@ class BahanDetailBase extends Component {
             idBahan: snap.val().idBahan,
             kodeBahan: snap.val().kodeBahan,
             namaBahan: snap.val().namaBahan,
+            satuanBahan: snap.val().satuanBahan,
           });
         } else {
           this.setState({ items: null, loading: false });
@@ -219,6 +225,7 @@ class BahanDetailBase extends Component {
       this.props.firebase.db.ref('masterData/bahan/' + this.state.idBahan).update({
         kodeBahan: this.state.kodeBahan,
         namaBahan: this.state.namaBahan,
+        satuanBahan: this.state.satuanBahan,
       })
   }
 
@@ -229,8 +236,8 @@ class BahanDetailBase extends Component {
   };
 
   render() {
-    const { loading, kodeBahan, namaBahan, items } = this.state;
-    const isInvalid = kodeBahan === '' || namaBahan === '';
+    const { loading, kodeBahan, namaBahan, satuanBahan, items } = this.state;
+    const isInvalid = kodeBahan === '' || namaBahan === '' || satuanBahan === '';
     return (
       <div>
           <h2>Detail Sample</h2>
@@ -250,6 +257,7 @@ class BahanDetailBase extends Component {
               <TableRow>
                 <TableCell>Kode Bahan</TableCell>
                 <TableCell>Nama Bahan</TableCell>
+                <TableCell>Satuan Bahan</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -257,6 +265,7 @@ class BahanDetailBase extends Component {
                 <TableRow key={key}>
                   <TableCell>{el.kodeBahan}</TableCell>
                   <TableCell>{el.namaBahan}</TableCell>
+                  <TableCell>{el.satuanBahan}</TableCell>
                 </TableRow>
               )}
             </TableBody>
@@ -286,6 +295,14 @@ class BahanDetailBase extends Component {
                 label="Nama Bahan"
                 value={ namaBahan }
                 onChange={this.onChange('namaBahan')}
+                fullWidth
+              />
+              <TextField
+                margin="dense"
+                id="satuanBahan"
+                label="Satuan Bahan"
+                value={ satuanBahan }
+                onChange={this.onChange('satuanBahan')}
                 fullWidth
               />
             </DialogContent>
@@ -329,6 +346,7 @@ class FormSampleBase extends Component {
     this.state = {
       kodeBahan: '',
       namaBahan: '',
+      satuanBahan: '',
       error: null,
     }; 
   }
@@ -344,11 +362,13 @@ class FormSampleBase extends Component {
     a.push({
       kodeBahan: this.state.kodeBahan,
       namaBahan: this.state.namaBahan,
+      satuanBahan: this.state.satuanBahan,
     })
     this.props.handleSubmit(a);
     this.setState({ 
       kodeBahan: '',
       namaBahan: '',
+      satuanBahan: '',
      })
   }
 
@@ -357,13 +377,14 @@ class FormSampleBase extends Component {
     this.setState({ 
       kodeBahan: '',
       namaBahan: '',
+      satuanBahan: '',
      })
   }
 
 
   render() {
-    const { kodeBahan, namaBahan } = this.state;
-    const isInvalid = kodeBahan === '' || namaBahan === '';
+    const { kodeBahan, namaBahan, satuanBahan } = this.state;
+    const isInvalid = kodeBahan === '' || namaBahan === '' || satuanBahan === '';
 
     return (
       <Dialog
@@ -391,6 +412,14 @@ class FormSampleBase extends Component {
             label="Nama Bahan"
             value={ namaBahan }
             onChange={this.onChange('namaBahan')}
+            fullWidth
+          />
+          <TextField
+            margin="dense"
+            id="satuanBahan"
+            label="Satuan Bahan"
+            value={ satuanBahan }
+            onChange={this.onChange('satuanBahan')}
             fullWidth
           />
         </DialogContent>

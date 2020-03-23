@@ -258,6 +258,7 @@ class SampelDetailBase extends Component {
       thisS: '',
       namaBahan: '',
       jumlahBahan: '',
+      satuanBahan: '',
       bahanOut: '',
       //tanggalBahanTerpakai: '',
     };
@@ -319,6 +320,7 @@ class SampelDetailBase extends Component {
               idBahan: res.val().idBahan,
               kodeBahan: res.val().kodeBahan,
               namaBahan: res.val().namaBahan,
+              satuanBahan: res.val().satuanBahan,
             })
           })
           this.setState({
@@ -336,6 +338,7 @@ class SampelDetailBase extends Component {
               bahanTanggalUjiSampelAnalis: res.val().bahanTanggalUjiSampelAnalis,
               bahanNama: res.val().bahanNama,
               bahanJumlah: res.val().bahanJumlah,
+              bahanSatuan: res.val().bahanSatuan,
               bahanNamaAnalis: res.val().bahanNamaAnalis,
               bahanIdPermohonanUji: res.val().bahanIdPermohonanUji,
               bahanBulanMasukSampel: res.val().bahanBulanMasukSampel,
@@ -397,6 +400,7 @@ class SampelDetailBase extends Component {
       bahanTanggalUjiSampelAnalis: this.state.tanggalUjiSampelAnalis === undefined ? dateFnsFormat(new Date(), "yyyy-MMM-dd") : this.state.tanggalUjiSampelAnalis.toString(),
       bahanNama: this.state.namaBahan,
       bahanJumlah: this.state.jumlahBahan,
+      bahanSatuan: this.state.satuanBahan,
       bahanNamaAnalis: this.state.items[0].penerimaSampelAnalisLab,
       bahanIdPermohonanUji: this.state.idPermohonanUji,
       bahanBulanMasukSampel: this.state.items[0].bulanMasukSampel,
@@ -473,6 +477,26 @@ class SampelDetailBase extends Component {
 
   };
 
+  onChange3 = name => event => {
+    this.setState({
+      [name]: event.target.value,
+    });
+    if (name === 'namaBahan') {
+      this.props.firebase.db.ref('masterData/bahan').orderByChild('namaBahan').equalTo(event.target.value).once('value', snap => {
+        const b3 = [];
+          snap.forEach((res) => {
+            b3.push({
+              satuanBahan: res.val().satuanBahan,
+            })
+          })
+          // console.log(b3[0].satuanBahan)
+          this.setState({
+            satuanBahan: b3[0].satuanBahan,
+          });
+      })
+    }
+  }
+
   render() {
     // console.log(this.state);
     const {
@@ -481,7 +505,7 @@ class SampelDetailBase extends Component {
       tanggalUjiSampelAnalis, penyeliaAnalis,
       hasilUjiSampel, hasilUjiSampelBaris2, hasilUjiSampelBaris3, hasilUjiSampelBaris4, hasilUjiSampelBaris5, hasilUjiSampelBaris6, hasilUjiSampelBaris7, hasilUjiSampelBaris8,
       hasilUjiSampelBaris9, hasilUjiSampelBaris10,
-      keteranganSampel, penerimaSampelAnalisLab, selectUserformPenyelia, namaBahan, selectBahan, jumlahBahan, bahanOut,
+      keteranganSampel, penerimaSampelAnalisLab, selectUserformPenyelia, namaBahan, selectBahan, jumlahBahan, satuanBahan, bahanOut,
     } = this.state;
     const isInvalid = tanggalTerimaSampelAdminLab === '' || PenerimaSampelAdminLab === '' || ManajerTeknisAdminLab === '' ||
       ManajerAdministrasiAdminLab === '';
@@ -571,6 +595,7 @@ class SampelDetailBase extends Component {
                       <TableRow>
                         <TableCell>Nama Bahan</TableCell>
                         <TableCell>Jumlah Bahan</TableCell>
+                        <TableCell>Satuan Bahan</TableCell>
                         <TableCell>Action</TableCell>
                       </TableRow>
                     </TableHead>
@@ -579,9 +604,10 @@ class SampelDetailBase extends Component {
                         <TableRow>
                           <TableCell>{el.bahanNama}</TableCell>
                           <TableCell>{el.bahanJumlah}</TableCell>
+                          <TableCell>{el.bahanSatuan}</TableCell>
                           <TableCell>
                             <Button variant="text" color="secondary" onClick={() => this.handleDeleteBahan(el.bahanId)}
-                              // disabled={value[1] === "Belum ada sampel uji" || value[1] === "Data sudah lengkap" ? false : true}
+                            // disabled={value[1] === "Belum ada sampel uji" || value[1] === "Data sudah lengkap" ? false : true}
                             >
                               Hapus
                             </Button>
@@ -609,30 +635,6 @@ class SampelDetailBase extends Component {
                     format={'dd MMM yyyy'}
                     onChange={this.handleDateChange} />
                 </MuiPickersUtilsProvider>
-                {/* <FormControl style={{marginTop: 15}} variant="standard">
-                  <InputLabel htmlFor="managerTeknisAnalis">Manajer Teknis</InputLabel>{" "}
-                  <Select
-                    value={managerTeknisAnalis}
-                    onChange={this.onChange('managerTeknisAnalis')}
-                    style={{width:400}}
-                    name="managerTeknisAnalis"
-                  >
-                    <MenuItem value="ManajerTeknis1">Manajer Teknis1</MenuItem>
-                    <MenuItem value="ManajerTeknis2">Manajer Teknis2</MenuItem>            
-                  </Select>
-                </FormControl>
-                <FormControl style={{marginTop: 15}} variant="standard">
-                  <InputLabel htmlFor="managerAdministrasiAnalis">Manajer Administrasi</InputLabel>{" "}
-                  <Select
-                    value={managerAdministrasiAnalis}
-                    onChange={this.onChange('managerAdministrasiAnalis')}
-                    style={{width:400}}
-                    name="managerAdministrasiAnalis"
-                  >
-                    <MenuItem value="ManajerAdministrasi1">Manajer Administrasi1</MenuItem>
-                    <MenuItem value="ManajerAdministrasi2">Manajer Administrasi2</MenuItem>            
-                  </Select>
-                </FormControl> */}
                 <FormControl style={{ marginBottom: 20 }} variant="standard">
                   <InputLabel htmlFor="penyeliaAnalis">Penyelia</InputLabel>{" "}
                   <Select
@@ -655,18 +657,6 @@ class SampelDetailBase extends Component {
                   disabled={true}
                   value={penerimaSampelAnalisLab}
                 />
-                {/* <FormControl style={{marginTop: 15}} variant="standard">
-                  <InputLabel htmlFor="namaAnalis">Nama Analis</InputLabel>{" "}
-                  <Select
-                    value={namaAnalis}
-                    onChange={this.onChange('namaAnalis')}
-                    style={{width:400}}
-                    name="namaAnalis"
-                  >
-                    <MenuItem value="Analis1">Analis1</MenuItem>
-                    <MenuItem value="Analis2">Analis2</MenuItem>            
-                  </Select>
-                </FormControl> */}
               </DialogContent>
               <DialogActions>
                 <Button color="secondary" onClick={this.handleClose}>
@@ -801,7 +791,7 @@ class SampelDetailBase extends Component {
                   <InputLabel htmlFor="namaBahan">Nama Bahan</InputLabel>{" "}
                   <Select
                     value={namaBahan}
-                    onChange={this.onChange('namaBahan')}
+                    onChange={this.onChange3('namaBahan')}
                     style={{ width: 400 }}
                     name="namaBahan"
                   >
@@ -815,9 +805,20 @@ class SampelDetailBase extends Component {
                   id="jumlahBahan"
                   label="Jumlah Bahan"
                   value={jumlahBahan}
-                  onChange={this.onChange2('jumlahBahan')}
+                  type='number'
+                  onChange={this.onChange3('jumlahBahan')}
                   fullWidth
                 />
+                {/* <TextField
+                  margin="dense"
+                  id="satuanBahan"
+                  label="Satuan Bahan"
+                  value={satuanBahan}
+                  disabled={true}
+                  onChange={this.onChange2('satuanBahan')}
+                  fullWidth
+                /> */}
+                <Typography style={{ marginTop: 20 }} variant="subtitle1" gutterBottom>Satuan Bahan : {satuanBahan}</Typography>
                 <TextField
                   id="penerimaSampelAnalisLab"
                   label="Analis"

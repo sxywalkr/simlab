@@ -374,6 +374,7 @@ class SampelAllBase extends Component {
                     NamaAnalis: res.val().bahanNamaAnalis,
                     Nama: res.val().bahanNama,
                     Jumlah: res.val().bahanJumlah,
+                    Satuan: res.val().bahanSatuan,
                     // bahanIdPermohonanUji: res.val().bahanIdPermohonanUji,
                     // bahanBulanMasukSampel: res.val().bahanBulanMasukSampel,
                   })
