@@ -1847,7 +1847,7 @@ const Quixote = (p) => {
         <Text style={styles.headerTitle11}>Nomor : {p.q.nomorAgendaSurat} {'   '}Tanggal : {dateFnsFormat(new Date(p.q.tanggalMasukSampel), "dd MMM yyyy")}</Text>
       </View>
       <View style={styles.marginV10}>
-        <Text style={styles.headerTitle11}>Tanggal Penerimaan Sampel : {dateFnsFormat(new Date(), "dd MMM yyyy")}</Text>
+        <Text style={styles.headerTitle11}>Tanggal Penerimaan Sampel : {dateFnsFormat(new Date(p.q.tanggalMasukSampel), "dd MMM yyyy")}</Text>
         <Text style={styles.headerTitle11}>Nama Customer : {p.q.namaPemilikSampel}</Text>
         <Text style={styles.headerTitle11}>Alamat dan No Tlp Customer : {p.q.alamatPemilikSampel}</Text>
         <Text style={styles.headerTitle11}>Asal/Tujuan Sampel: {p.q.asalTujuanSampel}</Text>
