@@ -756,7 +756,7 @@ class SampelDetailBase extends Component {
         })
       if (event.target.value === 'Bahan Asal Hewan' || event.target.value === 'Hasil Bahan Asal Hewan') {
         this.setState({
-          selectMetodePengujian: ['TPC', 'RAPID TEST KIT', 'HA-HI/AI-ND', 'Salmonella'],
+          selectMetodePengujian: ['TPC', 'RAPID TEST KIT', 'HA-HI/AI-ND', 'SALMONELLA'],
         })
       } else if (event.target.value === 'Ulas Darah') {
         this.setState({
@@ -764,7 +764,7 @@ class SampelDetailBase extends Component {
         })
       } else if (event.target.value === 'Bahan Baku Pakan Ternak') {
         this.setState({
-          selectMetodePengujian: ['PCR-DNA', 'RT-PCR', 'FEED CHECK'],
+          selectMetodePengujian: ['PCR-DNA', 'RT-PCR', 'FEED CHECK', 'RAPID TEST SALMONELLA'],
         })
       } else if (event.target.value === 'Swab') {
         this.setState({
@@ -856,9 +856,14 @@ class SampelDetailBase extends Component {
           selectTargetPengujian: ['Kandungan Mamalia'],
           ruangLingkupSampel: 'Diluar Akreditasi',
         })
-      } else if (event.target.value === 'Salmonella') {
+      } else if (event.target.value === 'SALMONELLA') {
         this.setState({
           selectTargetPengujian: ['Cemaran Mikroba'],
+          ruangLingkupSampel: 'Diluar Akreditasi',
+        })
+      } else if (event.target.value === 'RAPID TEST SALMONELLA') {
+        this.setState({
+          selectTargetPengujian: ['Salmonella'],
           ruangLingkupSampel: 'Diluar Akreditasi',
         })
       }
