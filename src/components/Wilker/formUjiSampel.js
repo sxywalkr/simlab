@@ -268,10 +268,11 @@ class SampelAllBase extends Component {
   ]
   options = {
     filterType: 'dropdown',
-    rowsPerPage: 5,
+    rowsPerPage: 50,
     selectableRows: 'none',
     download: false,
     print: false,
+    search: false,
     // customSort: (data, colIndex, order) => {
     //   return data.sort((a, b) => {
     //     if (colIndex === 0 || colIndex === 0) {
