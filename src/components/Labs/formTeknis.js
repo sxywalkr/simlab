@@ -114,8 +114,11 @@ class PageAllBase extends Component {
               })
             }
           });
+
+          const sortedItems = a.slice().sort((a, b) => new Date(b.tanggalMasukSampel) - new Date(a.tanggalMasukSampel))
+
           this.setState({
-            items: a,
+            items: sortedItems,
             items2: snap.val(),
             loading: false,
           });
@@ -177,21 +180,17 @@ class PageAllBase extends Component {
                               pathname: `${ROUTES.TEKNIS}/${el.idPermohonanUji}`,
                               data: { el },
                             }}
-                            disabled={el.flagStatusProses === "Proses di Pelaksana Teknis" ? false : true}
+                            disabled={el.flagStatusProses === 'Proses di Pelaksana Teknis' || el.flagStatusProses === 'Laporan Hasil Uji di Admin Lab' ? false : true}
                           >
                             Detail
                           </Button>
                         </TableCell>
-                        {/* <TableCell>
-                          <PDFDownloadLink document={<PDFLHU q={el} />} fileName="laporan-hasil-uji.pdf">
-                            {({ blob, url, loading, error }) => (loading ? 'Loading pdf...' : 'Download Laporan Hasil Uji')}
-                          </PDFDownloadLink>
-                        </TableCell> */}
                         <TableCell>
                           {el.flagStatusProses === 'Proses di Pelaksana Teknis' || el.flagStatusProses === 'Laporan Hasil Uji di Admin Lab' ?
                             <PDFDownloadLink document={<PdfLHP q={el} />} fileName="laporan-hasil-uji.pdf">
                               {({ blob, url, loading, error }) => (loading ? 'Loading pdf...' : 'Download Laporan Hasil Pengujian')}
                             </PDFDownloadLink>
+                            // 'Laporan Hasil Pengujian tersedia. Cek Detail.'
                             :
                             'Laporan Hasil Pengujian belum tersedia.'
                           }
@@ -200,7 +199,7 @@ class PageAllBase extends Component {
                           <Button variant="outlined" color="primary" onClick={() => this.handleSubmitLhuOk(el.idPermohonanUji)}
                             disabled={el.flagActivityDetail === "Update keterangan by manajer teknis done" ? false : true}
                           >
-                            Laporan Hasil Uji OK
+                            Laporan Hasil Uji {el.flagStatusProses === 'Proses di Pelaksana Teknis' || el.flagStatusProses === 'Laporan Hasil Uji di Admin Lab' ? 'OK' : 'belum tersedia'}
                           </Button>
                         </TableCell>
                       </TableRow>
@@ -277,6 +276,9 @@ class PageDetailBase extends Component {
             alamatPemilikSampel: snap.val().alamatPemilikSampel,
             asalTujuanSampel: snap.val().asalTujuanSampel,
             petugasPengambilSampel: snap.val().petugasPengambilSampel,
+            formLaporanKeterangan: snap.val().formLaporanKeterangan ? snap.val().formLaporanKeterangan : '',
+            formLaporanKesimpulan: snap.val().formLaporanKesimpulan ? snap.val().formLaporanKesimpulan : '',
+            manajerTeknisAdminLab: snap.val().manajerTeknisAdminLab ? snap.val().manajerTeknisAdminLab : '',
           });
         } else {
           this.setState({ items: null, loading: false });
@@ -444,10 +446,12 @@ class PageDetailBase extends Component {
   }
 
   render() {
+    // console.log(this.state)
     const {
       selectUnitPengujian, unitPengujianSampel, loading, items,
       formLaporanKeterangan, formLaporanKesimpulan,
-      manajerTeknisAdminLab, selectUserformManajerTeknis,
+      manajerTeknisAdminLab,
+      selectUserformManajerTeknis,
     } = this.state;
     const isInvalid = formLaporanKeterangan === '' || formLaporanKesimpulan === '' || manajerTeknisAdminLab === '';
     const isInvalid2 = unitPengujianSampel === '';
@@ -480,6 +484,8 @@ class PageDetailBase extends Component {
                 <Typography variant="subtitle1" gutterBottom>Asal/Tujuan Media Pembawa : {el.asalTujuanSampel}</Typography>
                 <Typography variant="subtitle1" gutterBottom>Petugas Pengambil Sampel (PPC) : {el.petugasPengambilSampel}</Typography>
                 <Typography variant="subtitle1" gutterBottom>Unit Pengujian Sampel : {el.unitPengujianSampel}</Typography>
+                <Typography variant="subtitle1" gutterBottom>Keterangan : {el.formLaporanKeterangan}</Typography>
+                <Typography variant="subtitle1" gutterBottom>Kesimpulan : {el.formLaporanKesimpulan}</Typography>
                 <Table>
                   <TableHead>
                     <TableRow>
@@ -542,15 +548,6 @@ class PageDetailBase extends Component {
             >
               <DialogTitle id="form-dialog-title">Tambah Keterangan oleh Manajer Teknis</DialogTitle>
               <DialogContent>
-                {/* <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                  <DatePicker
-                    margin="normal"
-                    style={{ width: 350, marginBottom: 20 }}
-                    label="Tanggal Terima Sampel oleh Admin Lab"
-                    value={tanggalTerimaSampelAdminLab}
-                    format={'dd MMM yyyy'}
-                    onChange={this.handleDateChange} />
-                </MuiPickersUtilsProvider> */}
 
                 <TextField
                   id="formLaporanKeterangan"
@@ -558,6 +555,7 @@ class PageDetailBase extends Component {
                   style={{ width: "100%", marginBottom: 20, marginTop: 20 }}
                   variant="outlined"
                   onChange={this.onChange}
+                  value={formLaporanKeterangan}
                 />
                 <TextField
                   id="formLaporanKesimpulan"
@@ -565,70 +563,9 @@ class PageDetailBase extends Component {
                   style={{ width: "100%", marginBottom: 20 }}
                   variant="outlined"
                   onChange={this.onChange}
+                  value={formLaporanKesimpulan}
                 />
-                {/* <FormControl style={{ marginBottom: 20 }} variant="standard">
-                  <InputLabel htmlFor="unitPengujianSampel">Unit Pengujian Sampel</InputLabel>{" "}
-                  <Select
-                    value={unitPengujianSampel}
-                    onChange={this.onChange2('unitPengujianSampel')}
-                    name="unitPengujianSampel"
-                    style={{ width: 400 }}
-                  >
-                    <MenuItem value="Mikrobiologi">Mikrobiologi</MenuItem>
-                    <MenuItem value="Virologi">Virologi</MenuItem>
-                    <MenuItem value="Serologi">Serologi</MenuItem>
-                    <MenuItem value="Parasitologi">Parasitologi</MenuItem>
-                    <MenuItem value="Biomolekuler">Biomolekuler</MenuItem>
-                    <MenuItem value="PSAH">PSAH</MenuItem>
-                  </Select>
-                </FormControl> */}
-                {/* <TextField
-                  id="penerimaSampelAdminLab"
-                  label="Admin Lab"
-                  style={{ width: "100%", marginBottom: 10 }}
-                  variant="outlined"
-                  onChange={this.onChange}
-                /> */}
-                {/* <FormControl style={{ marginBottom: 20 }} variant="standard">
-                  <InputLabel htmlFor="penerimaSampelAdminLab">Admin Lab</InputLabel>{" "}
-                  <Select
-                    value={penerimaSampelAdminLab}
-                    onChange={this.onChange2('penerimaSampelAdminLab')}
-                    style={{ width: 400 }}
-                    name="penerimaSampelAdminLab"
-                  >
-                    {!!selectUserformAdminLab && Object.keys(selectUserformAdminLab).map((el) =>
-                      <MenuItem key={el} value={selectUserformAdminLab[el].namaUserForm}>{selectUserformAdminLab[el].namaUserForm}</MenuItem>
-                    )}
-                  </Select>
-                </FormControl> */}
-                {/* <TextField
-                  id="manajerAdministrasiAdminLab"
-                  label="Manajer Administrasi"
-                  style={{ width: "100%", marginBottom: 10 }}
-                  variant="outlined"
-                  onChange={this.onChange}
-                /> */}
-                {/* <FormControl style={{ marginBottom: 20 }} variant="standard">
-                  <InputLabel htmlFor="manajerAdministrasiAdminLab">Manajer Administrasi</InputLabel>{" "}
-                  <Select
-                    value={manajerAdministrasiAdminLab}
-                    onChange={this.onChange2('manajerAdministrasiAdminLab')}
-                    style={{ width: 400 }}
-                    name="manajerAdministrasiAdminLab"
-                  >
-                    {!!selectUserformManajerAdministrasi && Object.keys(selectUserformManajerAdministrasi).map((el) =>
-                      <MenuItem key={el} value={selectUserformManajerAdministrasi[el].namaUserForm}>{selectUserformManajerAdministrasi[el].namaUserForm}</MenuItem>
-                    )}
-                  </Select>
-                </FormControl> */}
-                {/* <TextField
-                  id="manajerTeknisAdminLab"
-                  label="Manajer Teknis"
-                  style={{ width: "100%", marginBottom: 10 }}
-                  variant="outlined"
-                  onChange={this.onChange}
-                /> */}
+
                 <FormControl style={{ marginBottom: 20 }} variant="standard">
                   <InputLabel htmlFor="manajerTeknisAdminLab">Manajer Teknis</InputLabel>{" "}
                   <Select
@@ -642,26 +579,7 @@ class PageDetailBase extends Component {
                     )}
                   </Select>
                 </FormControl>
-                {/* <TextField
-                  id="penerimaSampelAnalisLab"
-                  label="Analis"
-                  style={{ width: "100%", marginBottom: 10 }}
-                  variant="outlined"
-                  onChange={this.onChange}
-                /> */}
-                {/* <FormControl style={{ marginBottom: 20 }} variant="standard">
-                  <InputLabel htmlFor="penerimaSampelAnalisLab">Analis</InputLabel>{" "}
-                  <Select
-                    value={penerimaSampelAnalisLab}
-                    onChange={this.onChange2('penerimaSampelAnalisLab')}
-                    style={{ width: 400 }}
-                    name="penerimaSampelAnalisLab"
-                  >
-                    {!!selectUserformAnalis && Object.keys(selectUserformAnalis).map((el) =>
-                      <MenuItem key={el} value={selectUserformAnalis[el].namaUserForm}>{selectUserformAnalis[el].namaUserForm}</MenuItem>
-                    )}
-                  </Select>
-                </FormControl> */}
+
               </DialogContent>
               <DialogActions>
                 <Button color="secondary" onClick={this.handleClose}>
