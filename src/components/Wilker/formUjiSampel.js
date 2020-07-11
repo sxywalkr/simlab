@@ -761,7 +761,7 @@ class SampelDetailBase extends Component {
         })
       } else if (event.target.value === 'Ulas Darah') {
         this.setState({
-          selectMetodePengujian: ['PEWARNAAN GIEMSA'],
+          selectMetodePengujian: ['MIKROSKOPIS TRYPANOSOMA SP. DENGAN PEWARNAAN GIEMSA'],
         })
       } else if (event.target.value === 'Bahan Baku Pakan Ternak') {
         this.setState({
@@ -827,9 +827,9 @@ class SampelDetailBase extends Component {
           selectTargetPengujian: ['Antibodi terhadap Brucella sp.'],
           ruangLingkupSampel: 'Akreditasi',
         })
-      } else if (event.target.value === 'PEWARNAAN GIEMSA') {
+      } else if (event.target.value === 'MIKROSKOPIS TRYPANOSOMA SP. DENGAN PEWARNAAN GIEMSA') {
         this.setState({
-          selectTargetPengujian: ['Trypanosoma sp.', 'Anthrax'],
+          selectTargetPengujian: ['Mikroskopis Trypanosoma sp.', 'Anthrax'],
           ruangLingkupSampel: 'Diluar Akreditasi',
         })
       } else if (event.target.value === 'MIKROSKOPIS') {
@@ -1409,7 +1409,7 @@ const Quixote = (p) => {
             </View>
           </View>
           <View style={styles.tableHeaderCol15}>
-            <Text style={styles.tableCellHeader}>Jenis Pengujian</Text>
+            <Text style={styles.tableCellHeader}>Jenis Pengujian / Pemeriksaan</Text>
           </View>
           <View style={styles.tableHeaderCol15}>
             <Text style={styles.tableCellHeader}>Ruang Lingkup</Text>
