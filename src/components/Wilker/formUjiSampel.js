@@ -757,7 +757,7 @@ class SampelDetailBase extends Component {
         })
       if (event.target.value === 'Bahan Asal Hewan' || event.target.value === 'Hasil Bahan Asal Hewan') {
         this.setState({
-          selectMetodePengujian: ['TPC', 'RAPID TEST KIT', 'HA-HI/AI-ND', 'SALMONELLA'],
+          selectMetodePengujian: ['TPC', 'RAPID TEST KIT', 'RAPID TEST SALMONELLA', 'RAPID TEST NITRIT', 'HA-HI/AI-ND', 'SALMONELLA'],
         })
       } else if (event.target.value === 'Ulas Darah') {
         this.setState({
@@ -791,7 +791,7 @@ class SampelDetailBase extends Component {
         })
       } else if (event.target.value === 'Sarang Burung Walet') {
         this.setState({
-          selectMetodePengujian: ['RESIDU NITRIT'],
+          selectMetodePengujian: ['RESIDU NITRIT', 'RAPID TEST NITRIT'],
         })
       } else if (event.target.value === 'Bakteri Kering') {
         this.setState({
@@ -865,6 +865,11 @@ class SampelDetailBase extends Component {
       } else if (event.target.value === 'RAPID TEST SALMONELLA') {
         this.setState({
           selectTargetPengujian: ['Salmonella'],
+          ruangLingkupSampel: 'Diluar Akreditasi',
+        })
+      } else if (event.target.value === 'RAPID TEST NITRIT') {
+        this.setState({
+          selectTargetPengujian: ['Kandungan Nitrit'],
           ruangLingkupSampel: 'Diluar Akreditasi',
         })
       }
