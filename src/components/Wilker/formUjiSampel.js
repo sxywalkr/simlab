@@ -805,6 +805,10 @@ class SampelDetailBase extends Component {
         this.setState({
           selectMetodePengujian: ['MIKROSKOPIS'],
         })
+      } else if (event.target.value === 'Serum Beku UP') {
+        this.setState({
+          selectMetodePengujian: ['HI/AI-ND', 'RBT'],
+        })
       }
     } else if (name === 'metodePengujianSampel') {
       if (event.target.value === 'TPC') {
@@ -871,6 +875,11 @@ class SampelDetailBase extends Component {
         this.setState({
           selectTargetPengujian: ['Kandungan Nitrit'],
           ruangLingkupSampel: 'Diluar Akreditasi',
+        })
+      } else if (event.target.value === 'HI/AI-ND') {
+        this.setState({
+          selectTargetPengujian: ['Antibodi AI-ND'],
+          ruangLingkupSampel: 'Akreditasi',
         })
       }
     }
