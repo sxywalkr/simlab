@@ -787,7 +787,7 @@ class SampelDetailBase extends Component {
         })
       } else if (event.target.value === 'Serum Darah Ayam' || event.target.value === 'Serum Darah DOC' || event.target.value === 'Serum Darah Burung') {
         this.setState({
-          selectMetodePengujian: ['HA-HI/AI-ND'],
+          selectMetodePengujian: ['HA-HI/AI-ND', 'HA/HI-AI', 'HA/HI-ND'],
         })
       } else if (event.target.value === 'Sarang Burung Walet') {
         this.setState({
@@ -821,7 +821,7 @@ class SampelDetailBase extends Component {
           selectTargetPengujian: ['Salmonella', 'E. Coli'],
           ruangLingkupSampel: 'Diluar Akreditasi',
         })
-      } else if (event.target.value === 'HA-HI/AI-ND' || event.target.value === 'ELISA RABIES' || event.target.value === 'ELISA BVD' || event.target.value === 'ELISA PARATB') {
+      } else if (event.target.value === 'HA-HI/AI-ND' || event.target.value === 'ELISA RABIES' || event.target.value === 'ELISA BVD' || event.target.value === 'ELISA PARATB' ) {
         this.setState({
           selectTargetPengujian: ['Titer Antibodi'],
           ruangLingkupSampel: 'Akreditasi',
@@ -879,6 +879,16 @@ class SampelDetailBase extends Component {
       } else if (event.target.value === 'HI/AI-ND') {
         this.setState({
           selectTargetPengujian: ['Antibodi AI-ND'],
+          ruangLingkupSampel: 'Akreditasi',
+        })
+      } else if (event.target.value === 'HA/HI-AI') {
+        this.setState({
+          selectTargetPengujian: ['Titer Antibodi AI'],
+          ruangLingkupSampel: 'Akreditasi',
+        })
+      } else if (event.target.value === 'HA/HI-ND') {
+        this.setState({
+          selectTargetPengujian: ['Titer Antibodi ND'],
           ruangLingkupSampel: 'Akreditasi',
         })
       }
