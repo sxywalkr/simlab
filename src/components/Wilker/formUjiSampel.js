@@ -1222,7 +1222,7 @@ const styles = StyleSheet.create({
   tableCell: {
     // margin: "auto",
     margin: 5,
-    fontSize: 10
+    fontSize: 9
   },
   headerRow: {
     margin: 5,
@@ -1269,8 +1269,8 @@ const styles = StyleSheet.create({
     borderLeftWidth: 0,
     borderTopWidth: 0
   },
-  tableHeaderCol20: {
-    width: "20%",
+  tableHeaderCol10: {
+    width: "10%",
     borderStyle: "solid",
     borderColor: '#000',
     borderBottomColor: '#000',
@@ -1280,6 +1280,24 @@ const styles = StyleSheet.create({
   },
   tableHeaderCol15: {
     width: "15%",
+    borderStyle: "solid",
+    borderColor: '#000',
+    borderBottomColor: '#000',
+    borderWidth: 1,
+    borderLeftWidth: 0,
+    borderTopWidth: 0
+  },
+  tableHeaderCol20: {
+    width: "20%",
+    borderStyle: "solid",
+    borderColor: '#000',
+    borderBottomColor: '#000',
+    borderWidth: 1,
+    borderLeftWidth: 0,
+    borderTopWidth: 0
+  },
+  tableHeaderCol25: {
+    width: "25%",
     borderStyle: "solid",
     borderColor: '#000',
     borderBottomColor: '#000',
@@ -1332,6 +1350,14 @@ const styles = StyleSheet.create({
   },
   tableCol20: {
     width: "20%",
+    borderStyle: "solid",
+    borderColor: '#000',
+    borderWidth: 1,
+    borderLeftWidth: 0,
+    borderTopWidth: 0
+  },
+  tableCol25: {
+    width: "25%",
     borderStyle: "solid",
     borderColor: '#000',
     borderWidth: 1,
@@ -1564,19 +1590,19 @@ const PDFLHU = (p) => {
           <View style={styles.tableHeaderCol20}>
             <Text style={styles.tableCellHeader}>Jenis Sampel</Text>
           </View>
-          <View style={styles.tableHeaderCol15}>
+          <View style={styles.tableHeaderCol10}>
             <Text style={styles.tableCellHeader}>Jumlah Sampel</Text>
           </View>
-          <View style={styles.tableHeaderCol15}>
+          <View style={styles.tableHeaderCol10}>
             <Text style={styles.tableCellHeader}>Jenis Pemeriksaan</Text>
           </View>
           <View style={styles.tableHeaderCol15}>
             <Text style={styles.tableCellHeader}>Metode Pemeriksaan</Text>
           </View>
-          <View style={styles.tableHeaderCol15}>
+          <View style={styles.tableHeaderCol20}>
             <Text style={styles.tableCellHeader}>Hasil Uji</Text>
           </View>
-          <View style={styles.tableHeaderCol20}>
+          <View style={styles.tableHeaderCol25}>
             <Text style={styles.tableCellHeader}>Keterangan</Text>
           </View>
         </View>
@@ -1585,16 +1611,16 @@ const PDFLHU = (p) => {
             <View style={styles.tableCol20}>
               <Text style={styles.tableCell}>{p.q.zItems[el1].jenisSampel}</Text>
             </View>
-            <View style={styles.tableCol15}>
+            <View style={styles.tableCol10}>
               <Text style={styles.tableCell}>{p.q.zItems[el1].jumlahSampel}</Text>
             </View>
-            <View style={styles.tableCol15}>
+            <View style={styles.tableCol10}>
               <Text style={styles.tableCell}>{p.q.zItems[el1].targetPengujianSampel}</Text>
             </View>
             <View style={styles.tableCol15}>
               <Text style={styles.tableCell}>{p.q.zItems[el1].metodePengujianSampel}</Text>
             </View>
-            <View style={styles.tableCol15}>
+            <View style={styles.tableCol20}>
               <Text style={styles.tableCell}>{p.q.zItems[el1].hasilUjiSampel}</Text>
               {!!p.q.zItems[el1].hasilUjiSampelBaris2 && <Text style={styles.tableCell}>{p.q.zItems[el1].hasilUjiSampelBaris2}</Text>}
               {!!p.q.zItems[el1].hasilUjiSampelBaris3 && <Text style={styles.tableCell}>{p.q.zItems[el1].hasilUjiSampelBaris3}</Text>}
@@ -1606,7 +1632,7 @@ const PDFLHU = (p) => {
               {!!p.q.zItems[el1].hasilUjiSampelBaris9 && <Text style={styles.tableCell}>{p.q.zItems[el1].hasilUjiSampelBaris9}</Text>}
               {!!p.q.zItems[el1].hasilUjiSampelBaris10 && <Text style={styles.tableCell}>{p.q.zItems[el1].hasilUjiSampelBaris10}</Text>}
             </View>
-            <View style={styles.tableCol20}>
+            <View style={styles.tableCol25}>
               <Text style={styles.tableCell}>{p.q.zItems[el1].keteranganSampel}</Text>
             </View>
           </View>
