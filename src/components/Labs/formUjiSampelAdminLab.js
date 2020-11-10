@@ -548,6 +548,7 @@ class SampelDetailBase extends Component {
       openAlert: false,
       openAlertKodeUnik: false,
       openAlertNomorLhu: false,
+      openAlertUnitPengujianSampel: false,
       openAlertTanggalMasukSampel: false,
       openAlertManajerAdministrasiAdminLab: false,
       ...props.location.state,
@@ -715,6 +716,14 @@ class SampelDetailBase extends Component {
     this.setState({ openAlertNomorLhu: false });
   };
 
+  handleOpenAlertUnitPengujianSampel = () => {
+    this.setState({ openAlertUnitPengujianSampel: true });
+  };
+
+  handleCloseAlertUnitPengujianSampel = () => {
+    this.setState({ openAlertUnitPengujianSampel: false });
+  };
+
   handleOpenAlertTanggalMasukSampel = () => {
     this.setState({ openAlertTanggalMasukSampel: true });
   };
@@ -761,6 +770,14 @@ class SampelDetailBase extends Component {
 
     this.props.firebase.db.ref('samples/' + this.state.idPermohonanUji).update({
       nomorLhu: this.state.nomorLhu,
+    })
+  };
+
+  handleEditUnitPengujianSampel = () => {
+    this.setState({ openAlertUnitPengujianSampel: false });
+
+    this.props.firebase.db.ref('samples/' + this.state.idPermohonanUji).update({
+      unitPengujianSampel: this.state.unitPengujianSampel,
     })
   };
 
@@ -860,6 +877,8 @@ class SampelDetailBase extends Component {
     this.setState({ tanggalUjiSampelAnalis: date });
   };
 
+  
+
   // onChange = id => event => {
   //   this.setState({
   //     [id]: event.target.value,
@@ -912,6 +931,7 @@ class SampelDetailBase extends Component {
       // selectNipUserformAdminLab, selectNipUserformManajerAdministrasi, selectNipUserformManajerTeknis, selectNipUserformAnalis,
       statusLaporanSPP, loadingReport, keteranganPengujianDitolak, nomorAgendaSurat, tanggalMasukSampel, tanggalUjiSampelAnalis,
       openAlert, openAlertKodeUnik, openAlertNomorLhu, nomorLhu, openAlertManajerAdministrasiAdminLab, openAlertTanggalMasukSampel,
+      openAlertUnitPengujianSampel,
     } = this.state;
     const isInvalid = tanggalTerimaSampelAdminLab === '' || PenerimaSampelAdminLab === '' || ManajerTeknisAdminLab === '' ||
       ManajerAdministrasiAdminLab === '' || kodeUnikSampelAdminLab === '' || kodeUnikSampelAdminLab.length < 20 || nomorLhu === '';
@@ -957,7 +977,9 @@ class SampelDetailBase extends Component {
                 <Typography variant="subtitle1" gutterBottom>Alamat Pemilik Sampel : {el.alamatPemilikSampel}</Typography>
                 <Typography variant="subtitle1" gutterBottom>Asal/Tujuan Media Pembawa : {el.asalTujuanSampel}</Typography>
                 <Typography variant="subtitle1" gutterBottom>Petugas Pengambil Sampel (PPC) : {el.petugasPengambilSampel}</Typography>
-                <Typography variant="subtitle1" gutterBottom>Unit Pengujian Sampel : {el.unitPengujianSampel}</Typography>
+                <Typography variant="subtitle1" gutterBottom>
+                  <Button variant='contained' onClick={this.handleOpenAlertUnitPengujianSampel}>Edit Unit Pengujian Sampel : {el.unitPengujianSampel}</Button> {'  '}
+                </Typography>
                 <Typography variant="subtitle1" gutterBottom>
                   <Button variant='contained' onClick={this.handleOpenAlertNomorLhu}>Edit Nomor LHU : {el.nomorLhu}</Button> {'  '}
                 </Typography>
@@ -1282,7 +1304,7 @@ class SampelDetailBase extends Component {
               maxWidth={'sm'}
               fullWidth={true}
             >
-              <DialogTitle id="alert-dialog-title">{'Edit Nomor Lhu'}</DialogTitle>
+              <DialogTitle id="alert-dialog-title">{'Edit Pelaksana Fungsi Manajer Admin'}</DialogTitle>
               <DialogContent>
                 <DialogContentText id="alert-dialog-description">
                   <TextField
@@ -1339,6 +1361,44 @@ class SampelDetailBase extends Component {
                   Batal
                 </Button>
                 <Button variant="contained" onClick={this.handleEditTanggalMasukSampel} color="primary" autoFocus>
+                  OK
+                </Button>
+              </DialogActions>
+            </Dialog>
+            <Dialog
+              open={openAlertUnitPengujianSampel}
+              onClose={this.handleCloseAlertUnitPengujianSampel}
+              aria-labelledby="alert-dialog-title"
+              aria-describedby="alert-dialog-description"
+              maxWidth={'sm'}
+              fullWidth={true}
+            >
+              <DialogTitle id="alert-dialog-title">{'Edit Unit Pengujian Sampel'}</DialogTitle>
+              <DialogContent>
+                <DialogContentText id="alert-dialog-description">
+                  <FormControl style={{ marginBottom: 20 }} variant="standard">
+                    <InputLabel htmlFor="unitPengujianSampel">Unit Pengujian Sampel</InputLabel>{" "}
+                    <Select
+                      value={unitPengujianSampel}
+                      onChange={this.onChange2('unitPengujianSampel')}
+                      name="unitPengujianSampel"
+                      style={{ width: 400 }}
+                    >
+                      <MenuItem value="Mikrobiologi">Mikrobiologi</MenuItem>
+                      <MenuItem value="Virologi">Virologi</MenuItem>
+                      <MenuItem value="Serologi">Serologi</MenuItem>
+                      <MenuItem value="Parasitologi">Parasitologi</MenuItem>
+                      <MenuItem value="Biomolekuler">Biomolekuler</MenuItem>
+                      <MenuItem value="PSAH">PSAH</MenuItem>
+                    </Select>
+                  </FormControl>
+                </DialogContentText>
+              </DialogContent>
+              <DialogActions>
+                <Button onClick={this.handleCloseAlertUnitPengujianSampel}>
+                  Batal
+                </Button>
+                <Button variant="contained" onClick={this.handleEditUnitPengujianSampel} color="primary" autoFocus>
                   OK
                 </Button>
               </DialogActions>
