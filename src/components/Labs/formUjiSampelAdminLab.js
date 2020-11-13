@@ -1465,8 +1465,9 @@ const styles = StyleSheet.create({
   },
   tableCell: {
     // margin: "auto",
-    margin: 5,
-    fontSize: 9
+    margin: 3,
+    fontSize: 9,
+    flexDirection: "row",
   },
   headerRow: {
     margin: 5,
@@ -1600,6 +1601,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderLeftWidth: 0,
     borderTopWidth: 0
+    
   },
   tableCol15: {
     width: "15%",
