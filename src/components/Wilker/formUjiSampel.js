@@ -1261,6 +1261,15 @@ const styles = StyleSheet.create({
   marginV10: {
     marginVertical: 10,
   },
+  marginL15: {
+    marginLeft: 10,
+  },
+  marginL20: {
+    marginLeft: 20,
+  },
+  marginL40: {
+    marginLeft: 40,
+  },
   tableHeaderCol5: {
     width: "5%",
     borderStyle: "solid",
@@ -1364,6 +1373,26 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderLeftWidth: 0,
     borderTopWidth: 0
+  },
+  header1Table: {
+    display: "table",
+    width: "auto",
+    
+  },
+  header1TableRow: {
+    // margin: "auto",
+    left: 30,
+    flexDirection: "row"
+  },
+  header1Col30: {
+    width: "30%",
+    
+  },
+  header1TableCell: {
+    // margin: "auto",
+    // margin: 3,
+    fontSize: 11,
+    flexDirection: "row",
   },
   footerRow: {
     position: 'absolute',
@@ -1560,27 +1589,105 @@ const PDFLHU = (p) => {
         {p.q.unitPengujianSampel === 'Parasitologi' && <Text style={styles.headerTitle16}>LAPORAN HASIL UJI PARASITOLOGI</Text>} */}
         <Text style={styles.headerTitle10}>Nomor : {p.q.nomorLhu} {'   '}Tanggal : {dateFnsFormat(new Date(p.q.tanggalUjiSampelAnalis), "dd MMM yyyy")}</Text>
       </View>
-      <View style={[styles.marginV10, styles.marginL20]}>
+      <View style={[styles.marginV10, styles.marginL15]}>
         <Text style={styles.headerTitle11}>Laporan / Sertifikat ini diberikan kepada :</Text>
       </View>
-      <View style={[styles.marginV10, styles.marginL40]}>
-        <Text style={styles.headerTitle11}>Nama / Instansi Pemilik Sampel : {p.q.namaPemilikSampel}</Text>
-        <Text style={styles.headerTitle11}>Alamat : {p.q.alamatPemilikSampel}</Text>
-        <Text style={styles.headerTitle11}>Ket. Asal / Tujuan : {p.q.asalTujuanSampel}</Text>
+      <View style={styles.header1Table}>
+        <View style={styles.header1TableRow}>
+              <View style={styles.header1Col30}>
+                <Text style={styles.header1TableCell}>Nama / Instansi Pemilik Sampel</Text>
+              </View>
+              <View style={styles.header1Col30}>
+                <Text style={styles.header1TableCell}>: {p.q.namaPemilikSampel}</Text>
+              </View>
+        </View>
+        <View style={styles.header1TableRow}>
+              <View style={styles.header1Col30}>
+                <Text style={styles.header1TableCell}>Alamat</Text>
+              </View>
+              <View style={styles.header1Col30}>
+                <Text style={styles.header1TableCell}>: {p.q.alamatPemilikSampel}</Text>
+              </View>
+        </View>
+        <View style={styles.header1TableRow}>
+              <View style={styles.header1Col30}>
+                <Text style={styles.header1TableCell}>Ket. Asal / Tujuan </Text>
+              </View>
+              <View style={styles.header1Col30}>
+                <Text style={styles.header1TableCell}>: {p.q.asalTujuanSampel}</Text>
+              </View>
+        </View>
       </View>
-      <View style={[styles.marginV10, styles.marginL20]}>
+      <View style={[styles.marginV10, styles.marginL15]}>
         <Text style={styles.headerTitle11}>Yang telah mengirim sampel untuk pengujian Laboratorium, Identitas sampel, jenis dan hasil pengujian sebagai berikut : </Text>
       </View>
       {!!p.q.zItems && Object.keys(p.q.zItems).map((el1, key1) =>
-        <View key={key1} style={[styles.marginV10, styles.marginL40]}>
-          <Text style={styles.headerTitle11}>Sampel (jenis dan jumlah) : {p.q.zItems[el1].jenisSampel} / {p.q.zItems[el1].jumlahSampel}</Text>
-          <Text style={styles.headerTitle11}>No. Identifikasi Sampel : {p.q.kodeUnikSampelAdminLab}</Text>
-          <Text style={styles.headerTitle11}>No. Surat Pengiriman : {p.q.nomorAgendaSurat}</Text>
-          <Text style={styles.headerTitle11}>Tanggal Pengiriman Surat : {dateFnsFormat(new Date(p.q.tanggalMasukSampel), "dd MMM yyyy")}</Text>
-          <Text style={styles.headerTitle11}>Tanggal Penerimaan Sampel : {dateFnsFormat(p.q.tanggalTerimaSampelAdminLab === undefined ? new Date() : new Date(p.q.tanggalTerimaSampelAdminLab), "dd MMM yyyy")}</Text>
-          <Text style={styles.headerTitle11}>Jenis Pengujian : {p.q.unitPengujianSampel}</Text>
-          <Text style={styles.headerTitle11}>Tanggal Pengujian : {dateFnsFormat(p.q.tanggalUjiSampelAnalis === undefined ? new Date() : new Date(p.q.tanggalUjiSampelAnalis), "dd MMM yyyy")}</Text>
-          <Text style={styles.headerTitle11}>Kondisi Sampel : {p.q.zItems[el1].kondisiSampel}</Text>
+        <View style={styles.header1Table}>
+          <View style={styles.header1TableRow}>
+                <View style={styles.header1Col30}>
+                  <Text style={styles.header1TableCell}>Sampel (jenis dan jumlah)</Text>
+                </View>
+                <View style={styles.header1Col30}>
+                  <Text style={styles.header1TableCell}>: {p.q.zItems[el1].jenisSampel} / {p.q.zItems[el1].jumlahSampel}</Text>
+                </View>
+          </View>
+          <View style={styles.header1TableRow}>
+                <View style={styles.header1Col30}>
+                  <Text style={styles.header1TableCell}>No. Identifikasi Sampel</Text>
+                </View>
+                <View style={styles.header1Col30}>
+                  <Text style={styles.header1TableCell}>: {p.q.kodeUnikSampelAdminLab}</Text>
+                </View>
+          </View>
+          <View style={styles.header1TableRow}>
+                <View style={styles.header1Col30}>
+                  <Text style={styles.header1TableCell}>No. Surat Pengiriman</Text>
+                </View>
+                <View style={styles.header1Col30}>
+                  <Text style={styles.header1TableCell}>: {p.q.nomorAgendaSurat}</Text>
+                </View>
+          </View>
+          <View style={styles.header1TableRow}>
+                <View style={styles.header1Col30}>
+                  <Text style={styles.header1TableCell}>Tanggal Pengiriman Surat</Text>
+                </View>
+                <View style={styles.header1Col30}>
+                  <Text style={styles.header1TableCell}>: {dateFnsFormat(new Date(p.q.tanggalMasukSampel), "dd MMM yyyy")}</Text>
+                </View>
+          </View>
+          <View style={styles.header1TableRow}>
+                <View style={styles.header1Col30}>
+                  <Text style={styles.header1TableCell}>Tanggal Penerimaan Sampel</Text>
+                </View>
+                <View style={styles.header1Col30}>
+                  <Text style={styles.header1TableCell}>: {dateFnsFormat(p.q.tanggalTerimaSampelAdminLab === undefined ? new Date() : new Date(p.q.tanggalTerimaSampelAdminLab), "dd MMM yyyy")}</Text>
+                </View>
+          </View>
+          <View style={styles.header1TableRow}>
+                <View style={styles.header1Col30}>
+                  <Text style={styles.header1TableCell}>Jenis Pengujian</Text>
+                </View>
+                <View style={styles.header1Col30}>
+                  <Text style={styles.header1TableCell}>: {p.q.unitPengujianSampel}</Text>
+                </View>
+          </View>
+          <View style={styles.header1TableRow}>
+                <View style={styles.header1Col30}>
+                  <Text style={styles.header1TableCell}>Tanggal Pengujian</Text>
+                </View>
+                <View style={styles.header1Col30}>
+                  <Text style={styles.header1TableCell}>: {dateFnsFormat(p.q.tanggalUjiSampelAnalis === undefined ? new Date() : new Date(p.q.tanggalUjiSampelAnalis), "dd MMM yyyy")}</Text>
+                </View>
+          </View>
+          <View style={styles.header1TableRow}>
+                <View style={styles.header1Col30}>
+                  <Text style={styles.header1TableCell}>Kondisi Sampel</Text>
+                </View>
+                <View style={styles.header1Col30}>
+                  <Text style={styles.header1TableCell}>: {p.q.zItems[el1].kondisiSampel}</Text>
+                </View>
+          </View>
+          
         </View>
       )}
       <View style={styles.headerRowCenter}>
@@ -1640,9 +1747,11 @@ const PDFLHU = (p) => {
         )}
       </View>
       <Text>{' '}</Text>
-      <View style={styles.headerTitle10}><Text>Keterangan: {p.q.formLaporanKeterangan}</Text></View>
+      <View style={styles.headerTitle10}><Text>Keterangan: </Text></View>
+      <View style={styles.headerTitle10}><Text>{p.q.formLaporanKeterangan}</Text></View>
       <Text>{' '}</Text>
-      <View style={styles.headerTitle10}><Text>Kesimpulan: {p.q.formLaporanKesimpulan}</Text></View>
+      <View style={styles.headerTitle10}><Text>Kesimpulan: </Text></View>
+      <View style={styles.headerTitle10}><Text>{p.q.formLaporanKesimpulan}</Text></View>
       <View style={styles.footerRow200}>
         <View style={styles.footerRow2}>
           <View style={styles.footerCol}>
