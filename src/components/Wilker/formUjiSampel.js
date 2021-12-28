@@ -761,7 +761,7 @@ class SampelDetailBase extends Component {
         })
       } else if (event.target.value === 'Ulas Darah') {
         this.setState({
-          selectMetodePengujian: ['MIKROSKOPIS TRYPANOSOMA SP. DENGAN PEWARNAAN GIEMSA'],
+          selectMetodePengujian: ['MIKROSKOPIS TRYPANOSOMA SP. DENGAN PEWARNAAN GIEMSA', 'MIKROSKOPIS TRYPANOSOMA SP. DENGAN PEWARNAAN GIEMSA WILKER', 'MIKROSKOPIS ANAPLASMA SP. DENGAN PEWARNAAN GIEMSA', 'MIKROSKOPIS BABESIA SP. DENGAN PEWARNAAN GIEMSA', 'MIKROSKOPIS THEILERIA SP. DENGAN PEWARNAAN GIEMSA'],
         })
       } else if (event.target.value === 'Bahan Baku Pakan Ternak') {
         this.setState({
@@ -831,9 +831,14 @@ class SampelDetailBase extends Component {
           selectTargetPengujian: ['Antibodi terhadap Brucella sp.'],
           ruangLingkupSampel: 'Akreditasi',
         })
-      } else if (event.target.value === 'MIKROSKOPIS TRYPANOSOMA SP. DENGAN PEWARNAAN GIEMSA') {
+      } else if (event.target.value === 'MIKROSKOPIS TRYPANOSOMA SP. DENGAN PEWARNAAN GIEMSA' 
+                    || event.target.value === 'MIKROSKOPIS TRYPANOSOMA SP. DENGAN PEWARNAAN GIEMSA WILKER'
+                    || event.target.value === 'MIKROSKOPIS ANAPLASMA SP. DENGAN PEWARNAAN GIEMSA'
+                    || event.target.value === 'MIKROSKOPIS BABESIA SP. DENGAN PEWARNAAN GIEMSA'
+                    || event.target.value === 'MIKROSKOPIS THEILERIA SP. DENGAN PEWARNAAN GIEMSA'
+                    ) {
         this.setState({
-          selectTargetPengujian: ['Mikroskopis Trypanosoma sp.', 'Anthrax'],
+          selectTargetPengujian: ['Mikroskopis Trypanosoma sp.', 'Anthrax', 'Anaplasma sp.', 'Babesia sp.', 'Theileria sp.'],
           ruangLingkupSampel: 'Diluar Akreditasi',
         })
       } else if (event.target.value === 'MIKROSKOPIS') {
@@ -1145,6 +1150,7 @@ class SampelDetailBase extends Component {
                   >
                     <MenuItem value="Akreditasi">Akreditasi</MenuItem>
                     <MenuItem value="Diluar Akreditasi">Diluar Akreditasi</MenuItem>
+                    <MenuItem value="Diluar Akreditasi (Wilker)">Diluar Akreditasi (Wilker)</MenuItem>
                   </Select>
                 </FormControl>
                 <TextField
@@ -1592,7 +1598,8 @@ const PDFLHU = (p) => {
                 || p.q.zItems[el1].metodePengujianSampel === 'RBT' 
                 || p.q.zItems[el1].metodePengujianSampel === 'ELISA RABIES' 
                 || p.q.zItems[el1].metodePengujianSampel === 'TPC'
-                || p.q.zItems[el1].metodePengujianSampel === 'PEWARNAAN GIEMSA'  
+                || p.q.zItems[el1].metodePengujianSampel === 'MIKROSKOPIS TRYPANOSOMA SP. DENGAN PEWARNAAN GIEMSA'
+                || p.q.zItems[el1].metodePengujianSampel === 'MIKROSKOPIS TRYPANOSOMA SP. DENGAN PEWARNAAN GIEMSA WILKER'  
                 ) {
             return <Image
               style={styles.logo2}
