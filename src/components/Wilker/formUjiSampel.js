@@ -406,6 +406,9 @@ class SampelAddBase extends Component {
       alamatPemilikSampel: '',
       asalTujuanSampel: '',
       petugasPengambilSampel: '',
+      kodeWilker:'',
+      areaWilker:'',
+      // areaWilker:this.props.location.data.authUser.area,
     };
   }
 
@@ -424,6 +427,7 @@ class SampelAddBase extends Component {
             idWilker: el.val().idWilker,
             countSampelWilker: el.val().countSampelWilker,
             kodeWilker: el.val().kodeWilker,
+            namaWilker: el.val().namaWilker,
           })
         })
         this.setState({
@@ -467,7 +471,7 @@ class SampelAddBase extends Component {
       nipUser: this.state.nipUser,
       flagActivity: 'Belum ada sampel uji',
       flagStatusProses: 'Sampel di Wilker',
-      areaWilker: this.props.location.data.authUser.area,
+      areaWilker: this.state.areaWilker,
       bulanMasukSampel: getMonth(this.state.tanggalMasukSampel) + 1,
     })
     this.props.firebase.db.ref('masterData/wilker/' + this.state.items[0].idWilker).update({
@@ -486,13 +490,22 @@ class SampelAddBase extends Component {
     });
   };
 
+  onChangeKodeWilker = name => event => {
+    // console.log(name)
+    this.setState({
+      areaWilker: event.target.value,
+    });
+    
+  };
+
+
   render() {
     const { kodeUnikSampel, tanggalMasukSampel, nomorAgendaSurat,
       namaPemilikSampel, alamatPemilikSampel, asalTujuanSampel, petugasPengambilSampel,
-      loading,
+      loading, areaWilker,
     } = this.state;
     const isInvalid = kodeUnikSampel === '' || tanggalMasukSampel === '' || nomorAgendaSurat === '' || namaPemilikSampel === '' ||
-      alamatPemilikSampel === '' || asalTujuanSampel === '' || petugasPengambilSampel === '';
+      alamatPemilikSampel === '' || asalTujuanSampel === '' || petugasPengambilSampel === '' || areaWilker === '';
     // console.log(this.state)
 
     return (
@@ -559,6 +572,25 @@ class SampelAddBase extends Component {
                 onChange={this.onChange('asalTujuanSampel')}
                 fullWidth
               />
+              <FormControl variant="standard">
+                <InputLabel htmlFor="areaWilker">Kode Wilker</InputLabel>{" "}
+                <Select
+                  value={areaWilker}
+                  onChange={this.onChangeKodeWilker('areaWilker')}
+                  style={{ width: 600 }}
+                  name="areaWilker"
+                >
+                  <MenuItem key={1} value="0501">0501 - Pelabuhan Soekarno Hatta</MenuItem>
+                  <MenuItem key={2} value="0502">0502 - Pelabuhan Paotere</MenuItem>
+                  <MenuItem key={3} value="0503">0503 - Pelabuhan Bulukumba</MenuItem>
+                  <MenuItem key={4} value="0504">0504 - Pelabuhan Jeneponto</MenuItem>
+                  <MenuItem key={5} value="0505">0505 - Bandara Hasanuddin</MenuItem>
+                  <MenuItem key={6} value="0506">0506 - Kantor Pos</MenuItem>
+                  <MenuItem key={7} value="0507">0507 - Pelabuhan Selayar</MenuItem>
+                  <MenuItem key={8} value="0508">0508 - Pelabuhan Tuju Tuju</MenuItem>
+                  <MenuItem key={9} value="0509">0509 - Pelabuhan Bajoe</MenuItem>
+                </Select>
+              </FormControl>
               <TextField
                 disabled
                 margin="dense"
@@ -568,6 +600,7 @@ class SampelAddBase extends Component {
                 onChange={this.onChange('petugasPengambilSampel')}
                 fullWidth
               />
+
               <Button style={{ marginTop: 15 }} variant="outlined" onClick={this.handleSubmit}
                 disabled={isInvalid}
                 color="primary">

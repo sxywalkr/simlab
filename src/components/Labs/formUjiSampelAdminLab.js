@@ -695,6 +695,7 @@ class SampelDetailBase extends Component {
       openAlertUnitPengujianSampel: false,
       openAlertTanggalMasukSampel: false,
       openAlertManajerAdministrasiAdminLab: false,
+      openAlertNamaWilker: false,
       ...props.location.state,
       idPermohonanUji: '',
       kodeUnikSampel: '',
@@ -727,6 +728,7 @@ class SampelDetailBase extends Component {
       statusLaporanSPP: false,
       loadingReport: true,
       keteranganPengujianDitolak: '',
+      
     };
   }
 
@@ -865,6 +867,14 @@ class SampelDetailBase extends Component {
     this.setState({ openAlertUnitPengujianSampel: true });
   };
 
+  handleOpenAlertNamaWilker = () => {
+    this.setState({ openAlertNamaWilker: true });
+  };
+
+  handleCloseAlertNamaWilker = () => {
+    this.setState({ openAlertNamaWilker: false });
+  };
+
   handleCloseAlertUnitPengujianSampel = () => {
     this.setState({ openAlertUnitPengujianSampel: false });
   };
@@ -923,6 +933,14 @@ class SampelDetailBase extends Component {
 
     this.props.firebase.db.ref('samples/' + this.state.idPermohonanUji).update({
       unitPengujianSampel: this.state.unitPengujianSampel,
+    })
+  };
+
+  handleEditNamaWilker = () => {
+    this.setState({ openAlertNamaWilker: false });
+
+    this.props.firebase.db.ref('samples/' + this.state.idPermohonanUji).update({
+      areaWilker: this.state.kodeAreaWilker,
     })
   };
 
@@ -1062,21 +1080,21 @@ class SampelDetailBase extends Component {
       });
       // console.log(filtered);
       this.setState({ nipManajerTeknisAdminLab: filtered[0].nipUserForm });
-    }
+    } 
   };
 
 
 
   render() {
     const {
-      selectUnitPengujian, unitPengujianSampel, loading, items, kodeUnikSampelAdminLab,
+      selectUnitPengujian, unitPengujianSampel, loading, items, kodeUnikSampelAdminLab, kodeAreaWilker,
       tanggalTerimaSampelAdminLab, PenerimaSampelAdminLab, ManajerTeknisAdminLab, ManajerAdministrasiAdminLab,
       penerimaSampelAdminLab, manajerTeknisAdminLab, manajerAdministrasiAdminLab, nipManajerAdministrasiAdminLab, penerimaSampelAnalisLab,
       selectUserformAdminLab, selectUserformManajerAdministrasi, selectUserformManajerTeknis, selectUserformAnalis,
       // selectNipUserformAdminLab, selectNipUserformManajerAdministrasi, selectNipUserformManajerTeknis, selectNipUserformAnalis,
       statusLaporanSPP, loadingReport, keteranganPengujianDitolak, nomorAgendaSurat, tanggalMasukSampel, tanggalUjiSampelAnalis,
       openAlert, openAlertKodeUnik, openAlertNomorLhu, nomorLhu, openAlertManajerAdministrasiAdminLab, openAlertTanggalMasukSampel,
-      openAlertUnitPengujianSampel,
+      openAlertUnitPengujianSampel, openAlertNamaWilker,
     } = this.state;
     const isInvalid = tanggalTerimaSampelAdminLab === '' || PenerimaSampelAdminLab === '' || ManajerTeknisAdminLab === '' ||
       ManajerAdministrasiAdminLab === '' || kodeUnikSampelAdminLab === '' || kodeUnikSampelAdminLab.length < 20 || nomorLhu === '';
@@ -1118,7 +1136,23 @@ class SampelDetailBase extends Component {
                   <Button variant='contained' onClick={this.handleOpenAlertTanggalMasukSampel}>Edit Tanggal LHU : {dateFnsFormat(new Date(el.tanggalUjiSampelAnalis), 'dd MMM yyyy')}</Button> {'  '}
                 </Typography>}
                 <Typography variant="subtitle1" gutterBottom>Nomor Permohonan (IQFAST) : {el.nomorAgendaSurat}</Typography>
-                <Typography variant="subtitle1" gutterBottom>Kode Area Wilker : {el.areaWilker}</Typography>
+                {/* <Typography variant="subtitle1" gutterBottom>Kode Area Wilker : {el.areaWilker}</Typography> */}
+                <Typography variant="subtitle1" gutterBottom>
+                  <Button variant='contained' onClick={this.handleOpenAlertNamaWilker}>Edit Area Wilker : {el.areaWilker}</Button> {'  '}
+                </Typography>
+                <Typography variant="subtitle1" gutterBottom>Nama Wilker: {
+                    el.areaWilker === '0501' ? 'Pelabuhan Laut Soekarno Hatta' 
+                  : el.areaWilker === '0502' ? 'Pelabuhan Paotere'
+                  : el.areaWilker === '0503' ? 'Pelabuhan Bulukumba' 
+                  : el.areaWilker === '0504' ? 'Pelabuhan Jeneponto' 
+                  : el.areaWilker === '0505' ? 'Bandara Hasanuddin' 
+                  : el.areaWilker === '0506' ? 'Kantor Pos' 
+                  : el.areaWilker === '0507' ? 'Pelabuhan Selayar' 
+                  : el.areaWilker === '0508' ? 'Pelabuhan Tuju Tuju' 
+                  : el.areaWilker === '0509' ? 'Pelabuhan Bajoe' 
+                  : '--'}
+                </Typography>
+                               
                 <Typography variant="subtitle1" gutterBottom>Nama Pemilik Sampel : {el.namaPemilikSampel}</Typography>
                 <Typography variant="subtitle1" gutterBottom>Alamat Pemilik Sampel : {el.alamatPemilikSampel}</Typography>
                 <Typography variant="subtitle1" gutterBottom>Asal/Tujuan Media Pembawa : {el.asalTujuanSampel}</Typography>
@@ -1545,6 +1579,47 @@ class SampelDetailBase extends Component {
                   Batal
                 </Button>
                 <Button variant="contained" onClick={this.handleEditUnitPengujianSampel} color="primary" autoFocus>
+                  OK
+                </Button>
+              </DialogActions>
+            </Dialog>
+            <Dialog
+              open={openAlertNamaWilker}
+              onClose={this.handleCloseAlertNamaWilker}
+              aria-labelledby="alert-dialog-title"
+              aria-describedby="alert-dialog-description"
+              maxWidth={'sm'}
+              fullWidth={true}
+            >
+              <DialogTitle id="alert-dialog-title">{'Edit Nama Wilker'}</DialogTitle>
+              <DialogContent>
+                <DialogContentText id="alert-dialog-description">
+                  <FormControl style={{ marginBottom: 20 }} variant="standard">
+                    <InputLabel htmlFor="kodeAreaWilker">Nama Wilker</InputLabel>{" "}
+                    <Select
+                      value={kodeAreaWilker}
+                      onChange={this.onChange2('kodeAreaWilker')}
+                      name="kodeAreaWilker"
+                      style={{ width: 400 }}
+                    >
+                      <MenuItem value="0501">0501 - Pelabuhan Soekarno Hatta</MenuItem>
+                      <MenuItem value="0502">0502 - Pelabuhan Paotere</MenuItem>
+                      <MenuItem value="0503">0503 - Pelabuhan Bulukumba</MenuItem>
+                      <MenuItem value="0504">0504 - Pelabuhan Jeneponto</MenuItem>
+                      <MenuItem value="0505">0505 - Bandara Hasanuddin</MenuItem>
+                      <MenuItem value="0506">0506 - Kantor Pos</MenuItem>
+                      <MenuItem value="0507">0507 - Pelabuhan Selayar</MenuItem>
+                      <MenuItem value="0508">0508 - Pelabuhan Tuju Tuju</MenuItem>
+                      <MenuItem value="0509">0509 - Pelabuhan Bajoe</MenuItem>
+                    </Select>
+                  </FormControl>
+                </DialogContentText>
+              </DialogContent>
+              <DialogActions>
+                <Button onClick={this.handleCloseAlertNamaWilker}>
+                  Batal
+                </Button>
+                <Button variant="contained" onClick={this.handleEditNamaWilker} color="primary" autoFocus>
                   OK
                 </Button>
               </DialogActions>
