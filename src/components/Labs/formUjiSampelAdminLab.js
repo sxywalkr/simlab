@@ -2033,7 +2033,8 @@ const PDFLHU = (p) => {
                 || p.q.zItems[el1].metodePengujianSampel === 'RBT' 
                 || p.q.zItems[el1].metodePengujianSampel === 'ELISA RABIES' 
                 || p.q.zItems[el1].metodePengujianSampel === 'TPC'
-                || p.q.zItems[el1].metodePengujianSampel === 'PEWARNAAN GIEMSA'  
+                || p.q.zItems[el1].metodePengujianSampel === 'PEWARNAAN GIEMSA'
+                || p.q.zItems[el1].metodePengujianSampel === 'MIKROSKOPIS TRYPANOSOMA SP. DENGAN PEWARNAAN GIEMSA'  
                 ) {
             return <Image
               style={styles.logo2}

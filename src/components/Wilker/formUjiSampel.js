@@ -86,7 +86,7 @@ class SampelAllBase extends Component {
     // console.log(this)
     this.setState({ loading: true });
     this.props.firebase.db.ref('samples')
-      .orderByChild('areaWilker').equalTo(this.context.area)
+      // .orderByChild('areaWilker').equalTo(this.context.area)
       .on('value', snap => {
         if (snap.val()) {
           const a = [];
@@ -1183,7 +1183,7 @@ class SampelDetailBase extends Component {
                   >
                     <MenuItem value="Akreditasi">Akreditasi</MenuItem>
                     <MenuItem value="Diluar Akreditasi">Diluar Akreditasi</MenuItem>
-                    <MenuItem value="Diluar Akreditasi (Wilker)">Diluar Akreditasi (Wilker)</MenuItem>
+                    {/* <MenuItem value="Diluar Akreditasi (Wilker)">Diluar Akreditasi (Wilker)</MenuItem> */}
                   </Select>
                 </FormControl>
                 <TextField
