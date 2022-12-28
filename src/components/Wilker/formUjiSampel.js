@@ -808,7 +808,7 @@ class SampelDetailBase extends Component {
     } else if (name === 'jenisSampel') {
       if (event.target.value === 'Serum Darah Sapi') {
         this.setState({
-          selectMetodePengujian: ['RBT', 'ELISA BVD', 'ELISA PARATB'],
+          selectMetodePengujian: ['RBT', 'ELISA BVD', 'ELISA PARATB', 'ELISA PMK', 'PCR PMK'],
         })
       } else if (event.target.value === 'Serum Darah Kerbau' || event.target.value === 'Serum Darah Kambing') {
         this.setState({
@@ -824,7 +824,7 @@ class SampelDetailBase extends Component {
         })
       } else if (event.target.value === 'Sarang Burung Walet') {
         this.setState({
-          selectMetodePengujian: ['RESIDU NITRIT', 'RAPID TEST NITRIT'],
+          selectMetodePengujian: ['RESIDU NITRIT', 'RAPID TEST NITRIT', 'PCR AI', 'RT-PCR'],
         })
       } else if (event.target.value === 'Bakteri Kering') {
         this.setState({
@@ -854,7 +854,7 @@ class SampelDetailBase extends Component {
           selectTargetPengujian: ['Salmonella', 'E. Coli'],
           ruangLingkupSampel: 'Diluar Akreditasi',
         })
-      } else if (event.target.value === 'HA-HI/AI-ND' || event.target.value === 'ELISA RABIES' || event.target.value === 'ELISA BVD' || event.target.value === 'ELISA PARATB' ) {
+      } else if (event.target.value === 'HA-HI/AI-ND' || event.target.value === 'ELISA RABIES' || event.target.value === 'ELISA BVD' || event.target.value === 'ELISA PARATB'  || event.target.value === 'ELISA PMK' ) {
         this.setState({
           selectTargetPengujian: ['Titer Antibodi'],
           ruangLingkupSampel: 'Akreditasi',
@@ -881,7 +881,7 @@ class SampelDetailBase extends Component {
         })
       } else if (event.target.value === 'RT-PCR') {
         this.setState({
-          selectTargetPengujian: ['Al', 'Anthrax'],
+          selectTargetPengujian: ['Al', 'Anthrax', 'Avian Influenza'],
           ruangLingkupSampel: 'Diluar Akreditasi',
         })
       } else if (event.target.value === 'PCR-DNA') {
@@ -927,6 +927,11 @@ class SampelDetailBase extends Component {
       } else if (event.target.value === 'HA/HI-ND') {
         this.setState({
           selectTargetPengujian: ['Titer Antibodi ND'],
+          ruangLingkupSampel: 'Akreditasi',
+        })
+      } else if (event.target.value === 'PCR PMK') {
+        this.setState({
+          selectTargetPengujian: ['PMK'],
           ruangLingkupSampel: 'Akreditasi',
         })
       }
