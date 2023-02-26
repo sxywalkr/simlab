@@ -824,7 +824,7 @@ class SampelDetailBase extends Component {
         })
       } else if (event.target.value === 'Sarang Burung Walet') {
         this.setState({
-          selectMetodePengujian: ['RESIDU NITRIT', 'RAPID TEST NITRIT', 'PCR AI', 'RT-PCR'],
+          selectMetodePengujian: ['RESIDU NITRIT', 'RAPID TEST NITRIT', 'PCR AI', 'RT-PCR', 'TPC'],
         })
       } else if (event.target.value === 'Bakteri Kering') {
         this.setState({
