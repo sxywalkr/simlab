@@ -95,6 +95,8 @@ class SampelAllBase extends Component {
     // const bb = '--';
     const a = [];
     this.props.firebase.db.ref('samples')
+      .orderByChild('tanggalMasuksampel')
+      .limitToLast(100)
       // .orderByChild('flagActivity')
       // .equalTo('Submit sampel ke admin lab')
       .on('value', snap => {

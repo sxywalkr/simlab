@@ -76,7 +76,8 @@ class SampelAllBase extends Component {
   componentDidMount() {
     this.setState({ loading: true });
     this.props.firebase.db.ref('samples')
-      // .orderByChild('flagStatusProses')
+      .orderByChild('tanggalMasuksampel')
+      .limitToLast(100)
       // .equalTo('Sampel di Analis')
       .on('value', snap => {
         if (snap.val()) {

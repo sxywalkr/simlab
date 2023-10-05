@@ -86,6 +86,8 @@ class SampelAllBase extends Component {
     // console.log(this)
     this.setState({ loading: true });
     this.props.firebase.db.ref('samples')
+      .orderByChild('tanggalMasuksampel')
+      .limitToLast(100)
       // .orderByChild('areaWilker').equalTo(this.context.area)
       .on('value', snap => {
         if (snap.val()) {
