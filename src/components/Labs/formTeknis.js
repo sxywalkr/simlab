@@ -79,7 +79,7 @@ class PageAllBase extends Component {
     this.setState({ loading: true });
     this.props.firebase.db.ref('samples')
       .orderByChild('tanggalMasuksampel')
-      .limitToLast(100)
+      .limitToLast(600)
       // .orderByChild('flagStatusProses')
       // .equalTo('Proses di Pelaksana Teknis')
       .on('value', snap => {
