@@ -5,6 +5,7 @@ import { compose } from 'recompose';
 import { AuthUserContext, withAuthorization } from '../Session';
 // import * as ROLES from '../../constants/roles';
 import * as ROUTES from '../../constants/routes';
+import FormGroup from '@material-ui/core/FormGroup';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
@@ -28,6 +29,9 @@ import { MuiPickersUtilsProvider, DatePicker } from 'material-ui-pickers';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
+import FormLabel from '@material-ui/core/FormLabel';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Checkbox from '@material-ui/core/Checkbox';
 import Select from '@material-ui/core/Select';
 import MUIDataTable from "mui-datatables";
 
@@ -1193,6 +1197,12 @@ class SampelDetailBase extends Component {
                     {/* <MenuItem value="Diluar Akreditasi (Wilker)">Diluar Akreditasi (Wilker)</MenuItem> */}
                   </Select>
                 </FormControl>
+                {/* <FormLabel style={{ marginTop: 15 }} component="legend">Kaji Ulang Permintaan</FormLabel>
+                <FormGroup>
+                  <FormControlLabel control={<Checkbox checked />} label="Ketersediaan Bahan Pengujian" />
+                  <FormControlLabel control={<Checkbox checked />} label="Kesiapan Personnel" />
+                  <FormControlLabel control={<Checkbox checked />} label="Kondisi Alat" />
+                </FormGroup> */}
                 <TextField
                   style={{ marginTop: 15, width: 400 }}
                   margin="dense"
