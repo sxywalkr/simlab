@@ -1867,6 +1867,9 @@ const styles = StyleSheet.create({
   headerTitle11: {
     fontSize: 11,
   },
+  headerTitle13: {
+    fontSize: 13,
+  },
   headerTitle16: {
     fontSize: 16,
     fontWeight: 'bold',
@@ -2141,7 +2144,7 @@ const Quixote = (p) => {
               <Text style={styles.headerTitle11}> Untuk dilakukan pengujian dari ruang lingkup {p.q.zItems[el1].ruangLingkupSampel === 'Akreditasi' ? '' : p.q.zItems[el1].metodePengujianSampel}</Text>
             </View>
             <View style={styles.headerRowCenter}>
-              <Text style={styles.headerTitle11}>Kaji Ulang Permintaan</Text>
+              <Text style={styles.headerTitle13}>KAJI ULANG PERMINTAAN</Text>
             </View>
             <View style={styles.tableDirectionRow}>
               {p.q.kesediaanBahanPengujian === "Ya" ?
