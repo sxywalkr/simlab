@@ -174,7 +174,9 @@ class UserItemBase extends Component {
       open: false,
       roles: [],
       ...props.location.state,
+      listWilker: [],
     };
+
   }
 
   componentDidMount() {
@@ -196,6 +198,28 @@ class UserItemBase extends Component {
       });
     // console.log(this.props);
     // console.log(this.state);
+
+    //fetch list of area wilker
+    this.props.firebase.db.ref('masterData/wilker')
+      .orderByChild('kodeWilker')
+      .on('value', snap => {
+        const a = [];
+        // a.push(snap.val());
+        snap.forEach(el => {
+          a.push({
+            xkodeWilker: el.val().kodeWilker,
+            xnamaWilker: el.val().namaWilker,
+          })
+        })
+
+        this.setState({
+          listWilker : a
+        })
+
+        // console.log('a')
+        // console.log(a)
+
+      })
   }
 
   componentWillUnmount() {
@@ -238,7 +262,7 @@ class UserItemBase extends Component {
     // console.log(this.state);
     // console.log(this.props.match.params.id)
 
-    const { user, loading, area, roles } = this.state;
+    const { user, loading, area, roles, listWilker } = this.state;
     return (
       <div>
         <Button variant="outlined" color="primary" onClick={this.handleClickOpen}>
@@ -310,7 +334,11 @@ class UserItemBase extends Component {
                 style={{ width: 400 }}
                 name="area"
               >
-                <MenuItem value="0501">0501</MenuItem>
+                {!!listWilker && Object.keys(listWilker).map(elx1 =>
+                      <MenuItem key={elx1} value={listWilker[elx1].xkodeWilker}>{listWilker[elx1].xkodeWilker} - {listWilker[elx1].xnamaWilker}</MenuItem>
+                    )}
+
+                {/* <MenuItem value="0501">0501</MenuItem>
                 <MenuItem value="0502">0502</MenuItem>
                 <MenuItem value="0503">0503</MenuItem>
                 <MenuItem value="0504">0504</MenuItem>
@@ -324,7 +352,7 @@ class UserItemBase extends Component {
                 <MenuItem value="0512">0512</MenuItem>
                 <MenuItem value="0513">0513</MenuItem>
                 <MenuItem value="0514">0514</MenuItem>
-                <MenuItem value="9999">9999</MenuItem>
+                <MenuItem value="9999">9999</MenuItem> */}
               </Select>
             </FormControl>
             <FormControl style={{ marginTop: 15 }} variant="standard">
