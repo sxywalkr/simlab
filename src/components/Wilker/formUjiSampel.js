@@ -35,7 +35,7 @@ import Checkbox from '@material-ui/core/Checkbox';
 import Select from '@material-ui/core/Select';
 import MUIDataTable from "mui-datatables";
 
-import { logoBalai, logoKan, qrAgus, qrRizka } from '../../constants/svg';
+import { logoBalai, logoKan, qrAgus, qrAhmad, qrIndra, qrIntarti, qrMirah, qrNovia, qrNur, qrRizka } from '../../constants/svg';
 // import FormHelperText from '@material-ui/core/FormHelperText';
 // import Input from '@material-ui/core/Input';
 // import OutlinedInput from '@material-ui/core/OutlinedInput';
@@ -1873,7 +1873,16 @@ const PDFLHU = (p) => {
               <Text style={styles.tableCell}>{p.q.zItems[el1].targetPengujianSampel}</Text>
             </View>
             <View style={styles.tableCol15}>
-              <Text style={styles.tableCell}>{p.q.zItems[el1].metodePengujianSampel}</Text>
+              <Text style={styles.tableCell}>{
+              p.q.zItems[el1].metodePengujianSampel === 'HA-HI/AI-ND' ? 'OIE 2018 Chapter 3.3.4 dan OIE 2018 chapter 3.3.14' 
+                : p.q.zItems[el1].metodePengujianSampel === 'ELISA RABIES' ? 'OIE 2018 chapter 3.1.17' 
+                : p.q.zItems[el1].metodePengujianSampel === 'TPC' ? 'SNI 7388 : 2009' 
+                : p.q.zItems[el1].metodePengujianSampel === 'MIKROSKOPIS TRYPANOSOMA SP. DENGAN PEWARNAAN GIEMSA' ? 'SNI 7388 : 2009' 
+                : p.q.zItems[el1].metodePengujianSampel === 'MIKROSKOPIS TRYPANOSOMA SP. DENGAN PEWARNAAN GIEMSA WILKER' ? 'SNI 7388 : 2009' 
+                // : p.q.zItems[el1].metodePengujianSampel.include('TRYPANOSOMA') ? 'OIE 2018 chapter 3.1.21. hal 662 - 663' 
+                : p.q.zItems[el1].metodePengujianSampel === 'RBT' ? 'OIE 2018 chapter 3.1.4 hal 368 - 369' 
+                : p.q.zItems[el1].metodePengujianSampel 
+              }</Text>
             </View>
             <View style={styles.tableCol20}>
               <Text style={styles.tableCell}>{p.q.zItems[el1].hasilUjiSampel}</Text>
@@ -1926,7 +1935,17 @@ const PDFLHU = (p) => {
             <Text>{' '}</Text>
             <Image
               style={styles.logo}
-              src={p.q.manajerTeknisAdminLab === 'Drh. Rizka Indriani, M. Sc' ? qrRizka : qrAgus} 
+              src={
+                p.q.manajerTeknisAdminLab === 'Drh. Rizka Indriani, M. Sc' ? qrRizka 
+                  : p.q.manajerTeknisAdminLab === 'drh. Indra Dewa, M.Si' ? qrIndra 
+                  : p.q.manajerTeknisAdminLab === 'drh. Nur Setyawan' ? qrNur 
+                  : p.q.manajerTeknisAdminLab === 'drh. Anak Agung Istri Agung Mirah Dwija, M. Si' ? qrMirah 
+                  : p.q.manajerTeknisAdminLab === 'drh. Agus Setiawan, M.Sc' ? qrAgus 
+                  : p.q.manajerTeknisAdminLab === 'drh. Ahmad Nadif, M.Si' ? qrAhmad 
+                  : p.q.manajerTeknisAdminLab === 'drh. Novia Anggraini' ? qrNovia 
+                  : p.q.manajerTeknisAdminLab === 'drh. Intarti, M.Si' ? qrIntarti 
+                  : qrRizka
+            } 
             />
           </View>
           <View style={styles.spaceV50}></View>

@@ -77,3 +77,9 @@ npm run start
 ### Deployment
 npm run build
 firebase deploy
+
+
+# new install
+npm install -g firebase-tools
+firebase login
+login to simlab2019@gmail.com
