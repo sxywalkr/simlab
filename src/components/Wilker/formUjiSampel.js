@@ -1842,45 +1842,60 @@ const PDFLHU = (p) => {
       </View>
       <View style={styles.table}>
         <View style={styles.tableRow}>
-          <View style={styles.tableHeaderCol20}>
+          <View style={styles.tableHeaderCol15}>
             <Text style={styles.tableCellHeader}>Jenis Sampel</Text>
           </View>
           <View style={styles.tableHeaderCol10}>
             <Text style={styles.tableCellHeader}>Jumlah Sampel</Text>
           </View>
-          <View style={styles.tableHeaderCol10}>
+          <View style={styles.tableHeaderCol20}>
             <Text style={styles.tableCellHeader}>Jenis Pemeriksaan</Text>
           </View>
-          <View style={styles.tableHeaderCol15}>
+          <View style={styles.tableHeaderCol20}>
             <Text style={styles.tableCellHeader}>Metode Pemeriksaan</Text>
           </View>
           <View style={styles.tableHeaderCol20}>
             <Text style={styles.tableCellHeader}>Hasil Uji</Text>
           </View>
-          <View style={styles.tableHeaderCol25}>
+          <View style={styles.tableHeaderCol15}>
             <Text style={styles.tableCellHeader}>Keterangan</Text>
           </View>
         </View>
         {!!p.q.zItems && Object.keys(p.q.zItems).map((el1, key1) =>
           <View key={key1} style={styles.tableRow}>
-            <View style={styles.tableCol20}>
+            <View style={styles.tableCol15}>
               <Text style={styles.tableCell}>{p.q.zItems[el1].jenisSampel}</Text>
             </View>
             <View style={styles.tableCol10}>
               <Text style={styles.tableCell}>{p.q.zItems[el1].jumlahSampel}</Text>
             </View>
-            <View style={styles.tableCol10}>
-              <Text style={styles.tableCell}>{p.q.zItems[el1].targetPengujianSampel}</Text>
+            <View style={styles.tableCol20}>
+              <Text style={styles.tableCell}>
+                {
+                p.q.zItems[el1].metodePengujianSampel === 'HA-HI/AI-ND' ? 'Titer Antibodi terhadap virus Avian Influenza dan Newcastle Disease' 
+                : p.q.zItems[el1].metodePengujianSampel === 'ELISA RABIES' ? 'Titer Antibodi terhadap virus Rabies' 
+                : p.q.zItems[el1].metodePengujianSampel === 'TPC' ? 'Angka Lempeng Total atau Total Plate Count'  // cemaran mikroba ?
+                : p.q.zItems[el1].metodePengujianSampel === 'MIKROSKOPIS TRYPANOSOMA SP. DENGAN PEWARNAAN GIEMSA' ? 'Mikroskopis Trypanosoma sp.' 
+                : p.q.zItems[el1].metodePengujianSampel === 'MIKROSKOPIS TRYPANOSOMA SP. DENGAN PEWARNAAN GIEMSA WILKER' ? 'Mikroskopis Trypanosoma sp.' 
+                : p.q.zItems[el1].metodePengujianSampel === 'RBT' ? 'Deteksi antibodi virus Rabies' 
+                : p.q.zItems[el1].targetPengujianSampel 
+                /* {
+                p.q.zItems[el1].targetPengujianSampel === 'Titer Antibodi' ? 'Titer antibodi terhadap virus Avian Influenza dan Newcastle Disease' 
+                  : p.q.zItems[el1].targetPengujianSampel === 'RBT' ? 'Deteksi Antibodi terhadap bakteri Brucella sp.' 
+                  // : p.q.zItems[el1].targetPengujianSampel === 'RBT' ? 'Deteksi Antibodi terhadap bakteri Brucella sp.' 
+                  : p.q.zItems[el1].targetPengujianSampel
+                } */}
+              </Text>
             </View>
-            <View style={styles.tableCol15}>
+            <View style={styles.tableCol20}>
               <Text style={styles.tableCell}>{
-              p.q.zItems[el1].metodePengujianSampel === 'HA-HI/AI-ND' ? 'OIE 2018 Chapter 3.3.4 dan OIE 2018 chapter 3.3.14' 
-                : p.q.zItems[el1].metodePengujianSampel === 'ELISA RABIES' ? 'OIE 2018 chapter 3.1.17' 
-                : p.q.zItems[el1].metodePengujianSampel === 'TPC' ? 'SNI 7388 : 2009' 
-                : p.q.zItems[el1].metodePengujianSampel === 'MIKROSKOPIS TRYPANOSOMA SP. DENGAN PEWARNAAN GIEMSA' ? 'SNI 7388 : 2009' 
-                : p.q.zItems[el1].metodePengujianSampel === 'MIKROSKOPIS TRYPANOSOMA SP. DENGAN PEWARNAAN GIEMSA WILKER' ? 'SNI 7388 : 2009' 
+              p.q.zItems[el1].metodePengujianSampel === 'HA-HI/AI-ND' ? 'OIE 2018 Chapter 3.3.4 hal 430 – 432 dan OIE 2018 Chapter 3.3.14' 
+                : p.q.zItems[el1].metodePengujianSampel === 'ELISA RABIES' ? 'OIE 2018 Chapter 3.1.17 hal 596-597' 
+                : p.q.zItems[el1].metodePengujianSampel === 'TPC' ? 'SNI 2897 : 2008 butir 4.2'  // cemaran mikroba ?
+                : p.q.zItems[el1].metodePengujianSampel === 'MIKROSKOPIS TRYPANOSOMA SP. DENGAN PEWARNAAN GIEMSA' ? 'OIE 2018 Chapter 3.1.21 hal 662-663' 
+                : p.q.zItems[el1].metodePengujianSampel === 'MIKROSKOPIS TRYPANOSOMA SP. DENGAN PEWARNAAN GIEMSA WILKER' ? 'OIE 2018 Chapter 3.1.21 hal 662-663' 
                 // : p.q.zItems[el1].metodePengujianSampel.include('TRYPANOSOMA') ? 'OIE 2018 chapter 3.1.21. hal 662 - 663' 
-                : p.q.zItems[el1].metodePengujianSampel === 'RBT' ? 'OIE 2018 chapter 3.1.4 hal 368 - 369' 
+                : p.q.zItems[el1].metodePengujianSampel === 'RBT' ? 'OIE 2018 Chapter 3.1.4 hal 368-369' 
                 : p.q.zItems[el1].metodePengujianSampel 
               }</Text>
             </View>
@@ -1896,7 +1911,7 @@ const PDFLHU = (p) => {
               {!!p.q.zItems[el1].hasilUjiSampelBaris9 && <Text style={styles.tableCell}>{p.q.zItems[el1].hasilUjiSampelBaris9}</Text>}
               {!!p.q.zItems[el1].hasilUjiSampelBaris10 && <Text style={styles.tableCell}>{p.q.zItems[el1].hasilUjiSampelBaris10}</Text>}
             </View>
-            <View style={styles.tableCol25}>
+            <View style={styles.tableCol15}>
               <Text style={styles.tableCell}>{p.q.zItems[el1].keteranganSampel}</Text>
             </View>
           </View>
