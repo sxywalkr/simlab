@@ -75,7 +75,9 @@ node 16
 npm run start
 
 ### Deployment
+nvm use 16
 npm run build
+nvm use 18
 firebase deploy
 
 
@@ -83,3 +85,4 @@ firebase deploy
 npm install -g firebase-tools
 firebase login
 login to simlab2019@gmail.com
+

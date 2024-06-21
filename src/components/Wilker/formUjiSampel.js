@@ -1558,6 +1558,9 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     textDecoration: 'underline',
   },
+  header1Content50: {
+    width: "50%",
+  },
 });
 
 const Quixote = (p) => {
@@ -1685,7 +1688,7 @@ const Quixote = (p) => {
 }
 
 const PDFLHU = (p) => {
-  console.log(p);
+  // console.log(p);
 
   return <Document>
     <Page size='LEGAL' orientation='portrait' style={styles.body}>
@@ -1744,7 +1747,7 @@ const PDFLHU = (p) => {
               <View style={styles.header1Col30}>
                 <Text style={styles.header1TableCell}>Nama / Instansi Pemilik Sampel</Text>
               </View>
-              <View style={styles.header1Col30}>
+              <View style={styles.header1Content50}>
                 <Text style={styles.header1TableCell}>: {p.q.namaPemilikSampel}</Text>
               </View>
         </View>
@@ -1752,7 +1755,7 @@ const PDFLHU = (p) => {
               <View style={styles.header1Col30}>
                 <Text style={styles.header1TableCell}>Alamat</Text>
               </View>
-              <View style={styles.header1Col30}>
+              <View style={styles.header1Content50}>
                 <Text style={styles.header1TableCell}>: {p.q.alamatPemilikSampel}</Text>
               </View>
         </View>
@@ -1760,7 +1763,7 @@ const PDFLHU = (p) => {
               <View style={styles.header1Col30}>
                 <Text style={styles.header1TableCell}>Ket. Asal / Tujuan </Text>
               </View>
-              <View style={styles.header1Col30}>
+              <View style={styles.header1Content50}>
                 <Text style={styles.header1TableCell}>: {p.q.asalTujuanSampel}</Text>
               </View>
         </View>
