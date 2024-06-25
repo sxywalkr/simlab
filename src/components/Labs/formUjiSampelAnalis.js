@@ -1034,10 +1034,29 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     textDecoration: 'underline',
   },
+  logoHeader: {
+    // marginVertical: 3,
+    // marginHorizontal: 3,
+    width: 60,
+    height: 60,
+  },
+  headerTitleRow1: {
+    fontSize: 14,
+    fontWeight: 'heavy',
+    letterSpacing: 3
+  },
+  headerTitleRow2: {
+    fontSize: 10,
+    fontWeight: 'heavy',
+    letterSpacing: 3
+  },
+  headerTitleRow3: {
+    fontSize: 6,
+  },
 });
 
 const Quixote = (p) => {
-  console.log(p);
+  // console.log(p);
 
   return <Document>
     <Page size='LEGAL' orientation='landscape' style={styles.body}>
